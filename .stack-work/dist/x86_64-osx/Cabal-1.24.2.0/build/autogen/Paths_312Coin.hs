@@ -30,7 +30,7 @@ version = Version [0,1,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
 bindir     = "/Users/coreywilson/Desktop/CPSC 312/Projects/Project 2/312Coin/.stack-work/install/x86_64-osx/lts-9.14/8.0.2/bin"
-libdir     = "/Users/coreywilson/Desktop/CPSC 312/Projects/Project 2/312Coin/.stack-work/install/x86_64-osx/lts-9.14/8.0.2/lib/x86_64-osx-ghc-8.0.2/312Coin-0.1.0.0-G7NtcrNisv1AYvtycpKYak"
+libdir     = "/Users/coreywilson/Desktop/CPSC 312/Projects/Project 2/312Coin/.stack-work/install/x86_64-osx/lts-9.14/8.0.2/lib/x86_64-osx-ghc-8.0.2/312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
 dynlibdir  = "/Users/coreywilson/Desktop/CPSC 312/Projects/Project 2/312Coin/.stack-work/install/x86_64-osx/lts-9.14/8.0.2/lib/x86_64-osx-ghc-8.0.2"
 datadir    = "/Users/coreywilson/Desktop/CPSC 312/Projects/Project 2/312Coin/.stack-work/install/x86_64-osx/lts-9.14/8.0.2/share/x86_64-osx-ghc-8.0.2/312Coin-0.1.0.0"
 libexecdir = "/Users/coreywilson/Desktop/CPSC 312/Projects/Project 2/312Coin/.stack-work/install/x86_64-osx/lts-9.14/8.0.2/libexec"

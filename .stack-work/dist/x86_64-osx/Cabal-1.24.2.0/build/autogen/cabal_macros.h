@@ -7,12 +7,33 @@
   (major1) == 0 && (major2) <  1 || \
   (major1) == 0 && (major2) == 1 && (minor) <= 0)
 
+/* package GenericPretty-1.2.1 */
+#define VERSION_GenericPretty "1.2.1"
+#define MIN_VERSION_GenericPretty(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  2 || \
+  (major1) == 1 && (major2) == 2 && (minor) <= 1)
+
+/* package Spock-0.12.0.0 */
+#define VERSION_Spock "0.12.0.0"
+#define MIN_VERSION_Spock(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  12 || \
+  (major1) == 0 && (major2) == 12 && (minor) <= 0)
+
 /* package aeson-1.1.2.0 */
 #define VERSION_aeson "1.1.2.0"
 #define MIN_VERSION_aeson(major1,major2,minor) (\
   (major1) <  1 || \
   (major1) == 1 && (major2) <  1 || \
   (major1) == 1 && (major2) == 1 && (minor) <= 2)
+
+/* package async-2.1.1.1 */
+#define VERSION_async "2.1.1.1"
+#define MIN_VERSION_async(major1,major2,minor) (\
+  (major1) <  2 || \
+  (major1) == 2 && (major2) <  1 || \
+  (major1) == 2 && (major2) == 1 && (minor) <= 1)
 
 /* package base-4.9.1.0 */
 #define VERSION_base "4.9.1.0"
@@ -42,12 +63,26 @@
   (major1) == 0 && (major2) <  11 || \
   (major1) == 0 && (major2) == 11 && (minor) <= 9)
 
+/* package hslogger-1.2.10 */
+#define VERSION_hslogger "1.2.10"
+#define MIN_VERSION_hslogger(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  2 || \
+  (major1) == 1 && (major2) == 2 && (minor) <= 10)
+
 /* package mtl-2.2.1 */
 #define VERSION_mtl "2.2.1"
 #define MIN_VERSION_mtl(major1,major2,minor) (\
   (major1) <  2 || \
   (major1) == 2 && (major2) <  2 || \
   (major1) == 2 && (major2) == 2 && (minor) <= 1)
+
+/* package text-1.2.2.2 */
+#define VERSION_text "1.2.2.2"
+#define MIN_VERSION_text(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  2 || \
+  (major1) == 1 && (major2) == 2 && (minor) <= 2)
 
 /* package time-1.6.0.1 */
 #define VERSION_time "1.6.0.1"
@@ -126,7 +161,7 @@
   (major1) == 0 && (major2) <  29 || \
   (major1) == 0 && (major2) == 29 && (minor) <= 2)
 
-#define CURRENT_COMPONENT_ID "312Coin-0.1.0.0-G7NtcrNisv1AYvtycpKYak"
+#define CURRENT_COMPONENT_ID "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
 
-#define CURRENT_PACKAGE_KEY "312Coin-0.1.0.0-G7NtcrNisv1AYvtycpKYak"
+#define CURRENT_PACKAGE_KEY "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
 

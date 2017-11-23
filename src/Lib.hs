@@ -1,6 +1,6 @@
-module Lib
-    ( someFunc
-    ) where
+{-# LANGUAGE DeriveGeneric       #-}
+
+module Lib where
 
 import           Control.Monad.Trans
 import           Crypto.Hash                    ( Digest
@@ -13,6 +13,7 @@ import           Data.Binary
 import           Data.ByteString.Char8          (pack)
 import           Data.Time.Clock.POSIX
 import           Text.Read                      (readMaybe)
+import           GHC.Generics
 
 data Block = Block { index        :: Int
                    , previousHash :: String
@@ -20,7 +21,10 @@ data Block = Block { index        :: Int
                    , blockData    :: String
                    , nonce        :: Int
                    , blockHash    :: String
-                   } deriving (Show, Read, Eq)
+                   } deriving (Show, Read, Eq, Generic)
+
+instance ToJSON Block
+instance FromJSON Block
 
 epoch :: IO Int
 epoch = round `fmap` getPOSIXTime
@@ -29,22 +33,19 @@ sha256 :: String -> Maybe (Digest SHA256)
 sha256 = digestFromByteString . hash . pack
 
 hashString :: String -> String
-hashString =
- maybe (error "Something went wrong generating a hash") show . sha256
+hashString = maybe (error "Something went wrong generating a hash") show . sha256
 
 calculateBlockHash :: Block -> String
-calculateBlockHash (Block i p t b n _)  =
- hashString $ concat [show i, p, show t, b, show n]
+calculateBlockHash (Block i p t b n _) = hashString (concat [show i, p, show t, b, show n])
 
 setBlockHash :: Block -> Block
 setBlockHash block = block {blockHash = calculateBlockHash block}
 
 setNonceAndHash :: Block -> Block
-setNonceAndHash block = setBlockHash $ block {nonce = findNonce block}
+setNonceAndHash block = setBlockHash (block {nonce = findNonce block})
 
 difficultyTarget :: Integer
-difficultyTarget =
-  0x0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+difficultyTarget = 0x0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 satisfiesPow :: String -> Bool
 satisfiesPow bHash =
@@ -59,7 +60,7 @@ findNonce block = do
       currentNonce = nonce block
   if satisfiesPow bHash
     then currentNonce
-    else findNonce $ block {nonce = currentNonce + 1}
+    else findNonce (block {nonce = currentNonce + 1})
 
 initialBlock :: Block
 initialBlock = do
@@ -93,7 +94,4 @@ mineBlockFrom lastBlock stringData = do
                     , nonce        = 0
                     , blockHash    = "will be changed"
                     }
-  return $ setNonceAndHash block
-
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+  return (setNonceAndHash block)
