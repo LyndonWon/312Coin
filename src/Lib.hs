@@ -15,6 +15,14 @@ import           Data.Time.Clock.POSIX
 import           Text.Read                      (readMaybe)
 import           GHC.Generics
 
+-- data Node = Node
+--   { name :: Text
+--   , id  :: Int
+--   } deriving (Generic, Show)
+--
+-- instance ToJSON Person
+-- instance FromJSON Person
+
 data Block = Block { index        :: Int
                    , previousHash :: String
                    , timestamp    :: Int
