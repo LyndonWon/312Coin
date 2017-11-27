@@ -15,13 +15,16 @@ import           Data.Time.Clock.POSIX
 import           Text.Read                      (readMaybe)
 import           GHC.Generics
 
--- data Node = Node
---   { name :: Text
---   , id  :: Int
---   } deriving (Generic, Show)
---
--- instance ToJSON Person
--- instance FromJSON Person
+data Node = Node
+  { name :: String
+  , id  :: Int
+  } deriving (Generic, Show, Read, Eq)
+
+instance ToJSON Node
+instance FromJSON Node
+
+initialNode :: Node
+initialNode = Node "master" 1
 
 data Block = Block { index        :: Int
                    , previousHash :: String

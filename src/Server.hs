@@ -24,7 +24,7 @@ type ApiAction a = SpockAction () () () a
 data MySession = EmptySession
 
 data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
-                                         -- registeredNodes :: IORef [Node]
+                                         , nodeState :: IORef [Node]
                                        } deriving (Generic)
 
 addDebug :: (MonadIO m) => String -> m ()
@@ -32,13 +32,13 @@ addDebug str = liftIO (debugM "312Coin" (show str))
 
 getBlockChain :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Block]
 getBlockChain = do
-  (BlockChainState chain) <- getState
+  (BlockChainState chain _) <- getState
   liftIO $ readIORef chain
 
--- getNodes :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Block]
--- getNodes = do
---   (BlockChainState chain) <- getState
---   liftIO $ readIORef chain
+getNodes :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Node]
+getNodes = do
+  (BlockChainState _ nodes) <- getState
+  liftIO $ readIORef nodes
 
 app :: SpockM () MySession BlockChainState ()
 app = do
@@ -47,6 +47,9 @@ app = do
   get "chain" $ do
     chain <- getBlockChain
     json $ chain
+  get "node" $ do
+    node <- getNodes
+    json $ node
   -- post "node" $ do
   --   theNode <- jsonBody' :: ApiAction Node
   --   text $ "Parsed: " <> pack (show thePerson)
@@ -55,7 +58,8 @@ app = do
 runServer :: IO ()
 runServer = do
   addDebug "Starting Server"
-  ref <- maybe (newIORef [initialBlock]) (const $ newIORef []) (Nothing)
-  spockCfg <- defaultSpockCfg EmptySession PCNoDatabase (BlockChainState ref)
+  chainRef <- maybe (newIORef [initialBlock]) (const $ newIORef []) (Nothing)
+  nodeRef <- maybe (newIORef [initialNode]) (const $ newIORef []) (Nothing)
+  spockCfg <- defaultSpockCfg EmptySession PCNoDatabase (BlockChainState chainRef nodeRef )
   runSpock 8080 (spock spockCfg app)
   addDebug "Server Running on 8080"

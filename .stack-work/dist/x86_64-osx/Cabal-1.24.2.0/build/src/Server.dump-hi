@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2017-11-27 20:22:20.296323 UTC
+2017-11-27 23:17:02.892713 UTC
 
 interface 312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Server [family instance module] 8002
-  interface hash: cfb780f1fce10d4b071c58a84de0fce7
-  ABI hash: 2c7eaedb8ce3d40bbaabd3dd7fa66c85
-  export-list hash: d5a648370faf7eeeda7017da2a59bcf5
+  interface hash: 7ae73ec99d60c1ae0e773ac59038d889
+  ABI hash: 39db3f66ff219a8edaa8986d9c2f7b77
+  export-list hash: c8e1f007987eba3df8c5698ebb1ef1af
   orphan hash: e6ac57eebfd2ae21ceca807dea4f90ac
   flag hash: 92a87f93a214d458259573a2c61da388
   sig of: Nothing
@@ -15,9 +15,10 @@ exports:
   Server.addDebug
   Server.app
   Server.getBlockChain
+  Server.getNodes
   Server.runServer
   Server.ApiAction
-  Server.BlockChainState{Server.BlockChainState blockChainState}
+  Server.BlockChainState{Server.BlockChainState blockChainState nodeState}
   Server.MySession{Server.EmptySession}
 module dependencies: Lib
 package dependencies: Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn
@@ -186,11 +187,13 @@ family instance modules: 312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Lib
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Storable
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed.Base
-import  -/  Lib 8d47b7d3bcc435fd2ec5075bb7f769a4
-  exports: 275dce19aa439e522e19acad8b6a6eee
-  Block 14468dcfc2e886c5f372cb4b650f3fbc
-  Block 1cf0f64a60de86e0e6c47dc1761da7a0
-  initialBlock 47f2463bf6d40e9ebde21effb8c387c7
+import  -/  Lib 573cfb54d3103031f77aacd5931a56c9
+  exports: c1fa9e207d8a20b7061fa55492c9d23d
+  Block 6b15bca8aa96c7fd8b8c573de9c6b6a1
+  Block 575978371121f29b3bd2c5531b36c636
+  Node 13ff5d7c1c5d754cb1b93b035b817460
+  initialBlock 493b7ca1966c412add6a18e4b2885993
+  initialNode ce8133c87e66edd17b2524900c36c125
 import  -/  Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock b645b9129155ecc1350f1e1c22188158
 import  -/  Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Config 0358826ed784dbfe5b1bafd5eb66c035
 import  -/  Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal.Types 8e225c927ac08e9fa79fafd28cf2b4f0
@@ -213,7 +216,7 @@ import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
 import  -/  hslogger-1.2.10@hslogger-1.2.10-Li6ZV5C1ftGLPA71zPNMlf:System.Log.Logger 6707e3b5e5a7f0e9078d17200983dc9a
 import  -/  mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6:Control.Monad.Trans d69bc2e104a90fb918d853b240f7af2e
 import  -/  text-1.2.2.2@text-1.2.2.2-9UQZjEJZQFSGMffj1Z5g00:Data.Text f7d3d648ffeef1043fe2e522e7e66c1b
-0f3ebde8782c4140b671d3c7a78c4b84
+e1d86c93e2029a3668503a0dc8ff2568
   $fGenericBlockChainState ::
     GHC.Generics.Generic Server.BlockChainState
   DFunId
@@ -222,7 +225,7 @@ import  -/  text-1.2.2.2@text-1.2.2.2-9UQZjEJZQFSGMffj1Z5g00:Data.Text f7d3d648f
                   @ Server.BlockChainState
                   Server.$fGenericBlockChainState_$cfrom
                   Server.$fGenericBlockChainState_$cto -}
-0f3ebde8782c4140b671d3c7a78c4b84
+e1d86c93e2029a3668503a0dc8ff2568
   $fGenericBlockChainState1 ::
     Server.BlockChainState
     -> GHC.Generics.M1
@@ -236,45 +239,93 @@ import  -/  text-1.2.2.2@text-1.2.2.2-9UQZjEJZQFSGMffj1Z5g00:Data.Text f7d3d648f
                'GHC.Generics.NoSourceUnpackedness
                'GHC.Generics.NoSourceStrictness
                'GHC.Generics.DecidedLazy)
-            (GHC.Generics.K1 GHC.Generics.R (GHC.IORef.IORef [Lib.Block])))
+            (GHC.Generics.K1 GHC.Generics.R (GHC.IORef.IORef [Lib.Block]))
+          GHC.Generics.:*: GHC.Generics.M1
+                             GHC.Generics.S
+                             ('GHC.Generics.MetaSel
+                                ('GHC.Base.Just "nodeState")
+                                'GHC.Generics.NoSourceUnpackedness
+                                'GHC.Generics.NoSourceStrictness
+                                'GHC.Generics.DecidedLazy)
+                             (GHC.Generics.K1 GHC.Generics.R (GHC.IORef.IORef [Lib.Node])))
          x
-  {- Arity: 1, HasNoCafRefs, Strictness: <S(S),1*U(1*U(U))>m,
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U(U,U)>m,
      Unfolding: InlineRule (1, True, False)
                 (\ @ x (x1 :: Server.BlockChainState) ->
-                 case x1 of wild { Server.BlockChainState g1 ->
-                 g1
+                 case x1 of wild { Server.BlockChainState g1 g2 ->
+                 (GHC.Generics.:*:
+                    @ (GHC.Generics.M1
+                         GHC.Generics.S
+                         ('GHC.Generics.MetaSel
+                            ('GHC.Base.Just "blockChainState")
+                            'GHC.Generics.NoSourceUnpackedness
+                            'GHC.Generics.NoSourceStrictness
+                            'GHC.Generics.DecidedLazy)
+                         (GHC.Generics.K1 GHC.Generics.R (GHC.IORef.IORef [Lib.Block])))
+                    @ (GHC.Generics.M1
+                         GHC.Generics.S
+                         ('GHC.Generics.MetaSel
+                            ('GHC.Base.Just "nodeState")
+                            'GHC.Generics.NoSourceUnpackedness
+                            'GHC.Generics.NoSourceStrictness
+                            'GHC.Generics.DecidedLazy)
+                         (GHC.Generics.K1 GHC.Generics.R (GHC.IORef.IORef [Lib.Node])))
+                    @ x
+                    g1
+                      `cast`
+                    (Trans
+                         (Sym (GHC.Generics.N:K1[0]
+                                   <GHC.Generics.R>_P <GHC.IORef.IORef [Lib.Block]>_R <x>_P))
+                         (Sym (GHC.Generics.N:M1[0]
+                                   <GHC.Generics.S>_P
+                                   <'GHC.Generics.MetaSel
+                                      ('GHC.Base.Just "blockChainState")
+                                      'GHC.Generics.NoSourceUnpackedness
+                                      'GHC.Generics.NoSourceStrictness
+                                      'GHC.Generics.DecidedLazy>_P
+                                   <GHC.Generics.K1
+                                      GHC.Generics.R (GHC.IORef.IORef [Lib.Block])>_R) <x>_N))
+                    g2
+                      `cast`
+                    (Trans
+                         (Sym (GHC.Generics.N:K1[0]
+                                   <GHC.Generics.R>_P <GHC.IORef.IORef [Lib.Node]>_R <x>_P))
+                         (Sym (GHC.Generics.N:M1[0]
+                                   <GHC.Generics.S>_P
+                                   <'GHC.Generics.MetaSel
+                                      ('GHC.Base.Just "nodeState")
+                                      'GHC.Generics.NoSourceUnpackedness
+                                      'GHC.Generics.NoSourceStrictness
+                                      'GHC.Generics.DecidedLazy>_P
+                                   <GHC.Generics.K1
+                                      GHC.Generics.R (GHC.IORef.IORef [Lib.Node])>_R) <x>_N)))
                    `cast`
-                 (Trans
-                      (Sym (GHC.Generics.N:K1[0]
-                                <GHC.Generics.R>_P <GHC.IORef.IORef [Lib.Block]>_R <x>_P))
-                      (Trans
-                           (Sym (GHC.Generics.N:M1[0]
-                                     <GHC.Generics.S>_P
-                                     <'GHC.Generics.MetaSel
-                                        ('GHC.Base.Just "blockChainState")
-                                        'GHC.Generics.NoSourceUnpackedness
-                                        'GHC.Generics.NoSourceStrictness
-                                        'GHC.Generics.DecidedLazy>_P
-                                     <GHC.Generics.K1
-                                        GHC.Generics.R (GHC.IORef.IORef [Lib.Block])>_R))
-                           (Sym (GHC.Generics.N:M1[0]
-                                     <GHC.Generics.C>_P
-                                     <'GHC.Generics.MetaCons
-                                        "BlockChainState" 'GHC.Generics.PrefixI 'GHC.Types.True>_P
-                                     <GHC.Generics.M1
-                                        GHC.Generics.S
-                                        ('GHC.Generics.MetaSel
-                                           ('GHC.Base.Just "blockChainState")
-                                           'GHC.Generics.NoSourceUnpackedness
-                                           'GHC.Generics.NoSourceStrictness
-                                           'GHC.Generics.DecidedLazy)
-                                        (GHC.Generics.K1
-                                           GHC.Generics.R
-                                           (GHC.IORef.IORef [Lib.Block]))>_R)) <x>_N)) }) -}
-0f3ebde8782c4140b671d3c7a78c4b84
+                 (Sym (GHC.Generics.N:M1[0]
+                           <GHC.Generics.C>_P
+                           <'GHC.Generics.MetaCons
+                              "BlockChainState" 'GHC.Generics.PrefixI 'GHC.Types.True>_P
+                           <GHC.Generics.M1
+                              GHC.Generics.S
+                              ('GHC.Generics.MetaSel
+                                 ('GHC.Base.Just "blockChainState")
+                                 'GHC.Generics.NoSourceUnpackedness
+                                 'GHC.Generics.NoSourceStrictness
+                                 'GHC.Generics.DecidedLazy)
+                              (GHC.Generics.K1 GHC.Generics.R (GHC.IORef.IORef [Lib.Block]))
+                            GHC.Generics.:*: GHC.Generics.M1
+                                               GHC.Generics.S
+                                               ('GHC.Generics.MetaSel
+                                                  ('GHC.Base.Just "nodeState")
+                                                  'GHC.Generics.NoSourceUnpackedness
+                                                  'GHC.Generics.NoSourceStrictness
+                                                  'GHC.Generics.DecidedLazy)
+                                               (GHC.Generics.K1
+                                                  GHC.Generics.R
+                                                  (GHC.IORef.IORef [Lib.Node]))>_R) <x>_N) }) -}
+e1d86c93e2029a3668503a0dc8ff2568
   $fGenericBlockChainState_$cfrom ::
     Server.BlockChainState -> GHC.Generics.Rep Server.BlockChainState x
-  {- Arity: 1, HasNoCafRefs, Strictness: <S(S),1*U(1*U(U))>m,
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U(U,U)>m,
      Unfolding: InlineRule (0, True, True)
                 Server.$fGenericBlockChainState1
                   `cast`
@@ -300,71 +351,112 @@ import  -/  text-1.2.2.2@text-1.2.2.2-9UQZjEJZQFSGMffj1Z5g00:Data.Text f7d3d648f
                                              'GHC.Generics.NoSourceStrictness
                                              'GHC.Generics.DecidedLazy)
                                           (GHC.Generics.K1
-                                             GHC.Generics.R (GHC.IORef.IORef [Lib.Block])))>_R))
+                                             GHC.Generics.R (GHC.IORef.IORef [Lib.Block]))
+                                        GHC.Generics.:*: GHC.Generics.M1
+                                                           GHC.Generics.S
+                                                           ('GHC.Generics.MetaSel
+                                                              ('GHC.Base.Just "nodeState")
+                                                              'GHC.Generics.NoSourceUnpackedness
+                                                              'GHC.Generics.NoSourceStrictness
+                                                              'GHC.Generics.DecidedLazy)
+                                                           (GHC.Generics.K1
+                                                              GHC.Generics.R
+                                                              (GHC.IORef.IORef [Lib.Node])))>_R))
                           (Sub (Sym (Server.Rep_BlockChainState[0]))) <x>_N) -}
-0f3ebde8782c4140b671d3c7a78c4b84
+e1d86c93e2029a3668503a0dc8ff2568
   $fGenericBlockChainState_$cto ::
     GHC.Generics.Rep Server.BlockChainState x -> Server.BlockChainState
-  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
-     Unfolding: InlineRule (1, True, True)
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U(U,U)>m,
+     Unfolding: InlineRule (1, True, False)
                 (\ @ x (ds :: GHC.Generics.Rep Server.BlockChainState x) ->
+                 case ds
+                        `cast`
+                      (Trans
+                           (Sub (Server.Rep_BlockChainState[0]))
+                           (Trans
+                                (GHC.Generics.N:M1[0]
+                                     <GHC.Generics.D>_P
+                                     <'GHC.Generics.MetaData
+                                        "BlockChainState"
+                                        "Server"
+                                        "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
+                                        'GHC.Types.False>_P
+                                     <GHC.Generics.M1
+                                        GHC.Generics.C
+                                        ('GHC.Generics.MetaCons
+                                           "BlockChainState" 'GHC.Generics.PrefixI 'GHC.Types.True)
+                                        (GHC.Generics.M1
+                                           GHC.Generics.S
+                                           ('GHC.Generics.MetaSel
+                                              ('GHC.Base.Just "blockChainState")
+                                              'GHC.Generics.NoSourceUnpackedness
+                                              'GHC.Generics.NoSourceStrictness
+                                              'GHC.Generics.DecidedLazy)
+                                           (GHC.Generics.K1
+                                              GHC.Generics.R (GHC.IORef.IORef [Lib.Block]))
+                                         GHC.Generics.:*: GHC.Generics.M1
+                                                            GHC.Generics.S
+                                                            ('GHC.Generics.MetaSel
+                                                               ('GHC.Base.Just "nodeState")
+                                                               'GHC.Generics.NoSourceUnpackedness
+                                                               'GHC.Generics.NoSourceStrictness
+                                                               'GHC.Generics.DecidedLazy)
+                                                            (GHC.Generics.K1
+                                                               GHC.Generics.R
+                                                               (GHC.IORef.IORef [Lib.Node])))>_R)
+                                (GHC.Generics.N:M1[0]
+                                     <GHC.Generics.C>_P
+                                     <'GHC.Generics.MetaCons
+                                        "BlockChainState" 'GHC.Generics.PrefixI 'GHC.Types.True>_P
+                                     <GHC.Generics.M1
+                                        GHC.Generics.S
+                                        ('GHC.Generics.MetaSel
+                                           ('GHC.Base.Just "blockChainState")
+                                           'GHC.Generics.NoSourceUnpackedness
+                                           'GHC.Generics.NoSourceStrictness
+                                           'GHC.Generics.DecidedLazy)
+                                        (GHC.Generics.K1
+                                           GHC.Generics.R (GHC.IORef.IORef [Lib.Block]))
+                                      GHC.Generics.:*: GHC.Generics.M1
+                                                         GHC.Generics.S
+                                                         ('GHC.Generics.MetaSel
+                                                            ('GHC.Base.Just "nodeState")
+                                                            'GHC.Generics.NoSourceUnpackedness
+                                                            'GHC.Generics.NoSourceStrictness
+                                                            'GHC.Generics.DecidedLazy)
+                                                         (GHC.Generics.K1
+                                                            GHC.Generics.R
+                                                            (GHC.IORef.IORef
+                                                               [Lib.Node]))>_R)) <x>_N) of wild { GHC.Generics.:*: ds1 ds2 ->
                  Server.BlockChainState
-                   ds
+                   ds1
                      `cast`
                    (Trans
-                        (Trans
-                             (Sub (Server.Rep_BlockChainState[0]))
-                             (Trans
-                                  (GHC.Generics.N:M1[0]
-                                       <GHC.Generics.D>_P
-                                       <'GHC.Generics.MetaData
-                                          "BlockChainState"
-                                          "Server"
-                                          "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
-                                          'GHC.Types.False>_P
-                                       <GHC.Generics.M1
-                                          GHC.Generics.C
-                                          ('GHC.Generics.MetaCons
-                                             "BlockChainState"
-                                             'GHC.Generics.PrefixI
-                                             'GHC.Types.True)
-                                          (GHC.Generics.M1
-                                             GHC.Generics.S
-                                             ('GHC.Generics.MetaSel
-                                                ('GHC.Base.Just "blockChainState")
-                                                'GHC.Generics.NoSourceUnpackedness
-                                                'GHC.Generics.NoSourceStrictness
-                                                'GHC.Generics.DecidedLazy)
-                                             (GHC.Generics.K1
-                                                GHC.Generics.R (GHC.IORef.IORef [Lib.Block])))>_R)
-                                  (Trans
-                                       (GHC.Generics.N:M1[0]
-                                            <GHC.Generics.C>_P
-                                            <'GHC.Generics.MetaCons
-                                               "BlockChainState"
-                                               'GHC.Generics.PrefixI
-                                               'GHC.Types.True>_P
-                                            <GHC.Generics.M1
-                                               GHC.Generics.S
-                                               ('GHC.Generics.MetaSel
-                                                  ('GHC.Base.Just "blockChainState")
-                                                  'GHC.Generics.NoSourceUnpackedness
-                                                  'GHC.Generics.NoSourceStrictness
-                                                  'GHC.Generics.DecidedLazy)
-                                               (GHC.Generics.K1
-                                                  GHC.Generics.R (GHC.IORef.IORef [Lib.Block]))>_R)
-                                       (GHC.Generics.N:M1[0]
-                                            <GHC.Generics.S>_P
-                                            <'GHC.Generics.MetaSel
-                                               ('GHC.Base.Just "blockChainState")
-                                               'GHC.Generics.NoSourceUnpackedness
-                                               'GHC.Generics.NoSourceStrictness
-                                               'GHC.Generics.DecidedLazy>_P
-                                            <GHC.Generics.K1
-                                               GHC.Generics.R
-                                               (GHC.IORef.IORef [Lib.Block])>_R))) <x>_N)
+                        (GHC.Generics.N:M1[0]
+                             <GHC.Generics.S>_P
+                             <'GHC.Generics.MetaSel
+                                ('GHC.Base.Just "blockChainState")
+                                'GHC.Generics.NoSourceUnpackedness
+                                'GHC.Generics.NoSourceStrictness
+                                'GHC.Generics.DecidedLazy>_P
+                             <GHC.Generics.K1
+                                GHC.Generics.R (GHC.IORef.IORef [Lib.Block])>_R <x>_N)
                         (GHC.Generics.N:K1[0]
-                             <GHC.Generics.R>_P <GHC.IORef.IORef [Lib.Block]>_R <x>_P))) -}
+                             <GHC.Generics.R>_P <GHC.IORef.IORef [Lib.Block]>_R <x>_P))
+                   ds2
+                     `cast`
+                   (Trans
+                        (GHC.Generics.N:M1[0]
+                             <GHC.Generics.S>_P
+                             <'GHC.Generics.MetaSel
+                                ('GHC.Base.Just "nodeState")
+                                'GHC.Generics.NoSourceUnpackedness
+                                'GHC.Generics.NoSourceStrictness
+                                'GHC.Generics.DecidedLazy>_P
+                             <GHC.Generics.K1
+                                GHC.Generics.R (GHC.IORef.IORef [Lib.Node])>_R <x>_N)
+                        (GHC.Generics.N:K1[0]
+                             <GHC.Generics.R>_P <GHC.IORef.IORef [Lib.Node]>_R <x>_P)) }) -}
 ef561d81198f5cc96a5a07752cc6e80b
   $s$fMonadIOActionCtxT2 ::
     Control.Monad.IO.Class.MonadIO
@@ -498,12 +590,13 @@ e7568e856c0a6a2c98c4e799b2f8ebdb
                    "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"#) -}
 3946fea49637a3fc5248c3c29f319357
   type ApiAction a = Web.Spock.Internal.Types.SpockAction () () () a
-0f3ebde8782c4140b671d3c7a78c4b84
+e1d86c93e2029a3668503a0dc8ff2568
   data BlockChainState
-    = BlockChainState {blockChainState :: GHC.IORef.IORef [Lib.Block]}
+    = BlockChainState {blockChainState :: GHC.IORef.IORef [Lib.Block],
+                       nodeState :: GHC.IORef.IORef [Lib.Node]}
 369287603ee0cee2d6284b29f4a71e59
   data MySession = EmptySession
-0f3ebde8782c4140b671d3c7a78c4b84
+e1d86c93e2029a3668503a0dc8ff2568
   axiom Rep_BlockChainState::
       GHC.Generics.Rep Server.BlockChainState
         = GHC.Generics.D1
@@ -521,7 +614,14 @@ e7568e856c0a6a2c98c4e799b2f8ebdb
                      'GHC.Generics.NoSourceUnpackedness
                      'GHC.Generics.NoSourceStrictness
                      'GHC.Generics.DecidedLazy)
-                  (GHC.Generics.Rec0 (GHC.IORef.IORef [Lib.Block]))))
+                  (GHC.Generics.Rec0 (GHC.IORef.IORef [Lib.Block]))
+                GHC.Generics.:*: GHC.Generics.S1
+                                   ('GHC.Generics.MetaSel
+                                      ('GHC.Base.Just "nodeState")
+                                      'GHC.Generics.NoSourceUnpackedness
+                                      'GHC.Generics.NoSourceStrictness
+                                      'GHC.Generics.DecidedLazy)
+                                   (GHC.Generics.Rec0 (GHC.IORef.IORef [Lib.Node]))))
 e2775e66dc2cc5f696632c5749e9fca9
   addDebug ::
     Control.Monad.IO.Class.MonadIO m => GHC.Base.String -> m ()
@@ -550,10 +650,10 @@ e2775e66dc2cc5f696632c5749e9fca9
 1bfc18c0f122587d0dd97c545775f18b
   addDebug2 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "312Coin"#) -}
-a33656445f5d9c94e07bdf9fe7bfe9db
+ecafc781c47e7090e94ab00c0a9ffa91
   app ::
     Web.Spock.SpockM () Server.MySession Server.BlockChainState ()
-  {- Arity: 2,
+  {- Arity: 2, Strictness: <L,U><L,U>,
      Unfolding: InlineRule (0, True, True)
                 Server.app1
                   `cast`
@@ -623,7 +723,7 @@ a33656445f5d9c94e07bdf9fe7bfe9db
                                        Server.BlockChainState
                                        (Control.Monad.Trans.Resource.Internal.ResourceT
                                           GHC.Types.IO)>_N)) <()>_N)) -}
-61a5f9b769846b389670f7a17db3683c
+9be1ed7d49fed6e8f3fd942b8816fa3f
   app1 ::
     Web.Routing.SafeRouting.PathInternal '[]
     -> Web.Routing.Router.RegistryState
@@ -661,93 +761,728 @@ a33656445f5d9c94e07bdf9fe7bfe9db
             ()
             Web.Spock.Internal.Wire.SpockMethod,
           [Network.Wai.Application -> Network.Wai.Application])
-  {- Arity: 2,
-     Unfolding: (Web.Spock.Core.$fMonadSpockCtxT3
-                   @ ()
-                   @ (Web.Spock.Internal.Types.WebStateT
-                        ()
-                        Server.MySession
-                        Server.BlockChainState
-                        (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO))
-                   (Web.Spock.Internal.Monad.$fHasSpockt_$s$fMonadWebStateT
-                      @ ()
-                      @ Server.MySession
-                      @ Server.BlockChainState)
-                   @ ()
-                   @ ()
-                   Server.app10
-                     `cast`
-                   (Trans
-                        (Web.Spock.Core.N:SpockCtxT[0]
-                             <()>_N
-                             <Web.Spock.Internal.Types.WebStateT
+  {- Arity: 2, Strictness: <L,U><L,U>,
+     Unfolding: (\ (r1 :: Web.Routing.SafeRouting.PathInternal '[])
+                   (s1 :: Web.Routing.Router.RegistryState
+                            (Web.Spock.Internal.Wire.ActionCtxT
+                               ()
+                               (Web.Spock.Internal.Types.WebStateT
+                                  ()
+                                  Server.MySession
+                                  Server.BlockChainState
+                                  (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)))
+                            ()
+                            Web.Spock.Internal.Wire.SpockMethod) ->
+                 let {
+                   m1 :: Control.Monad.Trans.Reader.ReaderT
+                           (Web.Spock.Core.LiftHooked
+                              ()
+                              (Web.Spock.Internal.Types.WebStateT
+                                 ()
+                                 Server.MySession
+                                 Server.BlockChainState
+                                 (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)))
+                           (Web.Spock.Internal.Types.WebStateT
+                              ()
+                              Server.MySession
+                              Server.BlockChainState
+                              (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO))
+                           ((),
+                            Web.Routing.Router.RegistryState
+                              (Web.Spock.Internal.Wire.ActionCtxT
+                                 ()
+                                 (Web.Spock.Internal.Types.WebStateT
+                                    ()
+                                    Server.MySession
+                                    Server.BlockChainState
+                                    (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)))
+                              ()
+                              Web.Spock.Internal.Wire.SpockMethod,
+                            [Network.Wai.Application -> Network.Wai.Application])
+                   = Server.app14
+                       `cast`
+                     (Trans
+                          (Trans
+                               (Web.Spock.Core.N:SpockCtxT[0]
+                                    <()>_N
+                                    <Web.Spock.Internal.Types.WebStateT
+                                       ()
+                                       Server.MySession
+                                       Server.BlockChainState
+                                       (Control.Monad.Trans.Resource.Internal.ResourceT
+                                          GHC.Types.IO)>_N)
+                               (Web.Routing.Router.N:RegistryT[0]
+                                    <Web.Spock.Internal.Wire.ActionCtxT
+                                       ()
+                                       (Web.Spock.Internal.Types.WebStateT
+                                          ()
+                                          Server.MySession
+                                          Server.BlockChainState
+                                          (Control.Monad.Trans.Resource.Internal.ResourceT
+                                             GHC.Types.IO))>_N
+                                    <()>_N
+                                    <Network.Wai.Application -> Network.Wai.Application>_N
+                                    <Web.Spock.Internal.Wire.SpockMethod>_N <Control.Monad.Trans.Reader.ReaderT
+                                                                               (Web.Spock.Core.LiftHooked
+                                                                                  ()
+                                                                                  (Web.Spock.Internal.Types.WebStateT
+                                                                                     ()
+                                                                                     Server.MySession
+                                                                                     Server.BlockChainState
+                                                                                     (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                        GHC.Types.IO)))
+                                                                               (Web.Spock.Internal.Types.WebStateT
+                                                                                  ()
+                                                                                  Server.MySession
+                                                                                  Server.BlockChainState
+                                                                                  (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                     GHC.Types.IO))>_N) <()>_N)
+                          (Control.Monad.Trans.RWS.Strict.N:RWST[0]
+                               <Web.Routing.SafeRouting.PathInternal '[]>_R
+                               <[Network.Wai.Application -> Network.Wai.Application]>_N
+                               <Web.Routing.Router.RegistryState
+                                  (Web.Spock.Internal.Wire.ActionCtxT
+                                     ()
+                                     (Web.Spock.Internal.Types.WebStateT
+                                        ()
+                                        Server.MySession
+                                        Server.BlockChainState
+                                        (Control.Monad.Trans.Resource.Internal.ResourceT
+                                           GHC.Types.IO)))
+                                  ()
+                                  Web.Spock.Internal.Wire.SpockMethod>_N
+                               <Control.Monad.Trans.Reader.ReaderT
+                                  (Web.Spock.Core.LiftHooked
+                                     ()
+                                     (Web.Spock.Internal.Types.WebStateT
+                                        ()
+                                        Server.MySession
+                                        Server.BlockChainState
+                                        (Control.Monad.Trans.Resource.Internal.ResourceT
+                                           GHC.Types.IO)))
+                                  (Web.Spock.Internal.Types.WebStateT
+                                     ()
+                                     Server.MySession
+                                     Server.BlockChainState
+                                     (Control.Monad.Trans.Resource.Internal.ResourceT
+                                        GHC.Types.IO))>_R
+                               <()>_N))
+                       r1
+                       s1
+                 } in
+                 (\ (r2 :: Web.Spock.Core.LiftHooked
+                             ()
+                             (Web.Spock.Internal.Types.WebStateT
                                 ()
                                 Server.MySession
                                 Server.BlockChainState
-                                (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)>_N)
-                        (Web.Routing.Router.N:RegistryT[0]
-                             <Web.Spock.Internal.Wire.ActionCtxT
-                                ()
-                                (Web.Spock.Internal.Types.WebStateT
+                                (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO))) ->
+                  let {
+                    eta :: Web.Spock.Internal.Types.WebStateT
+                             ()
+                             Server.MySession
+                             Server.BlockChainState
+                             (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)
+                             ((),
+                              Web.Routing.Router.RegistryState
+                                (Web.Spock.Internal.Wire.ActionCtxT
                                    ()
-                                   Server.MySession
-                                   Server.BlockChainState
-                                   (Control.Monad.Trans.Resource.Internal.ResourceT
-                                      GHC.Types.IO))>_N
-                             <()>_N
-                             <Network.Wai.Application -> Network.Wai.Application>_N
-                             <Web.Spock.Internal.Wire.SpockMethod>_N <Control.Monad.Trans.Reader.ReaderT
-                                                                        (Web.Spock.Core.LiftHooked
-                                                                           ()
-                                                                           (Web.Spock.Internal.Types.WebStateT
-                                                                              ()
-                                                                              Server.MySession
-                                                                              Server.BlockChainState
-                                                                              (Control.Monad.Trans.Resource.Internal.ResourceT
-                                                                                 GHC.Types.IO)))
-                                                                        (Web.Spock.Internal.Types.WebStateT
-                                                                           ()
-                                                                           Server.MySession
-                                                                           Server.BlockChainState
-                                                                           (Control.Monad.Trans.Resource.Internal.ResourceT
-                                                                              GHC.Types.IO))>_N) <()>_N)
-                   Server.app2
+                                   (Web.Spock.Internal.Types.WebStateT
+                                      ()
+                                      Server.MySession
+                                      Server.BlockChainState
+                                      (Control.Monad.Trans.Resource.Internal.ResourceT
+                                         GHC.Types.IO)))
+                                ()
+                                Web.Spock.Internal.Wire.SpockMethod,
+                              [Network.Wai.Application -> Network.Wai.Application])
+                    = m1
+                        `cast`
+                      (Control.Monad.Trans.Reader.N:ReaderT[0]
+                           <*>_N
+                           <Web.Spock.Core.LiftHooked
+                              ()
+                              (Web.Spock.Internal.Types.WebStateT
+                                 ()
+                                 Server.MySession
+                                 Server.BlockChainState
+                                 (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO))>_R
+                           <Web.Spock.Internal.Types.WebStateT
+                              ()
+                              Server.MySession
+                              Server.BlockChainState
+                              (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)>_R
+                           <((),
+                             Web.Routing.Router.RegistryState
+                               (Web.Spock.Internal.Wire.ActionCtxT
+                                  ()
+                                  (Web.Spock.Internal.Types.WebStateT
+                                     ()
+                                     Server.MySession
+                                     Server.BlockChainState
+                                     (Control.Monad.Trans.Resource.Internal.ResourceT
+                                        GHC.Types.IO)))
+                               ()
+                               Web.Spock.Internal.Wire.SpockMethod,
+                             [Network.Wai.Application -> Network.Wai.Application])>_N)
+                        r2
+                  } in
+                  (\ (eta2 :: Web.Spock.Internal.Types.WebState
+                                () Server.MySession Server.BlockChainState) ->
+                   let {
+                     ds :: Control.Monad.Trans.Resource.Internal.ResourceT
+                             GHC.Types.IO
+                             ((),
+                              Web.Routing.Router.RegistryState
+                                (Web.Spock.Internal.Wire.ActionCtxT
+                                   ()
+                                   (Web.Spock.Internal.Types.WebStateT
+                                      ()
+                                      Server.MySession
+                                      Server.BlockChainState
+                                      (Control.Monad.Trans.Resource.Internal.ResourceT
+                                         GHC.Types.IO)))
+                                ()
+                                Web.Spock.Internal.Wire.SpockMethod,
+                              [Network.Wai.Application -> Network.Wai.Application])
+                     = eta
+                         `cast`
+                       (Trans
+                            (Web.Spock.Internal.Types.N:WebStateT[0]
+                                 <()>_N
+                                 <Server.MySession>_N
+                                 <Server.BlockChainState>_N <Control.Monad.Trans.Resource.Internal.ResourceT
+                                                               GHC.Types.IO>_N <((),
+                                                                                 Web.Routing.Router.RegistryState
+                                                                                   (Web.Spock.Internal.Wire.ActionCtxT
+                                                                                      ()
+                                                                                      (Web.Spock.Internal.Types.WebStateT
+                                                                                         ()
+                                                                                         Server.MySession
+                                                                                         Server.BlockChainState
+                                                                                         (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                            GHC.Types.IO)))
+                                                                                   ()
+                                                                                   Web.Spock.Internal.Wire.SpockMethod,
+                                                                                 [Network.Wai.Application
+                                                                                  -> Network.Wai.Application])>_N)
+                            (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                 <*>_N
+                                 <Web.Spock.Internal.Types.WebState
+                                    () Server.MySession Server.BlockChainState>_R
+                                 <Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO>_R
+                                 <((),
+                                   Web.Routing.Router.RegistryState
+                                     (Web.Spock.Internal.Wire.ActionCtxT
+                                        ()
+                                        (Web.Spock.Internal.Types.WebStateT
+                                           ()
+                                           Server.MySession
+                                           Server.BlockChainState
+                                           (Control.Monad.Trans.Resource.Internal.ResourceT
+                                              GHC.Types.IO)))
+                                     ()
+                                     Web.Spock.Internal.Wire.SpockMethod,
+                                   [Network.Wai.Application -> Network.Wai.Application])>_N))
+                         eta2
+                   } in
+                   (\ (r :: GHC.IORef.IORef
+                              Control.Monad.Trans.Resource.Internal.ReleaseMap)
+                      (s :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                    case (ds
+                            `cast`
+                          (Control.Monad.Trans.Resource.Internal.N:ResourceT[0]
+                               <GHC.Types.IO>_R
+                               <((),
+                                 Web.Routing.Router.RegistryState
+                                   (Web.Spock.Internal.Wire.ActionCtxT
+                                      ()
+                                      (Web.Spock.Internal.Types.WebStateT
+                                         ()
+                                         Server.MySession
+                                         Server.BlockChainState
+                                         (Control.Monad.Trans.Resource.Internal.ResourceT
+                                            GHC.Types.IO)))
+                                   ()
+                                   Web.Spock.Internal.Wire.SpockMethod,
+                                 [Network.Wai.Application -> Network.Wai.Application])>_N)
+                            r)
+                           `cast`
+                         (GHC.Types.N:IO[0]
+                              <((),
+                                Web.Routing.Router.RegistryState
+                                  (Web.Spock.Internal.Wire.ActionCtxT
+                                     ()
+                                     (Web.Spock.Internal.Types.WebStateT
+                                        ()
+                                        Server.MySession
+                                        Server.BlockChainState
+                                        (Control.Monad.Trans.Resource.Internal.ResourceT
+                                           GHC.Types.IO)))
+                                  ()
+                                  Web.Spock.Internal.Wire.SpockMethod,
+                                [Network.Wai.Application -> Network.Wai.Application])>_R)
+                           s of ds1 { (#,#) ipv ipv1 ->
+                    case ipv1 of wild { (,,) a2 s' w1 ->
+                    case ((((Server.app10
+                               `cast`
+                             (Trans
+                                  (Trans
+                                       (Web.Spock.Core.N:SpockCtxT[0]
+                                            <()>_N
+                                            <Web.Spock.Internal.Types.WebStateT
+                                               ()
+                                               Server.MySession
+                                               Server.BlockChainState
+                                               (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                  GHC.Types.IO)>_N)
+                                       (Web.Routing.Router.N:RegistryT[0]
+                                            <Web.Spock.Internal.Wire.ActionCtxT
+                                               ()
+                                               (Web.Spock.Internal.Types.WebStateT
+                                                  ()
+                                                  Server.MySession
+                                                  Server.BlockChainState
+                                                  (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                     GHC.Types.IO))>_N
+                                            <()>_N
+                                            <Network.Wai.Application -> Network.Wai.Application>_N
+                                            <Web.Spock.Internal.Wire.SpockMethod>_N <Control.Monad.Trans.Reader.ReaderT
+                                                                                       (Web.Spock.Core.LiftHooked
+                                                                                          ()
+                                                                                          (Web.Spock.Internal.Types.WebStateT
+                                                                                             ()
+                                                                                             Server.MySession
+                                                                                             Server.BlockChainState
+                                                                                             (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                                GHC.Types.IO)))
+                                                                                       (Web.Spock.Internal.Types.WebStateT
+                                                                                          ()
+                                                                                          Server.MySession
+                                                                                          Server.BlockChainState
+                                                                                          (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                             GHC.Types.IO))>_N) <()>_N)
+                                  (Control.Monad.Trans.RWS.Strict.N:RWST[0]
+                                       <Web.Routing.SafeRouting.PathInternal '[]>_R
+                                       <[Network.Wai.Application -> Network.Wai.Application]>_N
+                                       <Web.Routing.Router.RegistryState
+                                          (Web.Spock.Internal.Wire.ActionCtxT
+                                             ()
+                                             (Web.Spock.Internal.Types.WebStateT
+                                                ()
+                                                Server.MySession
+                                                Server.BlockChainState
+                                                (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                   GHC.Types.IO)))
+                                          ()
+                                          Web.Spock.Internal.Wire.SpockMethod>_N
+                                       <Control.Monad.Trans.Reader.ReaderT
+                                          (Web.Spock.Core.LiftHooked
+                                             ()
+                                             (Web.Spock.Internal.Types.WebStateT
+                                                ()
+                                                Server.MySession
+                                                Server.BlockChainState
+                                                (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                   GHC.Types.IO)))
+                                          (Web.Spock.Internal.Types.WebStateT
+                                             ()
+                                             Server.MySession
+                                             Server.BlockChainState
+                                             (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                GHC.Types.IO))>_R
+                                       <()>_N))
+                               r1
+                               s')
+                              `cast`
+                            (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                 <*>_N
+                                 <Web.Spock.Core.LiftHooked
+                                    ()
+                                    (Web.Spock.Internal.Types.WebStateT
+                                       ()
+                                       Server.MySession
+                                       Server.BlockChainState
+                                       (Control.Monad.Trans.Resource.Internal.ResourceT
+                                          GHC.Types.IO))>_R
+                                 <Web.Spock.Internal.Types.WebStateT
+                                    ()
+                                    Server.MySession
+                                    Server.BlockChainState
+                                    (Control.Monad.Trans.Resource.Internal.ResourceT
+                                       GHC.Types.IO)>_R
+                                 <((),
+                                   Web.Routing.Router.RegistryState
+                                     (Web.Spock.Internal.Wire.ActionCtxT
+                                        ()
+                                        (Web.Spock.Internal.Types.WebStateT
+                                           ()
+                                           Server.MySession
+                                           Server.BlockChainState
+                                           (Control.Monad.Trans.Resource.Internal.ResourceT
+                                              GHC.Types.IO)))
+                                     ()
+                                     Web.Spock.Internal.Wire.SpockMethod,
+                                   [Network.Wai.Application -> Network.Wai.Application])>_N)
+                              r2)
+                             `cast`
+                           (Trans
+                                (Web.Spock.Internal.Types.N:WebStateT[0]
+                                     <()>_N
+                                     <Server.MySession>_N
+                                     <Server.BlockChainState>_N <Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                   GHC.Types.IO>_N <((),
+                                                                                     Web.Routing.Router.RegistryState
+                                                                                       (Web.Spock.Internal.Wire.ActionCtxT
+                                                                                          ()
+                                                                                          (Web.Spock.Internal.Types.WebStateT
+                                                                                             ()
+                                                                                             Server.MySession
+                                                                                             Server.BlockChainState
+                                                                                             (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                                GHC.Types.IO)))
+                                                                                       ()
+                                                                                       Web.Spock.Internal.Wire.SpockMethod,
+                                                                                     [Network.Wai.Application
+                                                                                      -> Network.Wai.Application])>_N)
+                                (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                     <*>_N
+                                     <Web.Spock.Internal.Types.WebState
+                                        () Server.MySession Server.BlockChainState>_R
+                                     <Control.Monad.Trans.Resource.Internal.ResourceT
+                                        GHC.Types.IO>_R
+                                     <((),
+                                       Web.Routing.Router.RegistryState
+                                         (Web.Spock.Internal.Wire.ActionCtxT
+                                            ()
+                                            (Web.Spock.Internal.Types.WebStateT
+                                               ()
+                                               Server.MySession
+                                               Server.BlockChainState
+                                               (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                  GHC.Types.IO)))
+                                         ()
+                                         Web.Spock.Internal.Wire.SpockMethod,
+                                       [Network.Wai.Application -> Network.Wai.Application])>_N))
+                             eta2)
+                            `cast`
+                          (Control.Monad.Trans.Resource.Internal.N:ResourceT[0]
+                               <GHC.Types.IO>_R
+                               <((),
+                                 Web.Routing.Router.RegistryState
+                                   (Web.Spock.Internal.Wire.ActionCtxT
+                                      ()
+                                      (Web.Spock.Internal.Types.WebStateT
+                                         ()
+                                         Server.MySession
+                                         Server.BlockChainState
+                                         (Control.Monad.Trans.Resource.Internal.ResourceT
+                                            GHC.Types.IO)))
+                                   ()
+                                   Web.Spock.Internal.Wire.SpockMethod,
+                                 [Network.Wai.Application -> Network.Wai.Application])>_N)
+                            r)
+                           `cast`
+                         (GHC.Types.N:IO[0]
+                              <((),
+                                Web.Routing.Router.RegistryState
+                                  (Web.Spock.Internal.Wire.ActionCtxT
+                                     ()
+                                     (Web.Spock.Internal.Types.WebStateT
+                                        ()
+                                        Server.MySession
+                                        Server.BlockChainState
+                                        (Control.Monad.Trans.Resource.Internal.ResourceT
+                                           GHC.Types.IO)))
+                                  ()
+                                  Web.Spock.Internal.Wire.SpockMethod,
+                                [Network.Wai.Application -> Network.Wai.Application])>_R)
+                           ipv of ds2 { (#,#) ipv2 ipv3 ->
+                    case ipv3 of wild1 { (,,) a1 s'1 w2 ->
+                    case ((((Server.app2
+                               `cast`
+                             (Trans
+                                  (Trans
+                                       (Web.Spock.Core.N:SpockCtxT[0]
+                                            <()>_N
+                                            <Web.Spock.Internal.Types.WebStateT
+                                               ()
+                                               Server.MySession
+                                               Server.BlockChainState
+                                               (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                  GHC.Types.IO)>_N)
+                                       (Web.Routing.Router.N:RegistryT[0]
+                                            <Web.Spock.Internal.Wire.ActionCtxT
+                                               ()
+                                               (Web.Spock.Internal.Types.WebStateT
+                                                  ()
+                                                  Server.MySession
+                                                  Server.BlockChainState
+                                                  (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                     GHC.Types.IO))>_N
+                                            <()>_N
+                                            <Network.Wai.Application -> Network.Wai.Application>_N
+                                            <Web.Spock.Internal.Wire.SpockMethod>_N <Control.Monad.Trans.Reader.ReaderT
+                                                                                       (Web.Spock.Core.LiftHooked
+                                                                                          ()
+                                                                                          (Web.Spock.Internal.Types.WebStateT
+                                                                                             ()
+                                                                                             Server.MySession
+                                                                                             Server.BlockChainState
+                                                                                             (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                                GHC.Types.IO)))
+                                                                                       (Web.Spock.Internal.Types.WebStateT
+                                                                                          ()
+                                                                                          Server.MySession
+                                                                                          Server.BlockChainState
+                                                                                          (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                             GHC.Types.IO))>_N) <()>_N)
+                                  (Control.Monad.Trans.RWS.Strict.N:RWST[0]
+                                       <Web.Routing.SafeRouting.PathInternal '[]>_R
+                                       <[Network.Wai.Application -> Network.Wai.Application]>_N
+                                       <Web.Routing.Router.RegistryState
+                                          (Web.Spock.Internal.Wire.ActionCtxT
+                                             ()
+                                             (Web.Spock.Internal.Types.WebStateT
+                                                ()
+                                                Server.MySession
+                                                Server.BlockChainState
+                                                (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                   GHC.Types.IO)))
+                                          ()
+                                          Web.Spock.Internal.Wire.SpockMethod>_N
+                                       <Control.Monad.Trans.Reader.ReaderT
+                                          (Web.Spock.Core.LiftHooked
+                                             ()
+                                             (Web.Spock.Internal.Types.WebStateT
+                                                ()
+                                                Server.MySession
+                                                Server.BlockChainState
+                                                (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                   GHC.Types.IO)))
+                                          (Web.Spock.Internal.Types.WebStateT
+                                             ()
+                                             Server.MySession
+                                             Server.BlockChainState
+                                             (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                GHC.Types.IO))>_R
+                                       <()>_N))
+                               r1
+                               s'1)
+                              `cast`
+                            (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                 <*>_N
+                                 <Web.Spock.Core.LiftHooked
+                                    ()
+                                    (Web.Spock.Internal.Types.WebStateT
+                                       ()
+                                       Server.MySession
+                                       Server.BlockChainState
+                                       (Control.Monad.Trans.Resource.Internal.ResourceT
+                                          GHC.Types.IO))>_R
+                                 <Web.Spock.Internal.Types.WebStateT
+                                    ()
+                                    Server.MySession
+                                    Server.BlockChainState
+                                    (Control.Monad.Trans.Resource.Internal.ResourceT
+                                       GHC.Types.IO)>_R
+                                 <((),
+                                   Web.Routing.Router.RegistryState
+                                     (Web.Spock.Internal.Wire.ActionCtxT
+                                        ()
+                                        (Web.Spock.Internal.Types.WebStateT
+                                           ()
+                                           Server.MySession
+                                           Server.BlockChainState
+                                           (Control.Monad.Trans.Resource.Internal.ResourceT
+                                              GHC.Types.IO)))
+                                     ()
+                                     Web.Spock.Internal.Wire.SpockMethod,
+                                   [Network.Wai.Application -> Network.Wai.Application])>_N)
+                              r2)
+                             `cast`
+                           (Trans
+                                (Web.Spock.Internal.Types.N:WebStateT[0]
+                                     <()>_N
+                                     <Server.MySession>_N
+                                     <Server.BlockChainState>_N <Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                   GHC.Types.IO>_N <((),
+                                                                                     Web.Routing.Router.RegistryState
+                                                                                       (Web.Spock.Internal.Wire.ActionCtxT
+                                                                                          ()
+                                                                                          (Web.Spock.Internal.Types.WebStateT
+                                                                                             ()
+                                                                                             Server.MySession
+                                                                                             Server.BlockChainState
+                                                                                             (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                                GHC.Types.IO)))
+                                                                                       ()
+                                                                                       Web.Spock.Internal.Wire.SpockMethod,
+                                                                                     [Network.Wai.Application
+                                                                                      -> Network.Wai.Application])>_N)
+                                (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                     <*>_N
+                                     <Web.Spock.Internal.Types.WebState
+                                        () Server.MySession Server.BlockChainState>_R
+                                     <Control.Monad.Trans.Resource.Internal.ResourceT
+                                        GHC.Types.IO>_R
+                                     <((),
+                                       Web.Routing.Router.RegistryState
+                                         (Web.Spock.Internal.Wire.ActionCtxT
+                                            ()
+                                            (Web.Spock.Internal.Types.WebStateT
+                                               ()
+                                               Server.MySession
+                                               Server.BlockChainState
+                                               (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                  GHC.Types.IO)))
+                                         ()
+                                         Web.Spock.Internal.Wire.SpockMethod,
+                                       [Network.Wai.Application -> Network.Wai.Application])>_N))
+                             eta2)
+                            `cast`
+                          (Control.Monad.Trans.Resource.Internal.N:ResourceT[0]
+                               <GHC.Types.IO>_R
+                               <((),
+                                 Web.Routing.Router.RegistryState
+                                   (Web.Spock.Internal.Wire.ActionCtxT
+                                      ()
+                                      (Web.Spock.Internal.Types.WebStateT
+                                         ()
+                                         Server.MySession
+                                         Server.BlockChainState
+                                         (Control.Monad.Trans.Resource.Internal.ResourceT
+                                            GHC.Types.IO)))
+                                   ()
+                                   Web.Spock.Internal.Wire.SpockMethod,
+                                 [Network.Wai.Application -> Network.Wai.Application])>_N)
+                            r)
+                           `cast`
+                         (GHC.Types.N:IO[0]
+                              <((),
+                                Web.Routing.Router.RegistryState
+                                  (Web.Spock.Internal.Wire.ActionCtxT
+                                     ()
+                                     (Web.Spock.Internal.Types.WebStateT
+                                        ()
+                                        Server.MySession
+                                        Server.BlockChainState
+                                        (Control.Monad.Trans.Resource.Internal.ResourceT
+                                           GHC.Types.IO)))
+                                  ()
+                                  Web.Spock.Internal.Wire.SpockMethod,
+                                [Network.Wai.Application -> Network.Wai.Application])>_R)
+                           ipv2 of ds3 { (#,#) ipv4 ipv5 ->
+                    case ipv5 of wild2 { (,,) b2 s'' w' ->
+                    (# ipv4,
+                       (b2, s'',
+                        GHC.Base.++
+                          @ (Network.Wai.Application -> Network.Wai.Application)
+                          w1
+                          (GHC.Base.++
+                             @ (Network.Wai.Application -> Network.Wai.Application)
+                             w2
+                             w')) #) } } } } } })
                      `cast`
                    (Trans
-                        (Web.Spock.Core.N:SpockCtxT[0]
-                             <()>_N
-                             <Web.Spock.Internal.Types.WebStateT
-                                ()
-                                Server.MySession
-                                Server.BlockChainState
-                                (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)>_N)
-                        (Web.Routing.Router.N:RegistryT[0]
-                             <Web.Spock.Internal.Wire.ActionCtxT
-                                ()
-                                (Web.Spock.Internal.Types.WebStateT
-                                   ()
-                                   Server.MySession
-                                   Server.BlockChainState
-                                   (Control.Monad.Trans.Resource.Internal.ResourceT
-                                      GHC.Types.IO))>_N
-                             <()>_N
-                             <Network.Wai.Application -> Network.Wai.Application>_N
-                             <Web.Spock.Internal.Wire.SpockMethod>_N <Control.Monad.Trans.Reader.ReaderT
-                                                                        (Web.Spock.Core.LiftHooked
-                                                                           ()
-                                                                           (Web.Spock.Internal.Types.WebStateT
-                                                                              ()
-                                                                              Server.MySession
-                                                                              Server.BlockChainState
-                                                                              (Control.Monad.Trans.Resource.Internal.ResourceT
-                                                                                 GHC.Types.IO)))
-                                                                        (Web.Spock.Internal.Types.WebStateT
-                                                                           ()
-                                                                           Server.MySession
-                                                                           Server.BlockChainState
-                                                                           (Control.Monad.Trans.Resource.Internal.ResourceT
-                                                                              GHC.Types.IO))>_N) <()>_N)) -}
-c11ec3557c8ac1c9d825bc742140c257
+                        (<GHC.IORef.IORef
+                            Control.Monad.Trans.Resource.Internal.ReleaseMap>_R
+                         ->_R Sym (GHC.Types.N:IO[0]
+                                       <((),
+                                         Web.Routing.Router.RegistryState
+                                           (Web.Spock.Internal.Wire.ActionCtxT
+                                              ()
+                                              (Web.Spock.Internal.Types.WebStateT
+                                                 ()
+                                                 Server.MySession
+                                                 Server.BlockChainState
+                                                 (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                    GHC.Types.IO)))
+                                           ()
+                                           Web.Spock.Internal.Wire.SpockMethod,
+                                         [Network.Wai.Application -> Network.Wai.Application])>_R))
+                        (Sym (Control.Monad.Trans.Resource.Internal.N:ResourceT[0]
+                                  <GHC.Types.IO>_R
+                                  <((),
+                                    Web.Routing.Router.RegistryState
+                                      (Web.Spock.Internal.Wire.ActionCtxT
+                                         ()
+                                         (Web.Spock.Internal.Types.WebStateT
+                                            ()
+                                            Server.MySession
+                                            Server.BlockChainState
+                                            (Control.Monad.Trans.Resource.Internal.ResourceT
+                                               GHC.Types.IO)))
+                                      ()
+                                      Web.Spock.Internal.Wire.SpockMethod,
+                                    [Network.Wai.Application -> Network.Wai.Application])>_N))))
+                    `cast`
+                  (Trans
+                       (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                 <*>_N
+                                 <Web.Spock.Internal.Types.WebState
+                                    () Server.MySession Server.BlockChainState>_R
+                                 <Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO>_R
+                                 <((),
+                                   Web.Routing.Router.RegistryState
+                                     (Web.Spock.Internal.Wire.ActionCtxT
+                                        ()
+                                        (Web.Spock.Internal.Types.WebStateT
+                                           ()
+                                           Server.MySession
+                                           Server.BlockChainState
+                                           (Control.Monad.Trans.Resource.Internal.ResourceT
+                                              GHC.Types.IO)))
+                                     ()
+                                     Web.Spock.Internal.Wire.SpockMethod,
+                                   [Network.Wai.Application -> Network.Wai.Application])>_N))
+                       (Sym (Web.Spock.Internal.Types.N:WebStateT[0]
+                                 <()>_N
+                                 <Server.MySession>_N
+                                 <Server.BlockChainState>_N) <Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                GHC.Types.IO>_N <((),
+                                                                                  Web.Routing.Router.RegistryState
+                                                                                    (Web.Spock.Internal.Wire.ActionCtxT
+                                                                                       ()
+                                                                                       (Web.Spock.Internal.Types.WebStateT
+                                                                                          ()
+                                                                                          Server.MySession
+                                                                                          Server.BlockChainState
+                                                                                          (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                             GHC.Types.IO)))
+                                                                                    ()
+                                                                                    Web.Spock.Internal.Wire.SpockMethod,
+                                                                                  [Network.Wai.Application
+                                                                                   -> Network.Wai.Application])>_N)))
+                   `cast`
+                 (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                           <*>_N
+                           <Web.Spock.Core.LiftHooked
+                              ()
+                              (Web.Spock.Internal.Types.WebStateT
+                                 ()
+                                 Server.MySession
+                                 Server.BlockChainState
+                                 (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO))>_R
+                           <Web.Spock.Internal.Types.WebStateT
+                              ()
+                              Server.MySession
+                              Server.BlockChainState
+                              (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)>_R
+                           <((),
+                             Web.Routing.Router.RegistryState
+                               (Web.Spock.Internal.Wire.ActionCtxT
+                                  ()
+                                  (Web.Spock.Internal.Types.WebStateT
+                                     ()
+                                     Server.MySession
+                                     Server.BlockChainState
+                                     (Control.Monad.Trans.Resource.Internal.ResourceT
+                                        GHC.Types.IO)))
+                               ()
+                               Web.Spock.Internal.Wire.SpockMethod,
+                             [Network.Wai.Application -> Network.Wai.Application])>_N))) -}
+4430f92b940d48e5bba31a26ba36a37c
   app10 ::
     Web.Spock.Core.SpockCtxT
       ()
@@ -763,8 +1498,325 @@ c11ec3557c8ac1c9d825bc742140c257
                    @ Server.BlockChainState
                    Data.HVect.$WRNil `cast` (Sym (Data.HVect.N:HasRep[0]) <'[]>_N)
                    Server.app9
-                   Server.app18
+                   Server.app12
                    Server.app11
+                     `cast`
+                   (Trans
+                        (<Web.Spock.Internal.Wire.RequestInfo ()>_R
+                         ->_R <Web.Spock.Internal.Wire.ResponseState>_R
+                         ->_R Trans
+                                  (<Web.Spock.Internal.Types.WebState
+                                      () Server.MySession Server.BlockChainState>_R
+                                   ->_R Trans
+                                            (<GHC.IORef.IORef
+                                                Control.Monad.Trans.Resource.Internal.ReleaseMap>_R
+                                             ->_R Sym (GHC.Types.N:IO[0]
+                                                           <(Data.Either.Either
+                                                               Web.Spock.Internal.Wire.ActionInterupt
+                                                               (),
+                                                             Web.Spock.Internal.Wire.ResponseState,
+                                                             ())>_R))
+                                            (Sym (Control.Monad.Trans.Resource.Internal.N:ResourceT[0]
+                                                      <GHC.Types.IO>_R
+                                                      <(Data.Either.Either
+                                                          Web.Spock.Internal.Wire.ActionInterupt (),
+                                                        Web.Spock.Internal.Wire.ResponseState,
+                                                        ())>_N)))
+                                  (Trans
+                                       (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                 <*>_N
+                                                 <Web.Spock.Internal.Types.WebState
+                                                    () Server.MySession Server.BlockChainState>_R
+                                                 <Control.Monad.Trans.Resource.Internal.ResourceT
+                                                    GHC.Types.IO>_R
+                                                 <(Data.Either.Either
+                                                     Web.Spock.Internal.Wire.ActionInterupt (),
+                                                   Web.Spock.Internal.Wire.ResponseState, ())>_N))
+                                       (Sym (Web.Spock.Internal.Types.N:WebStateT[0]
+                                                 <()>_N
+                                                 <Server.MySession>_N
+                                                 <Server.BlockChainState>_N) <Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                                GHC.Types.IO>_N <(Data.Either.Either
+                                                                                                    Web.Spock.Internal.Wire.ActionInterupt
+                                                                                                    (),
+                                                                                                  Web.Spock.Internal.Wire.ResponseState,
+                                                                                                  ())>_N)))
+                        (Trans
+                             (Sym (Control.Monad.Trans.RWS.Strict.N:RWST[0]
+                                       <Web.Spock.Internal.Wire.RequestInfo ()>_R
+                                       <()>_N
+                                       <Web.Spock.Internal.Wire.ResponseState>_N
+                                       <Web.Spock.Internal.Types.WebStateT
+                                          ()
+                                          Server.MySession
+                                          Server.BlockChainState
+                                          (Control.Monad.Trans.Resource.Internal.ResourceT
+                                             GHC.Types.IO)>_R
+                                       <Data.Either.Either
+                                          Web.Spock.Internal.Wire.ActionInterupt ()>_N))
+                             (Trans
+                                  (Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                            <Web.Spock.Internal.Wire.ActionInterupt>_N
+                                            <Control.Monad.Trans.RWS.Strict.RWST
+                                               (Web.Spock.Internal.Wire.RequestInfo ())
+                                               ()
+                                               Web.Spock.Internal.Wire.ResponseState
+                                               (Web.Spock.Internal.Types.WebStateT
+                                                  ()
+                                                  Server.MySession
+                                                  Server.BlockChainState
+                                                  (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                     GHC.Types.IO))>_R
+                                            <()>_N))
+                                  (Trans
+                                       (Sym (Web.Spock.Internal.Wire.N:ActionCtxT[0]
+                                                 <()>_N
+                                                 <Web.Spock.Internal.Types.WebStateT
+                                                    ()
+                                                    Server.MySession
+                                                    Server.BlockChainState
+                                                    (Control.Monad.Trans.Resource.Internal.ResourceT
+                                                       GHC.Types.IO)>_N) <()>_N)
+                                       (Sub (Sym (Data.HVect.D:R:HVectElim[0]
+                                                      <Web.Spock.Internal.Wire.ActionCtxT
+                                                         ()
+                                                         (Web.Spock.Internal.Types.WebStateM
+                                                            ()
+                                                            Server.MySession
+                                                            Server.BlockChainState)
+                                                         ()>_N)))))))) -}
+b648367306257d3228c53efd2bcaa98d
+  app11 ::
+    Web.Spock.Internal.Wire.RequestInfo ()
+    -> Web.Spock.Internal.Wire.ResponseState
+    -> Web.Spock.Internal.Types.WebState
+         () Server.MySession Server.BlockChainState
+    -> GHC.IORef.IORef Control.Monad.Trans.Resource.Internal.ReleaseMap
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+          (Data.Either.Either Web.Spock.Internal.Wire.ActionInterupt (),
+           Web.Spock.Internal.Wire.ResponseState, ()) #)
+  {- Arity: 5,
+     Unfolding: (\ (r1 :: Web.Spock.Internal.Wire.RequestInfo ())
+                   (s1 :: Web.Spock.Internal.Wire.ResponseState)
+                   (eta :: Web.Spock.Internal.Types.WebState
+                             () Server.MySession Server.BlockChainState)
+                   (eta1 :: GHC.IORef.IORef
+                              Control.Monad.Trans.Resource.Internal.ReleaseMap)
+                   (eta2 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 case eta of wild { Web.Spock.Internal.Types.WebState ds1 ds2 ds3 ds4 ->
+                 case ds3 of wild1 { Server.BlockChainState chain ds ->
+                 case ((((Web.Spock.Internal.Wire.$fMonadIOActionCtxT1
+                            @ ()
+                            @ (Web.Spock.Internal.Types.WebStateT
+                                 ()
+                                 Server.MySession
+                                 Server.BlockChainState
+                                 (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO))
+                            (Server.$s$fMonadIOActionCtxT_$s$fMonadIOWebStateT
+                               @ ()
+                               @ Server.MySession
+                               @ Server.BlockChainState)
+                            @ [Lib.Block]
+                            (GHC.STRef.readSTRef1
+                               @ GHC.Prim.RealWorld
+                               @ [Lib.Block]
+                               chain `cast` (GHC.IORef.N:IORef[0] <[Lib.Block]>_N))
+                              `cast`
+                            (Sym (GHC.Types.N:IO[0] <[Lib.Block]>_R)))
+                           `cast`
+                         (Control.Monad.Trans.RWS.Strict.N:RWST[0]
+                              <Web.Spock.Internal.Wire.RequestInfo ()>_R
+                              <()>_N
+                              <Web.Spock.Internal.Wire.ResponseState>_N
+                              <Web.Spock.Internal.Types.WebStateT
+                                 ()
+                                 Server.MySession
+                                 Server.BlockChainState
+                                 (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)>_R
+                              <Data.Either.Either
+                                 Web.Spock.Internal.Wire.ActionInterupt [Lib.Block]>_N)
+                           r1
+                           s1)
+                          `cast`
+                        (Trans
+                             (Web.Spock.Internal.Types.N:WebStateT[0]
+                                  <()>_N
+                                  <Server.MySession>_N
+                                  <Server.BlockChainState>_N <Control.Monad.Trans.Resource.Internal.ResourceT
+                                                                GHC.Types.IO>_N <(Data.Either.Either
+                                                                                    Web.Spock.Internal.Wire.ActionInterupt
+                                                                                    [Lib.Block],
+                                                                                  Web.Spock.Internal.Wire.ResponseState,
+                                                                                  ())>_N)
+                             (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                  <*>_N
+                                  <Web.Spock.Internal.Types.WebState
+                                     () Server.MySession Server.BlockChainState>_R
+                                  <Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO>_R
+                                  <(Data.Either.Either
+                                      Web.Spock.Internal.Wire.ActionInterupt [Lib.Block],
+                                    Web.Spock.Internal.Wire.ResponseState, ())>_N))
+                          wild)
+                         `cast`
+                       (Control.Monad.Trans.Resource.Internal.N:ResourceT[0]
+                            <GHC.Types.IO>_R
+                            <(Data.Either.Either
+                                Web.Spock.Internal.Wire.ActionInterupt [Lib.Block],
+                              Web.Spock.Internal.Wire.ResponseState, ())>_N)
+                         eta1)
+                        `cast`
+                      (GHC.Types.N:IO[0]
+                           <(Data.Either.Either
+                               Web.Spock.Internal.Wire.ActionInterupt [Lib.Block],
+                             Web.Spock.Internal.Wire.ResponseState, ())>_R)
+                        eta2 of ds7 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild2 { (,,) b1 s'' w' ->
+                 case b1 of wild3 {
+                   Data.Either.Left e1
+                   -> (# ipv,
+                         (Data.Either.Left @ Web.Spock.Internal.Wire.ActionInterupt @ () e1,
+                          s'', GHC.Tuple.()) #)
+                   Data.Either.Right x
+                   -> (# ipv,
+                         (Server.app6,
+                          case s'' of wild4 { Web.Spock.Internal.Wire.ResponseState ds8 ds9 ds10 ds11 ->
+                          case Server.app5 of ww { Data.Text.Internal.Text ww1 ww2 ww3 ->
+                          case Data.Text.Encoding.$wencodeUtf8
+                                 ww1
+                                 ww2
+                                 ww3 of v2 { Data.ByteString.Internal.PS ipv2 ipv3 ipv4 ipv5 ->
+                          case Server.app4 of ww4 { Data.Text.Internal.Text ww5 ww6 ww7 ->
+                          case Data.Text.Encoding.$wencodeUtf8
+                                 ww5
+                                 ww6
+                                 ww7 of dt { Data.ByteString.Internal.PS ipv6 ipv7 ipv8 ipv9 ->
+                          case Data.CaseInsensitive.Internal.$wfoldCaseBS
+                                 ipv6
+                                 ipv7
+                                 ipv8
+                                 ipv9 of dt1 { Data.ByteString.Internal.PS ipv10 ipv11 ipv12 ipv13 ->
+                          case Data.HashMap.Base.insert
+                                 @ (Data.CaseInsensitive.Internal.CI
+                                      Data.ByteString.Internal.ByteString)
+                                 @ Data.ByteString.Internal.ByteString
+                                 Web.Spock.Internal.CoreAction.$s$fEqCI
+                                 Web.Spock.Internal.CoreAction.$s$fHashableCI
+                                 (Data.CaseInsensitive.Internal.CI
+                                    @ Data.ByteString.Internal.ByteString
+                                    dt
+                                    dt1)
+                                 v2
+                                 ds8 of dt2 { DEFAULT ->
+                          let {
+                            val2 :: Data.ByteString.Lazy.Internal.ByteString
+                            = Data.ByteString.Builder.toLazyByteString
+                                (case x of wild5 {
+                                   []
+                                   -> Data.Aeson.Encoding.Builder.emptyArray_1
+                                        `cast`
+                                      (Trans
+                                           (forall (r :: <*>_N).
+                                            <Data.ByteString.Builder.Internal.BuildStep r>_R
+                                            ->_R <Data.ByteString.Builder.Internal.BufferRange>_R
+                                            ->_R Sym (GHC.Types.N:IO[0]
+                                                          <Data.ByteString.Builder.Internal.BuildSignal
+                                                             r>_R))
+                                           (Sym (Data.ByteString.Builder.Internal.N:Builder[0])))
+                                   : x1 xs
+                                   -> let {
+                                        ds12 :: Data.ByteString.Builder.Internal.Builder
+                                        = Data.Aeson.Encoding.Builder.encodeToBuilder
+                                            (Lib.$fToJSONBlock1 x1)
+                                              `cast`
+                                            (Data.Tagged.N:Tagged[0]
+                                                 <*>_N
+                                                 <Data.Aeson.Types.Generic.True>_P
+                                                 <Data.Aeson.Types.Internal.Value>_R)
+                                      } in
+                                      let {
+                                        ds13 :: Data.Aeson.Encoding.Internal.Encoding'
+                                                  Data.Aeson.Types.Internal.Value
+                                        = Server.app_go1 xs
+                                      } in
+                                      (\ @ r
+                                         (eta3 :: Data.ByteString.Builder.Internal.BuildStep r) ->
+                                       let {
+                                         w :: Data.ByteString.Builder.Internal.BuildStep r
+                                         = ds12
+                                             `cast`
+                                           (Data.ByteString.Builder.Internal.N:Builder[0])
+                                             @ r
+                                             (ds13
+                                                `cast`
+                                              (Trans
+                                                   (Data.Aeson.Encoding.Internal.N:Encoding'[0]
+                                                        <Data.Aeson.Types.Internal.Value>_P)
+                                                   (Data.ByteString.Builder.Internal.N:Builder[0]))
+                                                @ r
+                                                (Data.Aeson.Encoding.Internal.closeBracket1
+                                                   @ r
+                                                   eta3)
+                                                  `cast`
+                                                (<Data.ByteString.Builder.Internal.BufferRange>_R
+                                                 ->_R Sym (GHC.Types.N:IO[0]
+                                                               <Data.ByteString.Builder.Internal.BuildSignal
+                                                                  r>_R)))
+                                       } in
+                                       \ (w1 :: Data.ByteString.Builder.Internal.BufferRange)
+                                         (w2 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                                       case w1 of ww8 { Data.ByteString.Builder.Internal.BufferRange ww9 ww10 ->
+                                       Data.Aeson.Encoding.Internal.$wopenBracket
+                                         @ r
+                                         w
+                                         ww9
+                                         ww10
+                                         w2 })
+                                        `cast`
+                                      (Trans
+                                           (forall (r :: <*>_N).
+                                            <Data.ByteString.Builder.Internal.BuildStep r>_R
+                                            ->_R <Data.ByteString.Builder.Internal.BufferRange>_R
+                                            ->_R Sym (GHC.Types.N:IO[0]
+                                                          <Data.ByteString.Builder.Internal.BuildSignal
+                                                             r>_R))
+                                           (Sym (Data.ByteString.Builder.Internal.N:Builder[0]))) })
+                          } in
+                          Web.Spock.Internal.Wire.ResponseState
+                            dt2
+                            ds9
+                            ds10
+                            (\ (status :: Network.HTTP.Types.Status.Status)
+                               (headers :: Network.HTTP.Types.Header.ResponseHeaders) ->
+                             Network.Wai.responseLBS status headers val2)
+                              `cast`
+                            (Sym (Web.Spock.Internal.Wire.N:ResponseBody[0])) } } } } } } },
+                          GHC.Tuple.()) #) } } } } }) -}
+3511c9f0686c26f10932a973461771c3
+  app12 ::
+    Web.Routing.Combinators.Path '[] 'Web.Routing.Combinators.Open
+  {- Unfolding: (Web.Routing.Combinators.static Server.app13) -}
+662cea8053d62d51b3186355c6b8ae7f
+  app13 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "chain"#) -}
+a85b4e3a929eba7248206242af8be42e
+  app14 ::
+    Web.Spock.Core.SpockCtxT
+      ()
+      (Web.Spock.Internal.Types.WebStateM
+         () Server.MySession Server.BlockChainState)
+      ()
+  {- Unfolding: (Web.Spock.hookRoute'
+                   @ '[]
+                   @ 'Web.Routing.Combinators.Open
+                   @ ()
+                   @ ()
+                   @ Server.MySession
+                   @ Server.BlockChainState
+                   Data.HVect.$WRNil `cast` (Sym (Data.HVect.N:HasRep[0]) <'[]>_N)
+                   Server.app9
+                   Server.app22
+                   Server.app15
                      `cast`
                    (Trans
                         (Sym (Control.Monad.Trans.RWS.Strict.N:RWST[0]
@@ -797,8 +1849,8 @@ c11ec3557c8ac1c9d825bc742140c257
                                                     (Web.Spock.Internal.Types.WebStateM
                                                        () Server.MySession Server.BlockChainState)
                                                     ()>_N))))))) -}
-89c2bb4cd70f539e0ef7bc0a58c3bc6e
-  app11 ::
+a9e32f7fd2ee5fdaa930dd1025020875
+  app15 ::
     Web.Spock.Internal.Wire.RequestInfo ()
     -> Web.Spock.Internal.Wire.ResponseState
     -> Web.Spock.Internal.Types.WebStateT
@@ -826,8 +1878,8 @@ c11ec3557c8ac1c9d825bc742140c257
                           @ ()
                           @ Server.MySession
                           @ Server.BlockChainState)
-                       Server.app17
-                       Server.app16
+                       Server.app21
+                       Server.app20
                        s1
                  } in
                  (\ (eta2 :: Web.Spock.Internal.Types.WebState
@@ -918,58 +1970,27 @@ c11ec3557c8ac1c9d825bc742140c257
                                                                                    (),
                                                                                  Web.Spock.Internal.Wire.ResponseState,
                                                                                  ())>_N))) -}
-e7f733c34b51cb4b109d881aa77a4424
-  app12 :: Data.ByteString.Builder.Internal.Builder
+560969cb2eb9dfea118af09ca1dadef5
+  app16 :: Data.ByteString.Builder.Internal.Builder
   {- Unfolding: (case Lib.$w$ctoJSON
-                        Server.app15
-                        Server.app14
-                        Server.app15
-                        Server.app13
-                        Server.app15
+                        Server.app19
+                        Server.app18
+                        Server.app19
+                        Server.app17
+                        Server.app19
                         (GHC.Types.[] @ GHC.Types.Char) of ww7 { Unit# ww8 ->
                  Data.Aeson.Encoding.Builder.encodeToBuilder
                    (Data.Aeson.Types.Internal.Object ww8) }) -}
-bf98d93d7bb8a46daff0c6da47bff2df
-  app13 :: [GHC.Types.Char]
+b5b10f35ff14986c728e8953af7e5dbf
+  app17 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "initial data"#) -}
-97a8595562fa888fb3d4a581149acc67
-  app14 :: [GHC.Types.Char]
+743c47d1324756cd60d3ab1c77089452
+  app18 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "0"#) -}
-1e591f2deb471438faaf4d26c997e2ed
-  app15 :: GHC.Types.Int
-  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
-56e775fd6ba43ec1d4ece68027fd1458
-  app16 :: Data.ByteString.Internal.ByteString
-  {- Unfolding: (case Data.Text.Show.unpackCString#
-                        "application/json; charset=utf-8"# of ww { Data.Text.Internal.Text ww1 ww2 ww3 ->
-                 Data.Text.Encoding.$wencodeUtf8 ww1 ww2 ww3 }) -}
-d0633c2d9af10bd3f2d2a8c70617dddc
-  app17 ::
-    Data.CaseInsensitive.Internal.CI
-      Data.ByteString.Internal.ByteString
-  {- Unfolding: (case Data.Text.Show.unpackCString#
-                        "Content-Type"# of ww { Data.Text.Internal.Text ww1 ww2 ww3 ->
-                 case Data.Text.Encoding.$wencodeUtf8
-                        ww1
-                        ww2
-                        ww3 of dt { Data.ByteString.Internal.PS ipv ipv1 ipv2 ipv3 ->
-                 case Data.CaseInsensitive.Internal.$wfoldCaseBS
-                        ipv
-                        ipv1
-                        ipv2
-                        ipv3 of dt1 { Data.ByteString.Internal.PS ipv4 ipv5 ipv6 ipv7 ->
-                 Data.CaseInsensitive.Internal.CI
-                   @ Data.ByteString.Internal.ByteString
-                   dt
-                   dt1 } } }) -}
-d211a75726b1f7da7f3b4a14253fbdf6
-  app18 ::
-    Web.Routing.Combinators.Path '[] 'Web.Routing.Combinators.Open
-  {- Unfolding: (Web.Routing.Combinators.static Server.app19) -}
-a2e36dc513f08043dd72dc10345b09a9
-  app19 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "block"#) -}
-8c21ec8ab5fad7853d0888a954cd7de8
+a1b9b77055968f6a1acda7189ba440aa
+  app19 :: GHC.Types.Int
+  {- HasNoCafRefs, Unfolding: (GHC.Types.I# 0#) -}
+ce557e8bc59b4dad2eb5d3d2f7bce598
   app2 ::
     Web.Spock.Core.SpockCtxT
       ()
@@ -1072,7 +2093,38 @@ a2e36dc513f08043dd72dc10345b09a9
                                                             Server.MySession
                                                             Server.BlockChainState)
                                                          ()>_N)))))))) -}
-eb116001351baa4e482e02c53b9d4478
+7009a4e1b4475aadc48d605ad04d0699
+  app20 :: Data.ByteString.Internal.ByteString
+  {- Unfolding: (case Data.Text.Show.unpackCString#
+                        "application/json; charset=utf-8"# of ww { Data.Text.Internal.Text ww1 ww2 ww3 ->
+                 Data.Text.Encoding.$wencodeUtf8 ww1 ww2 ww3 }) -}
+759b6d260f64cf8b4ca589e78c6ce371
+  app21 ::
+    Data.CaseInsensitive.Internal.CI
+      Data.ByteString.Internal.ByteString
+  {- Unfolding: (case Data.Text.Show.unpackCString#
+                        "Content-Type"# of ww { Data.Text.Internal.Text ww1 ww2 ww3 ->
+                 case Data.Text.Encoding.$wencodeUtf8
+                        ww1
+                        ww2
+                        ww3 of dt { Data.ByteString.Internal.PS ipv ipv1 ipv2 ipv3 ->
+                 case Data.CaseInsensitive.Internal.$wfoldCaseBS
+                        ipv
+                        ipv1
+                        ipv2
+                        ipv3 of dt1 { Data.ByteString.Internal.PS ipv4 ipv5 ipv6 ipv7 ->
+                 Data.CaseInsensitive.Internal.CI
+                   @ Data.ByteString.Internal.ByteString
+                   dt
+                   dt1 } } }) -}
+39a06718af5f19cd3a500d8e85fc1074
+  app22 ::
+    Web.Routing.Combinators.Path '[] 'Web.Routing.Combinators.Open
+  {- Unfolding: (Web.Routing.Combinators.static Server.app23) -}
+53cd7c465bc6ec66c98a37154c67b268
+  app23 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "block"#) -}
+3abc614465a2ffaa9e67a2b4504588e5
   app3 ::
     Web.Spock.Internal.Wire.RequestInfo ()
     -> Web.Spock.Internal.Wire.ResponseState
@@ -1092,7 +2144,7 @@ eb116001351baa4e482e02c53b9d4478
                               Control.Monad.Trans.Resource.Internal.ReleaseMap)
                    (eta2 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
                  case eta of wild { Web.Spock.Internal.Types.WebState ds1 ds2 ds3 ds4 ->
-                 case ds3 of wild1 { Server.BlockChainState chain ->
+                 case ds3 of wild1 { Server.BlockChainState ds nodes ->
                  case ((((Web.Spock.Internal.Wire.$fMonadIOActionCtxT1
                             @ ()
                             @ (Web.Spock.Internal.Types.WebStateT
@@ -1104,13 +2156,13 @@ eb116001351baa4e482e02c53b9d4478
                                @ ()
                                @ Server.MySession
                                @ Server.BlockChainState)
-                            @ [Lib.Block]
+                            @ [Lib.Node]
                             (GHC.STRef.readSTRef1
                                @ GHC.Prim.RealWorld
-                               @ [Lib.Block]
-                               chain `cast` (GHC.IORef.N:IORef[0] <[Lib.Block]>_N))
+                               @ [Lib.Node]
+                               nodes `cast` (GHC.IORef.N:IORef[0] <[Lib.Node]>_N))
                               `cast`
-                            (Sym (GHC.Types.N:IO[0] <[Lib.Block]>_R)))
+                            (Sym (GHC.Types.N:IO[0] <[Lib.Node]>_R)))
                            `cast`
                          (Control.Monad.Trans.RWS.Strict.N:RWST[0]
                               <Web.Spock.Internal.Wire.RequestInfo ()>_R
@@ -1122,7 +2174,7 @@ eb116001351baa4e482e02c53b9d4478
                                  Server.BlockChainState
                                  (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)>_R
                               <Data.Either.Either
-                                 Web.Spock.Internal.Wire.ActionInterupt [Lib.Block]>_N)
+                                 Web.Spock.Internal.Wire.ActionInterupt [Lib.Node]>_N)
                            r1
                            s1)
                           `cast`
@@ -1133,7 +2185,7 @@ eb116001351baa4e482e02c53b9d4478
                                   <Server.BlockChainState>_N <Control.Monad.Trans.Resource.Internal.ResourceT
                                                                 GHC.Types.IO>_N <(Data.Either.Either
                                                                                     Web.Spock.Internal.Wire.ActionInterupt
-                                                                                    [Lib.Block],
+                                                                                    [Lib.Node],
                                                                                   Web.Spock.Internal.Wire.ResponseState,
                                                                                   ())>_N)
                              (Control.Monad.Trans.Reader.N:ReaderT[0]
@@ -1142,20 +2194,20 @@ eb116001351baa4e482e02c53b9d4478
                                      () Server.MySession Server.BlockChainState>_R
                                   <Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO>_R
                                   <(Data.Either.Either
-                                      Web.Spock.Internal.Wire.ActionInterupt [Lib.Block],
+                                      Web.Spock.Internal.Wire.ActionInterupt [Lib.Node],
                                     Web.Spock.Internal.Wire.ResponseState, ())>_N))
                           wild)
                          `cast`
                        (Control.Monad.Trans.Resource.Internal.N:ResourceT[0]
                             <GHC.Types.IO>_R
                             <(Data.Either.Either
-                                Web.Spock.Internal.Wire.ActionInterupt [Lib.Block],
+                                Web.Spock.Internal.Wire.ActionInterupt [Lib.Node],
                               Web.Spock.Internal.Wire.ResponseState, ())>_N)
                          eta1)
                         `cast`
                       (GHC.Types.N:IO[0]
                            <(Data.Either.Either
-                               Web.Spock.Internal.Wire.ActionInterupt [Lib.Block],
+                               Web.Spock.Internal.Wire.ActionInterupt [Lib.Node],
                              Web.Spock.Internal.Wire.ResponseState, ())>_R)
                         eta2 of ds7 { (#,#) ipv ipv1 ->
                  case ipv1 of wild2 { (,,) b1 s'' w' ->
@@ -1167,7 +2219,7 @@ eb116001351baa4e482e02c53b9d4478
                    Data.Either.Right x
                    -> (# ipv,
                          (Server.app6,
-                          case s'' of wild4 { Web.Spock.Internal.Wire.ResponseState ds ds8 ds9 ds10 ->
+                          case s'' of wild4 { Web.Spock.Internal.Wire.ResponseState ds8 ds9 ds10 ds11 ->
                           case Server.app5 of ww { Data.Text.Internal.Text ww1 ww2 ww3 ->
                           case Data.Text.Encoding.$wencodeUtf8
                                  ww1
@@ -1194,7 +2246,7 @@ eb116001351baa4e482e02c53b9d4478
                                     dt
                                     dt1)
                                  v2
-                                 ds of dt2 { DEFAULT ->
+                                 ds8 of dt2 { DEFAULT ->
                           let {
                             val2 :: Data.ByteString.Lazy.Internal.ByteString
                             = Data.ByteString.Builder.toLazyByteString
@@ -1212,9 +2264,9 @@ eb116001351baa4e482e02c53b9d4478
                                            (Sym (Data.ByteString.Builder.Internal.N:Builder[0])))
                                    : x1 xs
                                    -> let {
-                                        ds11 :: Data.ByteString.Builder.Internal.Builder
+                                        ds12 :: Data.ByteString.Builder.Internal.Builder
                                         = Data.Aeson.Encoding.Builder.encodeToBuilder
-                                            (Lib.$fToJSONBlock1 x1)
+                                            (Lib.$fToJSONNode1 x1)
                                               `cast`
                                             (Data.Tagged.N:Tagged[0]
                                                  <*>_N
@@ -1222,7 +2274,7 @@ eb116001351baa4e482e02c53b9d4478
                                                  <Data.Aeson.Types.Internal.Value>_R)
                                       } in
                                       let {
-                                        ds12 :: Data.Aeson.Encoding.Internal.Encoding'
+                                        ds13 :: Data.Aeson.Encoding.Internal.Encoding'
                                                   Data.Aeson.Types.Internal.Value
                                         = Server.app_go xs
                                       } in
@@ -1230,11 +2282,11 @@ eb116001351baa4e482e02c53b9d4478
                                          (eta3 :: Data.ByteString.Builder.Internal.BuildStep r) ->
                                        let {
                                          w :: Data.ByteString.Builder.Internal.BuildStep r
-                                         = ds11
+                                         = ds12
                                              `cast`
                                            (Data.ByteString.Builder.Internal.N:Builder[0])
                                              @ r
-                                             (ds12
+                                             (ds13
                                                 `cast`
                                               (Trans
                                                    (Data.Aeson.Encoding.Internal.N:Encoding'[0]
@@ -1271,8 +2323,8 @@ eb116001351baa4e482e02c53b9d4478
                           } in
                           Web.Spock.Internal.Wire.ResponseState
                             dt2
-                            ds8
                             ds9
+                            ds10
                             (\ (status :: Network.HTTP.Types.Status.Status)
                                (headers :: Network.HTTP.Types.Header.ResponseHeaders) ->
                              Network.Wai.responseLBS status headers val2)
@@ -1294,13 +2346,13 @@ f0eb2987ec22c346c759e16bad312dc7
                    @ Web.Spock.Internal.Wire.ActionInterupt
                    @ ()
                    Web.Spock.Internal.Wire.ActionDone) -}
-d4424d4382da323dc77b0b8e1cefae8e
+9957e09a544245ea2b6067c4cb38abbf
   app7 ::
     Web.Routing.Combinators.Path '[] 'Web.Routing.Combinators.Open
   {- Unfolding: (Web.Routing.Combinators.static Server.app8) -}
-8d502a11c2310a712a42830129f1e36a
+cefdcf7de3ca604786d703faee7ece90
   app8 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "chain"#) -}
+  {- Unfolding: (GHC.CString.unpackCString# "node"#) -}
 52a4a23e587fe9bded76448270f05cc7
   app9 :: Web.Spock.Internal.Wire.SpockMethod
   {- HasNoCafRefs, Strictness: m1,
@@ -1308,17 +2360,23 @@ d4424d4382da323dc77b0b8e1cefae8e
                    Network.HTTP.Types.Method.GET
                      `cast`
                    (Sym (Web.Spock.Internal.Wire.N:HttpMethod[0]))) -}
-91ee61f58be828af2c8ed5bc1db06ab4
+5df4646ac2e3f0a28b0c27461238ac0e
   app_go ::
+    [Lib.Node]
+    -> Data.Aeson.Encoding.Internal.Encoding'
+         Data.Aeson.Types.Internal.Value
+  {- Arity: 1, Strictness: <S,1*U> -}
+490ac826c4faac98ec35f509cb3ca9f5
+  app_go1 ::
     [Lib.Block]
     -> Data.Aeson.Encoding.Internal.Encoding'
          Data.Aeson.Types.Internal.Value
   {- Arity: 1, Strictness: <S,1*U> -}
-46b2efdc091c443d071421a6fe30a483
+4ec517b64f542e1ceba847669c3537fe
   app_val1 :: Data.ByteString.Lazy.Internal.ByteString
   {- Unfolding: (Data.ByteString.Builder.toLazyByteString
-                   Server.app12) -}
-bff25ec7d3dbf2e553a66c906d042ab0
+                   Server.app16) -}
+6250490d3e703fce3e40d45607a915e3
   app_val2 ::
     Network.HTTP.Types.Status.Status
     -> Network.HTTP.Types.Header.ResponseHeaders
@@ -1328,15 +2386,15 @@ bff25ec7d3dbf2e553a66c906d042ab0
                 (\ (status :: Network.HTTP.Types.Status.Status)
                    (headers :: Network.HTTP.Types.Header.ResponseHeaders) ->
                  Network.Wai.responseLBS status headers Server.app_val1) -}
-e6082a0a81b9ff9f4330cbba4610a69b
+8c56f78ade92c6a0e433b95b7bdb3741
   blockChainState ::
     Server.BlockChainState -> GHC.IORef.IORef [Lib.Block]
   RecSel Left Server.BlockChainState
-  {- Arity: 1, HasNoCafRefs, Strictness: <S(S),1*U(1*U(U))>m,
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(SL),1*U(1*U(U),A)>m,
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Server.BlockChainState) ->
-                 case ds of wild { Server.BlockChainState ds1 -> ds1 }) -}
-7f5e48d044e35018fb71e288b7f773d2
+                 case ds of wild { Server.BlockChainState ds1 ds2 -> ds1 }) -}
+c3f52950802c8b61a2079f474b653270
   getBlockChain ::
     (Web.Spock.Internal.Types.SpockState m
      Data.Type.Equality.~ Server.BlockChainState,
@@ -1361,7 +2419,7 @@ e6082a0a81b9ff9f4330cbba4610a69b
                              <GHC.Types.*>_N <Web.Spock.Internal.Types.SpockState
                                                 m>_N <Server.BlockChainState>_N) of cobox0 { DEFAULT ->
                  let {
-                   lvl21 :: GHC.Types.IO [Lib.Block] -> m [Lib.Block]
+                   lvl23 :: GHC.Types.IO [Lib.Block] -> m [Lib.Block]
                    = Control.Monad.IO.Class.liftIO @ m $dMonadIO @ [Lib.Block]
                  } in
                  GHC.Base.>>=
@@ -1373,20 +2431,72 @@ e6082a0a81b9ff9f4330cbba4610a69b
                      `cast`
                    (<m>_R cobox0)
                    (\ (ds :: Server.BlockChainState) ->
-                    case ds of wild { Server.BlockChainState chain ->
-                    lvl21
+                    case ds of wild { Server.BlockChainState chain ds1 ->
+                    lvl23
                       (GHC.STRef.readSTRef1
                          @ GHC.Prim.RealWorld
                          @ [Lib.Block]
                          chain `cast` (GHC.IORef.N:IORef[0] <[Lib.Block]>_N))
                         `cast`
                       (Sym (GHC.Types.N:IO[0] <[Lib.Block]>_R)) }) }) -}
-df2e6b41215999dcdbaa3abfa907da2c
+0ab3fb5e9c10b73e880ecae65b66be9a
+  getNodes ::
+    (Web.Spock.Internal.Types.SpockState m
+     Data.Type.Equality.~ Server.BlockChainState,
+     Control.Monad.IO.Class.MonadIO m,
+     Web.Spock.Internal.Types.HasSpock m) =>
+    m [Lib.Node]
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <S(S),1*U(1*U)><S(S(LC(C(S))LLL)L),U(1*U(A,1*C1(C1(U)),A,A,A),1*U)><L,1*U(A,1*U,A,A)>,
+     Unfolding: (\ @ (m :: * -> *)
+                   ($d~ :: Web.Spock.Internal.Types.SpockState m
+                           Data.Type.Equality.~ Server.BlockChainState)
+                   ($dMonadIO :: Control.Monad.IO.Class.MonadIO m)
+                   ($dHasSpock :: Web.Spock.Internal.Types.HasSpock m) ->
+                 case GHC.Types.HEq_sc
+                        @ GHC.Types.*
+                        @ GHC.Types.*
+                        @ (Web.Spock.Internal.Types.SpockState m)
+                        @ Server.BlockChainState
+                        $d~
+                          `cast`
+                        (Data.Type.Equality.N:~[0]
+                             <GHC.Types.*>_N <Web.Spock.Internal.Types.SpockState
+                                                m>_N <Server.BlockChainState>_N) of cobox0 { DEFAULT ->
+                 let {
+                   lvl23 :: GHC.Types.IO [Lib.Node] -> m [Lib.Node]
+                   = Control.Monad.IO.Class.liftIO @ m $dMonadIO @ [Lib.Node]
+                 } in
+                 GHC.Base.>>=
+                   @ m
+                   (Control.Monad.IO.Class.$p1MonadIO @ m $dMonadIO)
+                   @ Server.BlockChainState
+                   @ [Lib.Node]
+                   (Web.Spock.Internal.Types.getState @ m $dHasSpock)
+                     `cast`
+                   (<m>_R cobox0)
+                   (\ (ds :: Server.BlockChainState) ->
+                    case ds of wild { Server.BlockChainState ds1 nodes ->
+                    lvl23
+                      (GHC.STRef.readSTRef1
+                         @ GHC.Prim.RealWorld
+                         @ [Lib.Node]
+                         nodes `cast` (GHC.IORef.N:IORef[0] <[Lib.Node]>_N))
+                        `cast`
+                      (Sym (GHC.Types.N:IO[0] <[Lib.Node]>_R)) }) }) -}
+19da840c7fa55c4cf975d78a16f979f3
+  nodeState :: Server.BlockChainState -> GHC.IORef.IORef [Lib.Node]
+  RecSel Left Server.BlockChainState
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(LS),1*U(A,1*U(U))>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Server.BlockChainState) ->
+                 case ds of wild { Server.BlockChainState ds1 ds2 -> ds2 }) -}
+0e1ad354b3b7fa76c1511df94cf20720
   runServer :: GHC.Types.IO ()
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Server.runServer1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R)) -}
-491b60e7b8f11fb0cd7bae453813e55b
+90921fbdaeaf1ae3967ed53e2305d795
   runServer1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
@@ -1401,13 +2511,18 @@ df2e6b41215999dcdbaa3abfa907da2c
                         ww2
                         ww3
                         System.Log.DEBUG
-                        Server.runServer8
+                        Server.runServer9
                         ipv of ds2 { (#,#) ipv2 ipv3 ->
                  case GHC.Prim.newMutVar#
                         @ [Lib.Block]
                         @ GHC.Prim.RealWorld
-                        Server.runServer7
+                        Server.runServer8
                         ipv2 of ds { (#,#) ipv4 ipv5 ->
+                 case GHC.Prim.newMutVar#
+                        @ [Lib.Node]
+                        @ GHC.Prim.RealWorld
+                        Server.runServer7
+                        ipv4 of ds3 { (#,#) ipv6 ipv7 ->
                  case GHC.Prim.atomically#
                         @ (Web.Spock.Internal.SessionVault.SessionVault
                              (Web.Spock.Internal.Types.Session
@@ -1415,13 +2530,13 @@ df2e6b41215999dcdbaa3abfa907da2c
                         (Web.Spock.Internal.SessionVault.newSessionVault1
                            @ (Web.Spock.Internal.Types.Session
                                 () Server.MySession Server.BlockChainState))
-                        ipv4 of ds3 { (#,#) ipv6 ipv7 ->
+                        ipv6 of ds4 { (#,#) ipv8 ipv9 ->
                  case Web.Spock.Internal.SessionVault.newStmSessionStore2
                         @ Server.BlockChainState
                         @ Server.MySession
                         @ ()
-                        ipv7
-                        ipv6 of ds4 { (#,#) ipv8 ipv9 ->
+                        ipv9
+                        ipv8 of ds5 { (#,#) ipv10 ipv11 ->
                  case Web.Spock.Core.runSpock1
                         Server.runServer6
                         (\ (w2 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
@@ -1432,7 +2547,10 @@ df2e6b41215999dcdbaa3abfa907da2c
                            (Server.BlockChainState
                               (GHC.STRef.STRef @ GHC.Prim.RealWorld @ [Lib.Block] ipv5)
                                 `cast`
-                              (Sym (GHC.IORef.N:IORef[0]) <[Lib.Block]>_N))
+                              (Sym (GHC.IORef.N:IORef[0]) <[Lib.Block]>_N)
+                              (GHC.STRef.STRef @ GHC.Prim.RealWorld @ [Lib.Node] ipv7)
+                                `cast`
+                              (Sym (GHC.IORef.N:IORef[0]) <[Lib.Node]>_N))
                            Web.Spock.Internal.Types.$WPCNoDatabase
                            (Web.Spock.Internal.Types.SessionCfg
                               @ ()
@@ -1454,7 +2572,7 @@ df2e6b41215999dcdbaa3abfa907da2c
                                  GHC.Conc.Sync.$fMonadSTM
                                  GHC.Conc.Sync.$fFunctorSTM
                                  GHC.Conc.Sync.$fApplicativeSTM
-                                 ipv9)
+                                 ipv11)
                               Web.Spock.Config.defaultSessionCfg2
                                 `cast`
                               (Trans
@@ -1538,20 +2656,25 @@ df2e6b41215999dcdbaa3abfa907da2c
                            w2)
                           `cast`
                         (Sym (GHC.Types.N:IO[0] <Network.Wai.Middleware>_R))
-                        ipv8 of ds5 { (#,#) ipv10 ipv11 ->
+                        ipv10 of ds6 { (#,#) ipv12 ipv13 ->
                  case System.Log.Logger.alertM4
                         Server.addDebug2
-                        ipv10 of ds6 { (#,#) ipv12 ipv13 ->
-                 case ipv13 of ww4 { System.Log.Logger.Logger ww5 ww6 ww7 ->
+                        ipv12 of ds7 { (#,#) ipv14 ipv15 ->
+                 case ipv15 of ww4 { System.Log.Logger.Logger ww5 ww6 ww7 ->
                  System.Log.Logger.$wlogL
                    ww5
                    ww6
                    ww7
                    System.Log.DEBUG
                    Server.runServer2
-                   ipv12 } } } } } } } } }) -}
-e2d26187c547a6ec5cbd7cc2f1a9cfaf
-  runServer10 :: [GHC.Types.Char]
+                   ipv14 } } } } } } } } } }) -}
+3cff6934d905564651c010952630785f
+  runServer10 :: GHC.Base.String
+  {- Unfolding: (GHC.Show.showLitString
+                   Server.runServer11
+                   Server.runServer4) -}
+5a8233c0ea009dde1466e3c328b3c5b2
+  runServer11 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "Starting Server"#) -}
 0b375b7f26922d9289228ece790f1125
   runServer2 :: [GHC.Types.Char]
@@ -1578,23 +2701,24 @@ e2d26187c547a6ec5cbd7cc2f1a9cfaf
 73ca9ac26cc401f0f7efccd45bdcae9d
   runServer6 :: GHC.Types.Int
   {- HasNoCafRefs, Unfolding: (GHC.Types.I# 8080#) -}
-9f81780e56a8d226d11d56bd53e69533
-  runServer7 :: [Lib.Block]
+d70641dfd8a217006868d54820ad4f73
+  runServer7 :: [Lib.Node]
+  {- Unfolding: (GHC.Types.:
+                   @ Lib.Node
+                   Lib.initialNode
+                   (GHC.Types.[] @ Lib.Node)) -}
+9a382de3c3924d7bcef91faed99fb131
+  runServer8 :: [Lib.Block]
   {- Unfolding: (GHC.Types.:
                    @ Lib.Block
                    Lib.initialBlock
                    (GHC.Types.[] @ Lib.Block)) -}
-ff52b59867a2f3b1774c1b62b7c0deaa
-  runServer8 :: [GHC.Types.Char]
+b64bc33dc4bb073184e6a89f755702b5
+  runServer9 :: [GHC.Types.Char]
   {- Unfolding: (GHC.Types.:
                    @ GHC.Types.Char
                    GHC.Show.shows6
-                   Server.runServer9) -}
-aad5a09569177d058f2e5e6c80d865f6
-  runServer9 :: GHC.Base.String
-  {- Unfolding: (GHC.Show.showLitString
-                   Server.runServer10
-                   Server.runServer4) -}
+                   Server.runServer10) -}
 instance GHC.Generics.Generic [Server.BlockChainState]
   = Server.$fGenericBlockChainState
 family instance GHC.Generics.Rep [Server.BlockChainState]
