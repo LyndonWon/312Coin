@@ -7,13 +7,6 @@
   (major1) == 0 && (major2) <  1 || \
   (major1) == 0 && (major2) == 1 && (minor) <= 0)
 
-/* package GenericPretty-1.2.1 */
-#define VERSION_GenericPretty "1.2.1"
-#define MIN_VERSION_GenericPretty(major1,major2,minor) (\
-  (major1) <  1 || \
-  (major1) == 1 && (major2) <  2 || \
-  (major1) == 1 && (major2) == 2 && (minor) <= 1)
-
 /* package Spock-0.12.0.0 */
 #define VERSION_Spock "0.12.0.0"
 #define MIN_VERSION_Spock(major1,major2,minor) (\
@@ -161,7 +154,7 @@
   (major1) == 0 && (major2) <  29 || \
   (major1) == 0 && (major2) == 29 && (minor) <= 2)
 
-#define CURRENT_COMPONENT_ID "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+#define CURRENT_COMPONENT_ID "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
 
-#define CURRENT_PACKAGE_KEY "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+#define CURRENT_PACKAGE_KEY "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
 

@@ -1,12 +1,12 @@
 
 ==================== FINAL INTERFACE ====================
-2017-11-24 21:19:30.985301 UTC
+2017-11-27 20:22:15.481308 UTC
 
-interface 312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Lib [family instance module] 8002
-  interface hash: 084709c9f3e016d7ba593836392e32df
-  ABI hash: a9788e59e87cc4524c2aa9198b52c50f
-  export-list hash: 171f01b34c0861fc6128c4004e20260e
-  orphan hash: 41a88d3f4808f2b0a90b45008cd7f45b
+interface 312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Lib [family instance module] 8002
+  interface hash: 862343727dd2e147e3da5743ce25a5cd
+  ABI hash: 8d47b7d3bcc435fd2ec5075bb7f769a4
+  export-list hash: 275dce19aa439e522e19acad8b6a6eee
+  orphan hash: 91d88f4e741079e554a68c9923857817
   flag hash: c3b9198a5914f04c318c3e523cd07cbc
   sig of: Nothing
   used TH splices: False
@@ -162,13 +162,13 @@ import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
 import  -/  integer-gmp-1.0.0.1:GHC.Integer.Type 318df275d77dcdb18e0006d8d7870c2a
 import  -/  mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6:Control.Monad.Trans d69bc2e104a90fb918d853b240f7af2e
 import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df8e3106abfbce
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fEqBlock :: GHC.Classes.Eq Lib.Block
   DFunId
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
      Unfolding: DFun:.
                   @ Lib.Block Lib.$fEqBlock_$c== Lib.$fEqBlock_$c/= -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fEqBlock_$c/= :: Lib.Block -> Lib.Block -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs,
      Strictness: <S(S(S)LLLLL),1*U(1*U(U),1*U,1*U(U),1*U,1*U(U),1*U)><S(S(S)LLLLL),1*U(1*U(U),1*U,1*U(U),1*U,1*U(U),1*U)>,
@@ -177,7 +177,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                  case Lib.$fEqBlock_$c== a b of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fEqBlock_$c== :: Lib.Block -> Lib.Block -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs,
      Strictness: <S(S(S)LLLLL),1*U(1*U(U),1*U,1*U(U),1*U,1*U(U),1*U)><S(S(S)LLLLL),1*U(1*U(U),1*U,1*U(U),1*U,1*U(U),1*U)>,
@@ -201,7 +201,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                    ww13
                    ww14
                    ww15 } } } }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fFromJSONBlock :: Data.Aeson.Types.FromJSON.FromJSON Lib.Block
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -209,7 +209,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                   @ Lib.Block
                   Lib.$fFromJSONBlock_$cparseJSON
                   Lib.$fFromJSONBlock_$cparseJSONList -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fFromJSONBlock1 ::
     [Data.Aeson.Types.Internal.Parser Lib.Block]
     -> forall (f :: * -> *) r.
@@ -218,10 +218,10 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
        -> Data.Aeson.Types.Internal.Success [Lib.Block] f r
        -> f r
   {- Arity: 4, HasNoCafRefs, Strictness: <S,1*U><L,U><L,U><L,C(U)> -}
-9f493c2194c3b08859d8823405f35676
+c07286759df46f452d821c398e8a2ff8
   $fFromJSONBlock2 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "[a]"#) -}
-8ef5abf415779cf85e4ba248521548ad
+f0c1cacc9ce8a9965a9dd9e9928e5632
   $fFromJSONBlock3 ::
     Data.Aeson.Types.Internal.Options
     -> Data.Aeson.Types.FromJSON.FromArgs
@@ -233,7 +233,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
             ('GHC.Generics.MetaData
                "Block"
                "Lib"
-               "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+               "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
                'GHC.Types.False)
             (GHC.Generics.M1
                GHC.Generics.C
@@ -285,7 +285,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                                                                           GHC.Base.String)))))
             a1)
   {- Arity: 3, Strictness: <L,1*U(U,U,U,U,U,U)><L,U><L,1*U> -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fFromJSONBlock_$cparseJSON ::
     Data.Aeson.Types.Internal.Value
     -> Data.Aeson.Types.Internal.Parser Lib.Block
@@ -298,7 +298,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                              ('GHC.Generics.MetaData
                                 "Block"
                                 "Lib"
-                                "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+                                "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
                                 'GHC.Types.False)
                              (GHC.Generics.M1
                                 GHC.Generics.C
@@ -374,7 +374,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                      ks (Lib.$fFromJSONBlock_$cto @ GHC.Prim.Any a1)))
                    `cast`
                  (Sym (Data.Aeson.Types.Internal.N:Parser[0] <Lib.Block>_R))) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fFromJSONBlock_$cparseJSONList ::
     Data.Aeson.Types.Internal.Value
     -> Data.Aeson.Types.Internal.Parser [Lib.Block]
@@ -411,7 +411,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                         `cast`
                       (Sym (Data.Aeson.Types.Internal.N:Parser[0]
                                 <[Lib.Block]>_R)) } }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fFromJSONBlock_$cto :: GHC.Generics.Rep Lib.Block x -> Lib.Block
   {- Arity: 1, HasNoCafRefs,
      Strictness: <S(S(LS)S(LS)),1*U(1*U(U,1*U(U,U)),1*U(U,1*U(U,U)))>m,
@@ -427,7 +427,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                                      <'GHC.Generics.MetaData
                                         "Block"
                                         "Lib"
-                                        "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+                                        "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
                                         'GHC.Types.False>_P
                                      <GHC.Generics.M1
                                         GHC.Generics.C
@@ -635,19 +635,19 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                              <GHC.Generics.K1 GHC.Generics.R GHC.Base.String>_R <x>_N)
                         (GHC.Generics.N:K1[0]
                              <GHC.Generics.R>_P <GHC.Base.String>_R <x>_P)) } } } } }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fFromJSONBlock_go ::
     GHC.Prim.Int#
     -> [Data.Aeson.Types.Internal.Value]
     -> [Data.Aeson.Types.Internal.Parser Lib.Block]
   {- Arity: 2, Strictness: <L,U><S,1*U> -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fGenericBlock :: GHC.Generics.Generic Lib.Block
   DFunId
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
      Unfolding: DFun:.
                   @ Lib.Block Lib.$fGenericBlock_$cfrom Lib.$fFromJSONBlock_$cto -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fGenericBlock1 ::
     Lib.Block
     -> GHC.Generics.M1
@@ -986,7 +986,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                                                                                    (GHC.Generics.K1
                                                                                       GHC.Generics.R
                                                                                       GHC.Base.String)))>_R) <x>_N) }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fGenericBlock_$cfrom :: Lib.Block -> GHC.Generics.Rep Lib.Block x
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U(U,U,U,U,U,U)>m,
      Unfolding: InlineRule (0, True, True)
@@ -1000,7 +1000,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                                     <'GHC.Generics.MetaData
                                        "Block"
                                        "Lib"
-                                       "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+                                       "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
                                        'GHC.Types.False>_P
                                     <GHC.Generics.M1
                                        GHC.Generics.C
@@ -1066,7 +1066,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                                                                                                   GHC.Generics.R
                                                                                                   GHC.Base.String))))>_R))
                           (Sub (Sym (Lib.Rep_Block[0]))) <x>_N) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock :: GHC.Read.Read Lib.Block
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -1076,7 +1076,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                   Lib.$fReadBlock_$creadList
                   Lib.$fReadBlock_$creadPrec
                   Lib.$fReadBlock_$creadListPrec -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock1 ::
     Text.ParserCombinators.ReadPrec.Prec
     -> forall b.
@@ -1095,7 +1095,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                    eta
                    @ b
                    eta1) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock2 ::
     Text.ParserCombinators.ReadPrec.Prec
     -> Text.ParserCombinators.ReadP.ReadP Lib.Block
@@ -1109,7 +1109,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                          ->_R Sym (Text.ParserCombinators.ReadP.N:ReadP[0] <Lib.Block>_R))
                         (Sym (Text.ParserCombinators.ReadPrec.N:ReadPrec[0]
                                   <Lib.Block>_R)))) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock3 ::
     Text.ParserCombinators.ReadPrec.Prec
     -> forall b.
@@ -1122,7 +1122,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                    (w1 :: Lib.Block -> Text.ParserCombinators.ReadP.P b) ->
                  case w of ww { GHC.Types.I# ww1 ->
                  Lib.$w$creadPrec ww1 @ b w1 }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock4 :: Text.ParserCombinators.ReadP.P [Lib.Block]
   {- Unfolding: (GHC.Read.list1
                    @ Lib.Block
@@ -1133,14 +1133,14 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                    @ [Lib.Block]
                    (Text.ParserCombinators.ReadP.$fApplicativeP_$cpure
                       @ [Lib.Block])) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock_$creadList ::
     Text.ParserCombinators.ReadP.ReadS [Lib.Block]
   {- Arity: 1,
      Unfolding: (Text.ParserCombinators.ReadP.run
                    @ [Lib.Block]
                    Lib.$fReadBlock4) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock_$creadListPrec ::
     Text.ParserCombinators.ReadPrec.ReadPrec [Lib.Block]
   {- Arity: 2, Strictness: <L,U><L,U>,
@@ -1152,7 +1152,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                       ->_R Sym (Text.ParserCombinators.ReadP.N:ReadP[0] <[Lib.Block]>_R))
                      (Sym (Text.ParserCombinators.ReadPrec.N:ReadPrec[0]
                                <[Lib.Block]>_R))) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock_$creadPrec ::
     Text.ParserCombinators.ReadPrec.ReadPrec Lib.Block
   {- Arity: 1,
@@ -1161,7 +1161,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                   `cast`
                 (Sym (Text.ParserCombinators.ReadPrec.N:ReadPrec[0]
                           <Lib.Block>_R)) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fReadBlock_$creadsPrec ::
     GHC.Types.Int -> Text.ParserCombinators.ReadP.ReadS Lib.Block
   {- Arity: 1, Strictness: <L,U>,
@@ -1184,7 +1184,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                       @ Lib.Block
                       (Text.ParserCombinators.ReadP.$fApplicativeP_$cpure
                          @ Lib.Block))) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fShowBlock :: GHC.Show.Show Lib.Block
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -1193,13 +1193,13 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                   Lib.$fShowBlock_$cshowsPrec
                   Lib.$fShowBlock_$cshow
                   Lib.$fShowBlock_$cshowList -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fShowBlock1 :: Lib.Block -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (\ (w :: Lib.Block) (w1 :: GHC.Base.String) ->
                  case w of ww { Lib.Block ww1 ww2 ww3 ww4 ww5 ww6 ->
                  Lib.$w$cshowsPrec 0# ww1 ww2 ww3 ww4 ww5 ww6 w1 }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fShowBlock_$cshow :: Lib.Block -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U(1*U(U),1*U,1*U(U),1*U,1*U(U),1*U)>,
      Unfolding: InlineRule (1, True, False)
@@ -1208,11 +1208,11 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                    GHC.Show.shows22
                    x
                    (GHC.Types.[] @ GHC.Types.Char)) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fShowBlock_$cshowList :: [Lib.Block] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__ @ Lib.Block Lib.$fShowBlock1) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fShowBlock_$cshowsPrec ::
     GHC.Types.Int -> Lib.Block -> GHC.Show.ShowS
   {- Arity: 3,
@@ -1225,7 +1225,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                  case w of ww { GHC.Types.I# ww1 ->
                  case w1 of ww2 { Lib.Block ww3 ww4 ww5 ww6 ww7 ww8 ->
                  Lib.$w$cshowsPrec ww1 ww3 ww4 ww5 ww6 ww7 ww8 w2 } }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fToJSONBlock :: Data.Aeson.Types.ToJSON.ToJSON Lib.Block
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -1235,7 +1235,7 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                   Lib.$fToJSONBlock_$ctoEncoding
                   Lib.$fToJSONBlock_$ctoJSONList
                   Lib.$fToJSONBlock_$ctoEncodingList -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fToJSONBlock1 ::
     Lib.Block
     -> Data.Tagged.Tagged
@@ -1253,25 +1253,25 @@ import  -/  time-1.6.0.1@time-1.6.0.1:Data.Time.Clock.POSIX ca9431d4d4936fe9d9df
                            <*>_N
                            <Data.Aeson.Types.Generic.True>_P
                            <Data.Aeson.Types.Internal.Value>_R)) } }) -}
-eef9d0c9add229576fd969511efd34f7
+d518b5c8cc1b65e0f2fee9e60ab1c512
   $fToJSONBlock2 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "blockHash"#) -}
-63ca83a4e493ed907ec2cce8011fc1b7
+5c09e72fdfc158ab919f63d95f8a43ba
   $fToJSONBlock3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "nonce"#) -}
-ebf4e3373c15e5aeda3d9ccbe12835f8
+a392b82893c42f15c35928626156d8c4
   $fToJSONBlock4 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "blockData"#) -}
-8047e95db10ff349fda6a8548c14e713
+e96c7166589f2c47b2ae63000209e128
   $fToJSONBlock5 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "timestamp"#) -}
-7a8cdf39b521913b577fa07a40e99687
+2a34920cdffa3c91baaed784393c76cd
   $fToJSONBlock6 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "previousHash"#) -}
-aa029099db55f60fa7659afa965b1264
+d4e453e93c885fb70bac3b708f3f9a4a
   $fToJSONBlock7 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "index"#) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fToJSONBlock_$ctoEncoding ::
     Lib.Block -> Data.Aeson.Encoding.Internal.Encoding
   {- Arity: 1, Strictness: <S,1*U(1*U(U),1*U,1*U(U),1*U,1*U(U),1*U)>,
@@ -1280,7 +1280,7 @@ aa029099db55f60fa7659afa965b1264
                 (\ (eta :: Lib.Block) ->
                  Data.Aeson.Encoding.Internal.value
                    (Lib.$fToJSONBlock_$ctoJSON eta)) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fToJSONBlock_$ctoEncodingList ::
     [Lib.Block] -> Data.Aeson.Encoding.Internal.Encoding
   {- Arity: 1, Strictness: <S,1*U>, Inline: INLINE (sat-args=0),
@@ -1344,7 +1344,7 @@ aa029099db55f60fa7659afa965b1264
                         `cast`
                       (Sym (Data.Aeson.Encoding.Internal.N:Encoding'[0]
                                 <Data.Aeson.Types.Internal.Value>_P)) }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fToJSONBlock_$ctoJSON ::
     Lib.Block -> Data.Aeson.Types.Internal.Value
   {- Arity: 1,
@@ -1357,7 +1357,7 @@ aa029099db55f60fa7659afa965b1264
                           <*>_N
                           <Data.Aeson.Types.Generic.True>_P
                           <Data.Aeson.Types.Internal.Value>_R) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $fToJSONBlock_$ctoJSONList ::
     [Lib.Block] -> Data.Aeson.Types.Internal.Value
   {- Arity: 1, Strictness: <S,1*U>m2, Inline: INLINE (sat-args=0),
@@ -1394,7 +1394,7 @@ aa029099db55f60fa7659afa965b1264
                                     n
                                     eta)))) of dt1 { Data.Vector.Vector ipv ipv1 ipv2 ->
                  Data.Aeson.Types.Internal.Array dt1 }) -}
-e8ea8211d995092eddb908aba517ebbf
+5c231c568d6229cbc649d1dafb08a44f
   $fToJSONBlock_w2 :: Data.Aeson.Types.Internal.Options
   {- Strictness: m,
      Unfolding: (Data.Aeson.Types.Internal.Options
@@ -1404,7 +1404,7 @@ e8ea8211d995092eddb908aba517ebbf
                    GHC.Types.False
                    Data.Aeson.Types.Internal.defaultTaggedObject
                    GHC.Types.False) -}
-5800c72a5f49aa4bf82f11f4682bf37c
+b93be1e82b86e80e09db4329f4045ea6
   $s$fFromJSON[] ::
     Data.Aeson.Types.FromJSON.FromJSON [GHC.Types.Char]
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -1416,7 +1416,7 @@ e8ea8211d995092eddb908aba517ebbf
                   (Data.Aeson.Types.FromJSON.$fFromJSONKey[]_$cparseJSONList
                      @ GHC.Types.Char
                      Data.Aeson.Types.FromJSON.$fFromJSONChar) -}
-d32139dba9d4828197becb012463a416
+cd7aed596b485a7cbb229f29f31b20f1
   $s$fSelectorMetaMetaSel ::
     GHC.Generics.Selector
       ('GHC.Generics.MetaSel
@@ -1478,7 +1478,7 @@ d32139dba9d4828197becb012463a416
                      GHC.Generics.$WSDecidedLazy
                        `cast`
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Generics.DecidedStrictness>_N <'GHC.Generics.DecidedLazy>_N)) -}
-9bb84ffdb562cec6098b78c6e2c9d07f
+8c73e455d176b0c51b23d6058a2c3db0
   $s$fSelectorMetaMetaSel1 ::
     GHC.Generics.SingI ('GHC.Base.Just "blockHash")
   {- Unfolding: InlineRule (0, True, True)
@@ -1489,7 +1489,7 @@ d32139dba9d4828197becb012463a416
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Base.Maybe
                                                        GHC.Types.Symbol>_N) <'GHC.Base.Just
                                                                                "blockHash">_N) -}
-ddedb9a97f3eae1e6117c9a5163fb993
+f9c32f4fe4274212213f6b9ffd1c4521
   $s$fSelectorMetaMetaSel10 ::
     GHC.Generics.R:SingMaybeb
       GHC.Types.Symbol ('GHC.Base.Just "blockData")
@@ -1501,7 +1501,7 @@ ddedb9a97f3eae1e6117c9a5163fb993
                    Lib.$s$fSelectorMetaMetaSel11
                      `cast`
                    (Sym (GHC.Generics.D:R:SingSymbols0[0]) <"blockData">_N)) -}
-26b5dd9c4c221d4b8debd4ae469c8b5a
+22e2956c11cf811cd09144ff6febf010
   $s$fSelectorMetaMetaSel11 :: GHC.Generics.R:SingSymbols "blockData"
   {- Strictness: m,
      Unfolding: (GHC.Generics.SSym
@@ -1511,7 +1511,7 @@ ddedb9a97f3eae1e6117c9a5163fb993
                    (Trans
                         (Sym (GHC.TypeLits.N:SSymbol[0] <"blockData">_P))
                         (Sym (GHC.TypeLits.N:KnownSymbol[0]) <"blockData">_N))) -}
-f6797a822a19d2019c4e2cdc3ca988c2
+a84bbddcebbe104f5a9c2986e82e83c8
   $s$fSelectorMetaMetaSel12 ::
     GHC.Generics.Selector
       ('GHC.Generics.MetaSel
@@ -1573,7 +1573,7 @@ f6797a822a19d2019c4e2cdc3ca988c2
                      GHC.Generics.$WSDecidedLazy
                        `cast`
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Generics.DecidedStrictness>_N <'GHC.Generics.DecidedLazy>_N)) -}
-01c4b0beaf61c52ebe4e28c6545ee75c
+0c1b6316a304b0f50c485deb2ebac61a
   $s$fSelectorMetaMetaSel13 ::
     GHC.Generics.SingI ('GHC.Base.Just "timestamp")
   {- Unfolding: InlineRule (0, True, True)
@@ -1584,7 +1584,7 @@ f6797a822a19d2019c4e2cdc3ca988c2
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Base.Maybe
                                                        GHC.Types.Symbol>_N) <'GHC.Base.Just
                                                                                "timestamp">_N) -}
-6419f22e5a3a27637fd14d3990a079bf
+6bec3530d937f1893c8b6709a2b23a61
   $s$fSelectorMetaMetaSel14 ::
     GHC.Generics.R:SingMaybeb
       GHC.Types.Symbol ('GHC.Base.Just "timestamp")
@@ -1596,7 +1596,7 @@ f6797a822a19d2019c4e2cdc3ca988c2
                    Lib.$s$fSelectorMetaMetaSel15
                      `cast`
                    (Sym (GHC.Generics.D:R:SingSymbols0[0]) <"timestamp">_N)) -}
-b275beb973b7dabbb9c7648949e9ca7a
+cc61169fe36b0223c10363b295d71df0
   $s$fSelectorMetaMetaSel15 :: GHC.Generics.R:SingSymbols "timestamp"
   {- Strictness: m,
      Unfolding: (GHC.Generics.SSym
@@ -1606,7 +1606,7 @@ b275beb973b7dabbb9c7648949e9ca7a
                    (Trans
                         (Sym (GHC.TypeLits.N:SSymbol[0] <"timestamp">_P))
                         (Sym (GHC.TypeLits.N:KnownSymbol[0]) <"timestamp">_N))) -}
-0714fe66aaceb50ee5c20a9274b82893
+e798c98a6e2e96dddd6c64d17968a702
   $s$fSelectorMetaMetaSel16 ::
     GHC.Generics.Selector
       ('GHC.Generics.MetaSel
@@ -1668,7 +1668,7 @@ b275beb973b7dabbb9c7648949e9ca7a
                      GHC.Generics.$WSDecidedLazy
                        `cast`
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Generics.DecidedStrictness>_N <'GHC.Generics.DecidedLazy>_N)) -}
-9bfad226b7cdfbf31013d56149f0b933
+bfb2ad2f00589c2d245b4ec995e95290
   $s$fSelectorMetaMetaSel17 ::
     GHC.Generics.SingI ('GHC.Base.Just "previousHash")
   {- Unfolding: InlineRule (0, True, True)
@@ -1679,7 +1679,7 @@ b275beb973b7dabbb9c7648949e9ca7a
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Base.Maybe
                                                        GHC.Types.Symbol>_N) <'GHC.Base.Just
                                                                                "previousHash">_N) -}
-2ec4706c3be96d25709d0680e572a471
+b977c50191b2a7c917978f58b61c901e
   $s$fSelectorMetaMetaSel18 ::
     GHC.Generics.R:SingMaybeb
       GHC.Types.Symbol ('GHC.Base.Just "previousHash")
@@ -1691,7 +1691,7 @@ b275beb973b7dabbb9c7648949e9ca7a
                    Lib.$s$fSelectorMetaMetaSel19
                      `cast`
                    (Sym (GHC.Generics.D:R:SingSymbols0[0]) <"previousHash">_N)) -}
-0966693f956d05c32d94b38c5185b347
+8e09520e0f7b4067d442c4cac4a5b6da
   $s$fSelectorMetaMetaSel19 ::
     GHC.Generics.R:SingSymbols "previousHash"
   {- Strictness: m,
@@ -1702,7 +1702,7 @@ b275beb973b7dabbb9c7648949e9ca7a
                    (Trans
                         (Sym (GHC.TypeLits.N:SSymbol[0] <"previousHash">_P))
                         (Sym (GHC.TypeLits.N:KnownSymbol[0]) <"previousHash">_N))) -}
-aecd1865d8bac5406e293164e533ef36
+664aac1e2628aa89b1179857df84cd38
   $s$fSelectorMetaMetaSel2 ::
     GHC.Generics.R:SingMaybeb
       GHC.Types.Symbol ('GHC.Base.Just "blockHash")
@@ -1714,7 +1714,7 @@ aecd1865d8bac5406e293164e533ef36
                    Lib.$s$fSelectorMetaMetaSel3
                      `cast`
                    (Sym (GHC.Generics.D:R:SingSymbols0[0]) <"blockHash">_N)) -}
-73faff2265d1b65d6be6e9598a6b8423
+558443c199200436cd6d601e81ad09ee
   $s$fSelectorMetaMetaSel20 ::
     GHC.Generics.Selector
       ('GHC.Generics.MetaSel
@@ -1776,7 +1776,7 @@ aecd1865d8bac5406e293164e533ef36
                      GHC.Generics.$WSDecidedLazy
                        `cast`
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Generics.DecidedStrictness>_N <'GHC.Generics.DecidedLazy>_N)) -}
-c610e44c061bc0e4f6e36da756675245
+d41f24c0800604fa5d026ece6de89b10
   $s$fSelectorMetaMetaSel21 ::
     GHC.Generics.SingI ('GHC.Base.Just "index")
   {- Unfolding: InlineRule (0, True, True)
@@ -1787,7 +1787,7 @@ c610e44c061bc0e4f6e36da756675245
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Base.Maybe
                                                        GHC.Types.Symbol>_N) <'GHC.Base.Just
                                                                                "index">_N) -}
-88751d1eab5d400c9d84ea2d194a29d6
+143403abf3fe42c93c25bd51f5643ab5
   $s$fSelectorMetaMetaSel22 ::
     GHC.Generics.R:SingMaybeb GHC.Types.Symbol ('GHC.Base.Just "index")
   {- Unfolding: (GHC.Generics.SJust
@@ -1798,7 +1798,7 @@ c610e44c061bc0e4f6e36da756675245
                    Lib.$s$fSelectorMetaMetaSel23
                      `cast`
                    (Sym (GHC.Generics.D:R:SingSymbols0[0]) <"index">_N)) -}
-02f87b64a0c6b067ddf7ac5681bb8f03
+ddbd04704c4b16c3387631cbc4eb80ae
   $s$fSelectorMetaMetaSel23 :: GHC.Generics.R:SingSymbols "index"
   {- Strictness: m,
      Unfolding: (GHC.Generics.SSym
@@ -1808,7 +1808,7 @@ c610e44c061bc0e4f6e36da756675245
                    (Trans
                         (Sym (GHC.TypeLits.N:SSymbol[0] <"index">_P))
                         (Sym (GHC.TypeLits.N:KnownSymbol[0]) <"index">_N))) -}
-380d89fe8b644038f0069abfe2638e5d
+6bda190f28a76548de68bf72dc73e022
   $s$fSelectorMetaMetaSel3 :: GHC.Generics.R:SingSymbols "blockHash"
   {- Strictness: m,
      Unfolding: (GHC.Generics.SSym
@@ -1818,7 +1818,7 @@ c610e44c061bc0e4f6e36da756675245
                    (Trans
                         (Sym (GHC.TypeLits.N:SSymbol[0] <"blockHash">_P))
                         (Sym (GHC.TypeLits.N:KnownSymbol[0]) <"blockHash">_N))) -}
-cad58ffc30bee739a7b01ae14caad6ad
+43b322081744b693374f07efa0b8ae51
   $s$fSelectorMetaMetaSel4 ::
     GHC.Generics.Selector
       ('GHC.Generics.MetaSel
@@ -1880,7 +1880,7 @@ cad58ffc30bee739a7b01ae14caad6ad
                      GHC.Generics.$WSDecidedLazy
                        `cast`
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Generics.DecidedStrictness>_N <'GHC.Generics.DecidedLazy>_N)) -}
-19970ae58505a6e040a41f4b9cdc13c9
+b6f2129ffa42383f9e638cfcb3db7ec1
   $s$fSelectorMetaMetaSel5 ::
     GHC.Generics.SingI ('GHC.Base.Just "nonce")
   {- Unfolding: InlineRule (0, True, True)
@@ -1891,7 +1891,7 @@ cad58ffc30bee739a7b01ae14caad6ad
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Base.Maybe
                                                        GHC.Types.Symbol>_N) <'GHC.Base.Just
                                                                                "nonce">_N) -}
-e7112426b261211f065f9d82131491bb
+d4cfbbdaec817bdeca1bd23142f10728
   $s$fSelectorMetaMetaSel6 ::
     GHC.Generics.R:SingMaybeb GHC.Types.Symbol ('GHC.Base.Just "nonce")
   {- Unfolding: (GHC.Generics.SJust
@@ -1902,7 +1902,7 @@ e7112426b261211f065f9d82131491bb
                    Lib.$s$fSelectorMetaMetaSel7
                      `cast`
                    (Sym (GHC.Generics.D:R:SingSymbols0[0]) <"nonce">_N)) -}
-c343cdb8cd9393f1067ce77833b38944
+0f6c45bd5eeeb1d64e1b7cd9cdb71ba5
   $s$fSelectorMetaMetaSel7 :: GHC.Generics.R:SingSymbols "nonce"
   {- Strictness: m,
      Unfolding: (GHC.Generics.SSym
@@ -1912,7 +1912,7 @@ c343cdb8cd9393f1067ce77833b38944
                    (Trans
                         (Sym (GHC.TypeLits.N:SSymbol[0] <"nonce">_P))
                         (Sym (GHC.TypeLits.N:KnownSymbol[0]) <"nonce">_N))) -}
-b3bb283208c20301e516701511c59a4b
+8162902c5c5405ee5ab039e00e39fe27
   $s$fSelectorMetaMetaSel8 ::
     GHC.Generics.Selector
       ('GHC.Generics.MetaSel
@@ -1974,7 +1974,7 @@ b3bb283208c20301e516701511c59a4b
                      GHC.Generics.$WSDecidedLazy
                        `cast`
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Generics.DecidedStrictness>_N <'GHC.Generics.DecidedLazy>_N)) -}
-f92a156e60cb11fe1b83108668c50e0d
+61987538cedb2e44788af0b523f84f1d
   $s$fSelectorMetaMetaSel9 ::
     GHC.Generics.SingI ('GHC.Base.Just "blockData")
   {- Unfolding: InlineRule (0, True, True)
@@ -1985,7 +1985,7 @@ f92a156e60cb11fe1b83108668c50e0d
                      (Sym (GHC.Generics.N:SingI[0]) <GHC.Base.Maybe
                                                        GHC.Types.Symbol>_N) <'GHC.Base.Just
                                                                                "blockData">_N) -}
-b32686e32aaa6e4ee321012b2c451cf9
+caf001ad9a26fa301d2d44a163350004
   $s$fSelectorMetaMetaSel_$s$fSelectorMetaMetaSel_$cselName ::
     forall k (t :: GHC.Generics.Meta
                    -> (GHC.Types.* -> GHC.Types.*) -> k -> *) (f :: GHC.Types.*
@@ -2009,7 +2009,7 @@ b32686e32aaa6e4ee321012b2c451cf9
                                 'GHC.Generics.NoSourceStrictness
                                 'GHC.Generics.DecidedLazy) f a) ->
                  Lib.$fToJSONBlock2) -}
-d4abab54f2a05044b2cb19253046bf43
+f1ff664ab8d62310ea871f74f448f616
   $s$fSelectorMetaMetaSel_$s$fSelectorMetaMetaSel_$cselName1 ::
     forall k (t :: GHC.Generics.Meta
                    -> (GHC.Types.* -> GHC.Types.*) -> k -> *) (f :: GHC.Types.*
@@ -2033,7 +2033,7 @@ d4abab54f2a05044b2cb19253046bf43
                                 'GHC.Generics.NoSourceStrictness
                                 'GHC.Generics.DecidedLazy) f a) ->
                  Lib.$fToJSONBlock3) -}
-a4eca3c5e383c6d93ed4578abe01fe3a
+4c7452c966eeeccec21c7f9889c44e21
   $s$fSelectorMetaMetaSel_$s$fSelectorMetaMetaSel_$cselName2 ::
     forall k (t :: GHC.Generics.Meta
                    -> (GHC.Types.* -> GHC.Types.*) -> k -> *) (f :: GHC.Types.*
@@ -2057,7 +2057,7 @@ a4eca3c5e383c6d93ed4578abe01fe3a
                                 'GHC.Generics.NoSourceStrictness
                                 'GHC.Generics.DecidedLazy) f a) ->
                  Lib.$fToJSONBlock4) -}
-c015c7d91015066fc921d12a7ab8dc8d
+763711f718d9c008a0fe9ab95ab1289d
   $s$fSelectorMetaMetaSel_$s$fSelectorMetaMetaSel_$cselName3 ::
     forall k (t :: GHC.Generics.Meta
                    -> (GHC.Types.* -> GHC.Types.*) -> k -> *) (f :: GHC.Types.*
@@ -2081,7 +2081,7 @@ c015c7d91015066fc921d12a7ab8dc8d
                                 'GHC.Generics.NoSourceStrictness
                                 'GHC.Generics.DecidedLazy) f a) ->
                  Lib.$fToJSONBlock5) -}
-f2e1a28a878b7837c879c7d5b85701d7
+0aac350ef14c6c110f5978e201e86e5b
   $s$fSelectorMetaMetaSel_$s$fSelectorMetaMetaSel_$cselName4 ::
     forall k (t :: GHC.Generics.Meta
                    -> (GHC.Types.* -> GHC.Types.*) -> k -> *) (f :: GHC.Types.*
@@ -2105,7 +2105,7 @@ f2e1a28a878b7837c879c7d5b85701d7
                                 'GHC.Generics.NoSourceStrictness
                                 'GHC.Generics.DecidedLazy) f a) ->
                  Lib.$fToJSONBlock6) -}
-2efba5a8f1e4a1f786ea589c100e48bd
+56a569146d7bb24617fb5e6b438de55a
   $s$fSelectorMetaMetaSel_$s$fSelectorMetaMetaSel_$cselName5 ::
     forall k (t :: GHC.Generics.Meta
                    -> (GHC.Types.* -> GHC.Types.*) -> k -> *) (f :: GHC.Types.*
@@ -2129,44 +2129,44 @@ f2e1a28a878b7837c879c7d5b85701d7
                                 'GHC.Generics.NoSourceStrictness
                                 'GHC.Generics.DecidedLazy) f a) ->
                  Lib.$fToJSONBlock7) -}
-34b21fb304dad4a8e059054d5084d296
+b6586924ea47a53caa799f62d18cd80b
   $tc'Block :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   11811071935054633841##
-                   12348231764333764508##
+                   994000090498070139##
+                   165955013032845166##
                    Lib.$trModule
                    Lib.$tc'Block1) -}
-afdf76fdecf8b28ca63a31a5e6a19552
+e5f083001a2d284fe9bcfb93c6287343
   $tc'Block1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "'Block"#) -}
-3940cc028f86df0a05729c81cdefdeee
+0853b378bd44970e156c2d77896acacb
   $tcBlock :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   4155397933891218626##
-                   18088363585498803216##
+                   270998175612933496##
+                   2228135128782586241##
                    Lib.$trModule
                    Lib.$tcBlock1) -}
-f2b27390f0ed31bef52c452fe6811b5b
+6b34b21dd915df2e024edb6900115beb
   $tcBlock1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "Block"#) -}
-8a640b289472eea0927309d0d4d45a86
+ffc585650dc336f1638a664235e6f897
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.Module Lib.$trModule2 Lib.$trModule1) -}
-2019012722feb46f3bf3771692b74d66
+a6db00babea50b2033f2f82a7bdf5f6d
   $trModule1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "Lib"#) -}
-238a646953dc5a60f9b3847b129328e2
+a41ea1ee3aea0e543b7c7d443270f9dd
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS
-                   "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"#) -}
-1fdbab55099b176cc6fab2f24fead7f2
+                   "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"#) -}
+f86157a42890a1c0a3d636f426a09048
   $w$c== ::
     GHC.Prim.Int#
     -> GHC.Base.String
@@ -2222,14 +2222,14 @@ f2b27390f0ed31bef52c452fe6811b5b
                                        GHC.Types.False -> GHC.Types.False
                                        GHC.Types.True
                                        -> GHC.Base.eqString ww5 ww11 } } } } } } } } }) -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   $w$creadPrec ::
     GHC.Prim.Int#
     -> forall b.
        (Lib.Block -> Text.ParserCombinators.ReadP.P b)
        -> Text.ParserCombinators.ReadP.P b
   {- Arity: 2, Strictness: <S,U><L,C(U)>, Inline: [0] -}
-02edafa1054d52a7903f597efba11d2e
+5e8a271122e4398336e5ab7a2e9f69c0
   $w$cshowsPrec ::
     GHC.Prim.Int#
     -> GHC.Types.Int
@@ -2243,7 +2243,7 @@ f2b27390f0ed31bef52c452fe6811b5b
   {- Arity: 8,
      Strictness: <S,U><L,1*U(U)><L,1*U><L,1*U(U)><L,1*U><L,1*U(U)><L,1*U><L,U>,
      Inline: [0] -}
-9d39918ce5da39472a04d3383d9be8a3
+eb8d2d0eaff0f809173a3540aab7fc49
   $w$ctoJSON ::
     GHC.Types.Int
     -> GHC.Base.String
@@ -2409,7 +2409,7 @@ f2b27390f0ed31bef52c452fe6811b5b
                            @ Data.Text.Internal.Text
                            @ Data.Aeson.Types.Internal.Value) of dt1 { DEFAULT ->
                  (# dt1 #) } }) -}
-2732cf3e4c7f193ec46da015b212c8d9
+f8e091c043e50de7f71726a600622905
   $w$dRecordToPairs ::
     Data.Aeson.Types.Internal.Options
     -> GHC.Generics.M1
@@ -2603,7 +2603,7 @@ f2b27390f0ed31bef52c452fe6811b5b
                           case ipv1 of dt1 { Data.Text.Internal.Text ipv2 ipv3 ipv4 ->
                           Data.Aeson.Types.Internal.String dt1 } })
                          w1) } #)) -}
-63b4171b746f83802125ebab5540699f
+7fa3704cdc63d6e85fd208475572ae2b
   $w$dRecordToPairs1 ::
     Data.Aeson.Types.Internal.Options
     -> GHC.Generics.M1
@@ -2787,7 +2787,7 @@ f2b27390f0ed31bef52c452fe6811b5b
                           Data.Aeson.Types.Internal.Number
                             (Data.Scientific.Scientific dt 0#) } })
                          w1) } #)) -}
-9ab0be0638c77fdd7c687537151ddd29
+268749b11f6dbbcf5fd4efdf2f82b1d3
   $wcalculateBlockHash ::
     GHC.Types.Int
     -> GHC.Base.String
@@ -2854,7 +2854,7 @@ f2b27390f0ed31bef52c452fe6811b5b
                           `cast`
                         (Sym (Crypto.Hash.Types.N:Digest[0]
                                   <Crypto.Hash.SHA256.SHA256>_P)) } }) -}
-d2b7a1e335ec162351afa226cdec41e6
+7b643d40ad1068878aee2ad6db703fa4
   $wfindNonce ::
     GHC.Types.Int
     -> GHC.Base.String
@@ -2864,7 +2864,7 @@ d2b7a1e335ec162351afa226cdec41e6
     -> GHC.Prim.Int#
   {- Arity: 5, Strictness: <L,U(U)><L,U><L,U(U)><L,U><L,U>,
      Inline: [0] -}
-47e7096c2a6a32441962f9ead73d2539
+08055a1ff4a5f9bc5e6d9337a1bce377
   $wisValidNewBlock ::
     GHC.Prim.Int#
     -> GHC.Base.String
@@ -2904,7 +2904,7 @@ d2b7a1e335ec162351afa226cdec41e6
                                      ww6) of wild2 {
                              GHC.Types.False -> GHC.Types.False
                              GHC.Types.True -> Lib.satisfiesPow ww7 } } }) -}
-6e4eaf68304b806949e910dfa15a4098
+079e2e08dfaaf1fa562ec123a4f06f2c
   $wouter ::
     GHC.Prim.MutableByteArray# GHC.Prim.RealWorld
     -> GHC.Prim.Int#
@@ -2915,7 +2915,7 @@ d2b7a1e335ec162351afa226cdec41e6
           Data.Text.Internal.Text #)
   {- Arity: 5, Strictness: <L,U><L,U><S,1*U><S,U><S,U>,
      Inline: [0] -}
-505413af651f32b0590d0f1aededb4e1
+7b12f94f28def8c6d9c281f4c8d20b78
   $wouter1 ::
     GHC.Prim.MutableByteArray# GHC.Prim.RealWorld
     -> GHC.Prim.Int#
@@ -2926,7 +2926,7 @@ d2b7a1e335ec162351afa226cdec41e6
           Data.Text.Internal.Text #)
   {- Arity: 5, Strictness: <L,U><L,U><S,1*U><S,U><S,U>,
      Inline: [0] -}
-4fe420ca8d8fa73d3e52f60438af0fe4
+9af8c8d15d4ec7cdb4b54824db380fc7
   $wouter2 ::
     GHC.Prim.MutableByteArray# GHC.Prim.RealWorld
     -> GHC.Prim.Int#
@@ -2937,7 +2937,7 @@ d2b7a1e335ec162351afa226cdec41e6
           Data.Text.Internal.Text #)
   {- Arity: 5, Strictness: <L,U><L,U><S,1*U><S,U><S,U>,
      Inline: [0] -}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   data Block
     = Block {index :: GHC.Types.Int,
              previousHash :: GHC.Base.String,
@@ -2945,14 +2945,14 @@ d2b7a1e335ec162351afa226cdec41e6
              blockData :: GHC.Base.String,
              nonce :: GHC.Types.Int,
              blockHash :: GHC.Base.String}
-0baef2da1b8a71b4f3cada96a625866a
+1cf0f64a60de86e0e6c47dc1761da7a0
   axiom Rep_Block::
       GHC.Generics.Rep Lib.Block
         = GHC.Generics.D1
             ('GHC.Generics.MetaData
                "Block"
                "Lib"
-               "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+               "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
                'GHC.Types.False)
             (GHC.Generics.C1
                ('GHC.Generics.MetaCons
@@ -3001,7 +3001,7 @@ d2b7a1e335ec162351afa226cdec41e6
                                                                           'GHC.Generics.DecidedLazy)
                                                                        (GHC.Generics.Rec0
                                                                           GHC.Base.String)))))
-59599dec725c7fef5311f88cf084daff
+db6640a657a773ee787fd2f5ea789592
   blockData :: Lib.Block -> GHC.Base.String
   RecSel Left Lib.Block
   {- Arity: 1, HasNoCafRefs,
@@ -3009,7 +3009,7 @@ d2b7a1e335ec162351afa226cdec41e6
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Lib.Block) ->
                  case ds of wild { Lib.Block ds1 ds2 ds3 ds4 ds5 ds6 -> ds4 }) -}
-2df4c53b5789faeaaeb7b538f787103b
+4f4fa95158d85da6673e5f458e4c7b28
   blockHash :: Lib.Block -> GHC.Base.String
   RecSel Left Lib.Block
   {- Arity: 1, HasNoCafRefs,
@@ -3017,7 +3017,7 @@ d2b7a1e335ec162351afa226cdec41e6
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Lib.Block) ->
                  case ds of wild { Lib.Block ds1 ds2 ds3 ds4 ds5 ds6 -> ds6 }) -}
-943890c9215e3c15ccf86dd54557287e
+62eec5d1c4c638a0771e3c023a55e17d
   calculateBlockHash :: Lib.Block -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U(1*U(U),1*U,1*U(U),1*U,1*U(U),A)>,
      Inline: INLINE[0],
@@ -3025,10 +3025,10 @@ d2b7a1e335ec162351afa226cdec41e6
                 (\ (w :: Lib.Block) ->
                  case w of ww { Lib.Block ww1 ww2 ww3 ww4 ww5 ww6 ->
                  Lib.$wcalculateBlockHash ww1 ww2 ww3 ww4 ww5 }) -}
-784c7a9845730b052dd5aa553f4d5b9f
+dcd6e4b3cee49d2a00b10469bae53c80
   calculateBlockHash1 :: GHC.Base.String
   {- Strictness: x -}
-75c1a7ad9f7d1fbb55a65fd84c569405
+825ab86bff16242fac48c38b6821073b
   calculateBlockHash2 ::
     GHC.Base.String -> Data.ByteString.Internal.ByteString
   {- Arity: 1, Strictness: <L,U>,
@@ -3050,15 +3050,15 @@ d2b7a1e335ec162351afa226cdec41e6
                      `cast`
                    (<GHC.Ptr.Ptr GHC.Prim.Any>_R
                     ->_R Sym (GHC.Types.N:IO[0] <()>_R))) -}
-b248a6797dc6708c221059f7f210786b
+dd3b3c752a645a00a57d7721eb857aa0
   difficultyTarget :: GHC.Integer.Type.Integer
   {- Unfolding: (1766847064778384329583297500742918515827483896875618958121606201292619775) -}
-e82e981fc905ea85830c7e316f96e9d7
+356ac1260c645a51faf98774c78bf3c3
   epoch :: GHC.Types.IO GHC.Types.Int
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Lib.epoch1 `cast` (Sym (GHC.Types.N:IO[0] <GHC.Types.Int>_R)) -}
-28f66ec2ec2223936cd8a065085baf54
+77121ded55b9fdc97a255eeeabf82d2d
   epoch1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Types.Int #)
@@ -3082,7 +3082,7 @@ e82e981fc905ea85830c7e316f96e9d7
                       GHC.Real.$fIntegralInt
                       ww7
                       ww8 } #) }) -}
-1de8d152b8b4db5149edb8f4f0906682
+470a57f9eb9c221747cba6d6cf8f5494
   findNonce :: Lib.Block -> GHC.Types.Int
   {- Arity: 1, Strictness: <S(LLLLSL),U(U(U),U,U(U),U,U(U),A)>m,
      Inline: INLINE[0],
@@ -3092,7 +3092,7 @@ e82e981fc905ea85830c7e316f96e9d7
                  case ww5 of ww7 { GHC.Types.I# ww8 ->
                  case Lib.$wfindNonce ww1 ww2 ww3 ww4 ww8 of ww9 { DEFAULT ->
                  GHC.Types.I# ww9 } } }) -}
-610d6dda351bd25d577519b6b1666539
+4df32a20830d25759692ae403a231684
   hashString :: GHC.Base.String -> GHC.Base.String
   {- Arity: 1, Strictness: <L,U>,
      Unfolding: (\ (x :: GHC.Base.String) ->
@@ -3116,7 +3116,7 @@ e82e981fc905ea85830c7e316f96e9d7
                           `cast`
                         (Sym (Crypto.Hash.Types.N:Digest[0]
                                   <Crypto.Hash.SHA256.SHA256>_P)) } }) -}
-982c14a8f6d15c86941d37221615400e
+26ceda8424a7d51e0ed0e4575a60d1ef
   index :: Lib.Block -> GHC.Types.Int
   RecSel Left Lib.Block
   {- Arity: 1, HasNoCafRefs,
@@ -3124,7 +3124,7 @@ e82e981fc905ea85830c7e316f96e9d7
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Lib.Block) ->
                  case ds of wild { Lib.Block ds1 ds2 ds3 ds4 ds5 ds6 -> ds1 }) -}
-c5061015826cdc3ffc6319eb60daeb08
+47f2463bf6d40e9ebde21effb8c387c7
   initialBlock :: Lib.Block
   {- Strictness: m,
      Unfolding: (Lib.Block
@@ -3134,7 +3134,7 @@ c5061015826cdc3ffc6319eb60daeb08
                    Lib.initialBlock3
                    Lib.initialBlock2
                    Lib.initialBlock1) -}
-6108d5342dcd6c8eb7a1f27605558163
+75aab158b69811c5cf0824260f0fbb9f
   initialBlock1 :: GHC.Base.String
   {- Unfolding: (Lib.$wcalculateBlockHash
                    Lib.initialBlock5
@@ -3142,7 +3142,7 @@ c5061015826cdc3ffc6319eb60daeb08
                    Lib.initialBlock5
                    Lib.initialBlock3
                    Lib.initialBlock2) -}
-2b40bd53bd89008f3200dd0806587330
+81371fab5fc0610a4670d4a1ac934eaa
   initialBlock2 :: GHC.Types.Int
   {- Unfolding: (case Lib.$wfindNonce
                         Lib.initialBlock5
@@ -3151,16 +3151,16 @@ c5061015826cdc3ffc6319eb60daeb08
                         Lib.initialBlock3
                         0# of ww { DEFAULT ->
                  GHC.Types.I# ww }) -}
-703c2267b3b935c3b3fee0457061b5a4
+0a9f066b8fe26b72372eaf0d59e1c1ac
   initialBlock3 :: GHC.Base.String
   {- Unfolding: (GHC.CString.unpackCString# "initial data"#) -}
-9c3b0d65002a92c00e54a5fdbbd3bc0f
+d4184d2c3e542464be32f0311e7d3f3d
   initialBlock4 :: GHC.Base.String
   {- Unfolding: (GHC.CString.unpackCString# "0"#) -}
-0db248f0edaac0148c15c965755877ab
+a2873376a8637e2469e483b31b6ffbb0
   initialBlock5 :: GHC.Types.Int
   {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
-e4b34e8aaa38089e72cfb3bf33fb41bb
+0e32e84653f8c4de9cc54d05d21697f9
   isValidChain :: [Lib.Block] -> GHC.Types.Bool
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: (\ (chain :: [Lib.Block]) ->
@@ -3215,10 +3215,10 @@ e4b34e8aaa38089e72cfb3bf33fb41bb
                                                       -> (Lib.isValidChain_go wild wild1)
                                                            `cast`
                                                          (Data.Monoid.N:All[0]) } } } } } } } } } } } } }) -}
-0df583a7cfda196f00eac5878e97a94a
+49528e473472d2ffc85328f217fb5cd3
   isValidChain_go :: [Lib.Block] -> [Lib.Block] -> Data.Monoid.All
   {- Arity: 2, Strictness: <S,1*U><L,1*U> -}
-395a2f90c1defb8f0e3aa62d92930a20
+860083aa03d97d97577e7278e5b32139
   isValidNewBlock :: Lib.Block -> Lib.Block -> GHC.Types.Bool
   {- Arity: 2,
      Strictness: <S(S(S)LLLLL),1*U(1*U(U),A,A,A,A,1*U)><S(S(S)LLLLL),1*U(U(U),U,1*U(U),1*U,1*U(U),U)>,
@@ -3238,7 +3238,7 @@ e4b34e8aaa38089e72cfb3bf33fb41bb
                    ww13
                    ww14
                    ww15 } } } }) -}
-4edf28591a37504131f410f420133ab6
+c819450f4520f3b177747b91670694b2
   mineBlockFrom ::
     Control.Monad.IO.Class.MonadIO m =>
     Lib.Block -> GHC.Base.String -> m Lib.Block
@@ -3289,7 +3289,7 @@ e4b34e8aaa38089e72cfb3bf33fb41bb
                          eta1
                          ds
                          (Lib.$wcalculateBlockHash lvl38 lvl39 time eta1 ds)))) -}
-9a17a6afe3d28a5e09d8752cf9f57f5b
+0f18481b9c811651fa5cb4023a375ae6
   nonce :: Lib.Block -> GHC.Types.Int
   RecSel Left Lib.Block
   {- Arity: 1, HasNoCafRefs,
@@ -3297,7 +3297,7 @@ e4b34e8aaa38089e72cfb3bf33fb41bb
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Lib.Block) ->
                  case ds of wild { Lib.Block ds1 ds2 ds3 ds4 ds5 ds6 -> ds5 }) -}
-58d12f47d64bd30735709380cb74c522
+717fb8a317878991563b392bfdf9d9db
   previousHash :: Lib.Block -> GHC.Base.String
   RecSel Left Lib.Block
   {- Arity: 1, HasNoCafRefs,
@@ -3305,7 +3305,7 @@ e4b34e8aaa38089e72cfb3bf33fb41bb
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Lib.Block) ->
                  case ds of wild { Lib.Block ds1 ds2 ds3 ds4 ds5 ds6 -> ds2 }) -}
-b3d0b0ba121dac88b69bf3191eb70673
+9ce7fb7cfcc998f6ba4af4df80e03d6b
   satisfiesPow :: GHC.Base.String -> GHC.Types.Bool
   {- Arity: 1, Strictness: <L,U>,
      Unfolding: (\ (bHash :: GHC.Base.String) ->
@@ -3324,10 +3324,10 @@ b3d0b0ba121dac88b69bf3191eb70673
                                   Lib.difficultyTarget of wild2 { DEFAULT ->
                            GHC.Prim.tagToEnum# @ GHC.Types.Bool wild2 }
                         : ipv ipv1 -> Lib.satisfiesPow1 bHash } }) -}
-3fb4037951290be8bf2116cc36b913bc
+9a7de86eef934a231910b29d8cd6310b
   satisfiesPow1 :: GHC.Base.String -> GHC.Types.Bool
   {- Arity: 1, Strictness: <L,U>x -}
-904d8b12550929dbae6739d125e5da2b
+88d711fc533718b9edeae6b1f1ed62ef
   satisfiesPow2 ::
     Text.ParserCombinators.ReadP.P GHC.Integer.Type.Integer
   {- Unfolding: (GHC.Read.$fReadInteger3
@@ -3335,14 +3335,14 @@ b3d0b0ba121dac88b69bf3191eb70673
                    Text.ParserCombinators.ReadPrec.minPrec
                    @ GHC.Integer.Type.Integer
                    (Text.Read.readEither5 @ GHC.Integer.Type.Integer)) -}
-dd4bb2c04f125dac59ae07b6bc08b7de
+73fb83d594d8ab133686af6e6ef7d824
   setBlockHash :: Lib.Block -> Lib.Block
   {- Arity: 1, Strictness: <S,1*U(U(U),U,U(U),U,U(U),A)>m,
      Unfolding: InlineRule (1, True, False)
                 (\ (block :: Lib.Block) ->
                  case block of wild { Lib.Block ds ds1 ds2 ds3 ds4 ds5 ->
                  Lib.Block ds ds1 ds2 ds3 ds4 (Lib.calculateBlockHash wild) }) -}
-53d25d0025ad3f2e4479721ee60dbebd
+6fe458ad4604c685c4ad494003c7930f
   setNonceAndHash :: Lib.Block -> Lib.Block
   {- Arity: 1, Strictness: <S,1*U(U(U),U,U(U),U,U(U),A)>m,
      Unfolding: InlineRule (1, True, False)
@@ -3358,7 +3358,7 @@ dd4bb2c04f125dac59ae07b6bc08b7de
                    ds3
                    ds6
                    (Lib.calculateBlockHash (Lib.Block ds ds1 ds2 ds3 ds6 ds5)) }) -}
-fa766312ad5f218728a9d67cb2d22534
+45ab59e1a89f0e0e0826ada555456e37
   sha256 ::
     GHC.Base.String
     -> GHC.Base.Maybe
@@ -3369,7 +3369,7 @@ fa766312ad5f218728a9d67cb2d22534
                  case Lib.calculateBlockHash2
                         x of ww { Data.ByteString.Internal.PS ww1 ww2 ww3 ww4 ->
                  Crypto.Hash.$w$cdigestFromByteString6 ww1 ww2 ww3 ww4 }) -}
-d0d4963a9919f41c144e36774f435d74
+209a42deb5bfe7e40bc1d2271d49309b
   timestamp :: Lib.Block -> GHC.Types.Int
   RecSel Left Lib.Block
   {- Arity: 1, HasNoCafRefs,

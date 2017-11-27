@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2017-11-23 08:35:51.092295 UTC
+2017-11-27 20:22:23.587172 UTC
 
 interface main@main:Main 8002
-  interface hash: 572bd9694604aa9819b9445e66cf650e
-  ABI hash: da7d4de310952e7283651cf377c8dc06
-  export-list hash: 8c6beb8ea4bc1363469440664b398691
+  interface hash: 8d07af650b1fc89f2589dd06c1fd61f7
+  ABI hash: 64cb90afa84b06b619abcea670c672a1
+  export-list hash: 348604d3a4cc9b94cb471a3de101cde0
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: c6dfcabecfc65a0b67d0f04c7f4320bb
   sig of: Nothing
@@ -15,8 +15,7 @@ exports:
   Main.initLogger
   Main.main
 module dependencies:
-package dependencies: 312Coin-0.1.0.0@312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA
-                      GenericPretty-1.2.1@GenericPretty-1.2.1-3m7fEhDoQGz54BsJnbKOxl
+package dependencies: 312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW
                       Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn
                       Spock-core-0.12.0.0@Spock-core-0.12.0.0-4M4NSRiG2taFbUY5ijcMbA
                       aeson-1.1.2.0@aeson-1.1.2.0-7ssY6fy1GxZGXxTPcOtf2k
@@ -66,7 +65,6 @@ package dependencies: 312Coin-0.1.0.0@312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA
                       monad-control-1.0.2.2@monad-control-1.0.2.2-1Ci8dYJ8Tb7E3HTcTqOb8l
                       mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
                       network-2.6.3.2@network-2.6.3.2-IsLM4TXcLoRI0fmmBYVyQz
-                      pretty-1.1.3.3@pretty-1.1.3.3
                       primitive-0.6.2.0@primitive-0.6.2.0-4578caNkWQ54Gt1mxLF2Yh
                       psqueues-0.2.4.0@psqueues-0.2.4.0-CvAhEbuBRGQCwl61vq8zYS
                       random-1.1@random-1.1-9tceXaeYIMZ4JrKq20Egog
@@ -118,8 +116,8 @@ orphans: Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal
          transformers-0.5.2.0@transformers-0.5.2.0:Control.Monad.Trans.Error
          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Fusion.Bundle
          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed
-family instance modules: 312Coin-0.1.0.0@312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Lib
-                         312Coin-0.1.0.0@312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Server
+family instance modules: 312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Lib
+                         312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Server
                          Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal.Monad
                          Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal.SessionVault
                          Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal.Types
@@ -168,8 +166,6 @@ family instance modules: 312Coin-0.1.0.0@312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:
                          iproute-1.7.1@iproute-1.7.1-EJjAtfniBUorobFQnk7lR:Data.IP.Range
                          list-t-1.0.0.1@list-t-1.0.0.1-5hQv0wfkuYf598er1kAI66:ListT
                          monad-control-1.0.2.2@monad-control-1.0.2.2-1Ci8dYJ8Tb7E3HTcTqOb8l:Control.Monad.Trans.Control
-                         pretty-1.1.3.3@pretty-1.1.3.3:Text.PrettyPrint.Annotated.HughesPJ
-                         pretty-1.1.3.3@pretty-1.1.3.3:Text.PrettyPrint.HughesPJ
                          primitive-0.6.2.0@primitive-0.6.2.0-4578caNkWQ54Gt1mxLF2Yh:Control.Monad.Primitive
                          primitive-0.6.2.0@primitive-0.6.2.0-4578caNkWQ54Gt1mxLF2Yh:Data.Primitive.Array
                          resourcet-1.1.9@resourcet-1.1.9-L2BUQrxWZMwDiwhcuyPuNi:Control.Monad.Trans.Resource.Internal
@@ -187,8 +183,8 @@ family instance modules: 312Coin-0.1.0.0@312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Storable
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed.Base
-import  -/  312Coin-0.1.0.0@312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Lib a9788e59e87cc4524c2aa9198b52c50f
-import  -/  312Coin-0.1.0.0@312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Server 878784f627d9172c6303ab2f831790a0
+import  -/  312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Lib 8d47b7d3bcc435fd2ec5075bb7f769a4
+import  -/  312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Server 2c7eaedb8ce3d40bbaabd3dd7fa66c85
 import  -/  base-4.9.1.0:GHC.Base c4231c43c07e46080a26bf94094c7aa1
 import  -/  base-4.9.1.0:GHC.IO.Handle.FD bf0291e0f2b6c0eca5446f986999f1cc
 import  -/  base-4.9.1.0:Prelude 22dd289b8469a8fa8dc81cab7b237771
@@ -330,12 +326,12 @@ c6a14d16de29171c0b01985b2f3750ee
 b19b1c6bc05625d72ea2839f3a8414aa
   initLogger6 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "312Coin.log"#) -}
-9ba8e6c77316472bfe4817d3f7d64e9a
+3fefdfbfce6a7dc71c6d8192ea3c4eeb
   main :: GHC.Types.IO ()
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Main.main1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R)) -}
-6f469cc9d6aa6dbac9e4c7c19b18de1d
+2126fbae70a0a8cf1219537144b40293
   main1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
@@ -364,7 +360,7 @@ b19b1c6bc05625d72ea2839f3a8414aa
                            ds5 })
                         ipv of ds2 { (#,#) ipv2 ipv3 ->
                  Server.runServer1 ipv2 } }) -}
-cea67fb4d0efadc4c5a20413215e93e2
+ceeb38d7cb468d1fde56fd7a9aa320be
   main2 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)

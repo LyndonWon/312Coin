@@ -1,12 +1,12 @@
 
 ==================== FINAL INTERFACE ====================
-2017-11-23 08:35:48.416569 UTC
+2017-11-27 20:22:20.296323 UTC
 
-interface 312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Server [family instance module] 8002
-  interface hash: e589666f3697ff7432198458c5cc3df1
-  ABI hash: 878784f627d9172c6303ab2f831790a0
-  export-list hash: d570d29ed75064a986fda00f53bd61f2
-  orphan hash: 0a79c156f58a4675389eab77f8fdf21f
+interface 312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Server [family instance module] 8002
+  interface hash: cfb780f1fce10d4b071c58a84de0fce7
+  ABI hash: 2c7eaedb8ce3d40bbaabd3dd7fa66c85
+  export-list hash: d5a648370faf7eeeda7017da2a59bcf5
+  orphan hash: e6ac57eebfd2ae21ceca807dea4f90ac
   flag hash: 92a87f93a214d458259573a2c61da388
   sig of: Nothing
   used TH splices: False
@@ -20,8 +20,7 @@ exports:
   Server.BlockChainState{Server.BlockChainState blockChainState}
   Server.MySession{Server.EmptySession}
 module dependencies: Lib
-package dependencies: GenericPretty-1.2.1@GenericPretty-1.2.1-3m7fEhDoQGz54BsJnbKOxl
-                      Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn
+package dependencies: Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn
                       Spock-core-0.12.0.0@Spock-core-0.12.0.0-4M4NSRiG2taFbUY5ijcMbA
                       aeson-1.1.2.0@aeson-1.1.2.0-7ssY6fy1GxZGXxTPcOtf2k
                       appar-0.1.4@appar-0.1.4-DGWHHt2WRn9FI49prcwO9
@@ -70,7 +69,6 @@ package dependencies: GenericPretty-1.2.1@GenericPretty-1.2.1-3m7fEhDoQGz54BsJnb
                       monad-control-1.0.2.2@monad-control-1.0.2.2-1Ci8dYJ8Tb7E3HTcTqOb8l
                       mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
                       network-2.6.3.2@network-2.6.3.2-IsLM4TXcLoRI0fmmBYVyQz
-                      pretty-1.1.3.3@pretty-1.1.3.3
                       primitive-0.6.2.0@primitive-0.6.2.0-4578caNkWQ54Gt1mxLF2Yh
                       psqueues-0.2.4.0@psqueues-0.2.4.0-CvAhEbuBRGQCwl61vq8zYS
                       random-1.1@random-1.1-9tceXaeYIMZ4JrKq20Egog
@@ -122,7 +120,7 @@ orphans: Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal
          transformers-0.5.2.0@transformers-0.5.2.0:Control.Monad.Trans.Error
          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Fusion.Bundle
          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed
-family instance modules: 312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Lib
+family instance modules: 312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Lib
                          Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal.Monad
                          Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal.SessionVault
                          Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal.Types
@@ -171,8 +169,6 @@ family instance modules: 312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Lib
                          iproute-1.7.1@iproute-1.7.1-EJjAtfniBUorobFQnk7lR:Data.IP.Range
                          list-t-1.0.0.1@list-t-1.0.0.1-5hQv0wfkuYf598er1kAI66:ListT
                          monad-control-1.0.2.2@monad-control-1.0.2.2-1Ci8dYJ8Tb7E3HTcTqOb8l:Control.Monad.Trans.Control
-                         pretty-1.1.3.3@pretty-1.1.3.3:Text.PrettyPrint.Annotated.HughesPJ
-                         pretty-1.1.3.3@pretty-1.1.3.3:Text.PrettyPrint.HughesPJ
                          primitive-0.6.2.0@primitive-0.6.2.0-4578caNkWQ54Gt1mxLF2Yh:Control.Monad.Primitive
                          primitive-0.6.2.0@primitive-0.6.2.0-4578caNkWQ54Gt1mxLF2Yh:Data.Primitive.Array
                          resourcet-1.1.9@resourcet-1.1.9-L2BUQrxWZMwDiwhcuyPuNi:Control.Monad.Trans.Resource.Internal
@@ -190,12 +186,11 @@ family instance modules: 312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA:Lib
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Storable
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed.Base
-import  -/  Lib a9788e59e87cc4524c2aa9198b52c50f
-  exports: 171f01b34c0861fc6128c4004e20260e
-  Block 1a92cd2518e7005d15041a0f9ffbcd29
-  Block 0baef2da1b8a71b4f3cada96a625866a
-  initialBlock c5061015826cdc3ffc6319eb60daeb08
-import  -/  GenericPretty-1.2.1@GenericPretty-1.2.1-3m7fEhDoQGz54BsJnbKOxl:Text.PrettyPrint.GenericPretty 6ec8b8aa1d01495d2ee2118b51f58cf3
+import  -/  Lib 8d47b7d3bcc435fd2ec5075bb7f769a4
+  exports: 275dce19aa439e522e19acad8b6a6eee
+  Block 14468dcfc2e886c5f372cb4b650f3fbc
+  Block 1cf0f64a60de86e0e6c47dc1761da7a0
+  initialBlock 47f2463bf6d40e9ebde21effb8c387c7
 import  -/  Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock b645b9129155ecc1350f1e1c22188158
 import  -/  Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Config 0358826ed784dbfe5b1bafd5eb66c035
 import  -/  Spock-0.12.0.0@Spock-0.12.0.0-DoeIEjqt9tNI9prv9Tysmn:Web.Spock.Internal.Types 8e225c927ac08e9fa79fafd28cf2b4f0
@@ -218,7 +213,7 @@ import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
 import  -/  hslogger-1.2.10@hslogger-1.2.10-Li6ZV5C1ftGLPA71zPNMlf:System.Log.Logger 6707e3b5e5a7f0e9078d17200983dc9a
 import  -/  mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6:Control.Monad.Trans d69bc2e104a90fb918d853b240f7af2e
 import  -/  text-1.2.2.2@text-1.2.2.2-9UQZjEJZQFSGMffj1Z5g00:Data.Text f7d3d648ffeef1043fe2e522e7e66c1b
-a7abc3689bb22c6863888c9553c50892
+0f3ebde8782c4140b671d3c7a78c4b84
   $fGenericBlockChainState ::
     GHC.Generics.Generic Server.BlockChainState
   DFunId
@@ -227,7 +222,7 @@ a7abc3689bb22c6863888c9553c50892
                   @ Server.BlockChainState
                   Server.$fGenericBlockChainState_$cfrom
                   Server.$fGenericBlockChainState_$cto -}
-a7abc3689bb22c6863888c9553c50892
+0f3ebde8782c4140b671d3c7a78c4b84
   $fGenericBlockChainState1 ::
     Server.BlockChainState
     -> GHC.Generics.M1
@@ -276,7 +271,7 @@ a7abc3689bb22c6863888c9553c50892
                                         (GHC.Generics.K1
                                            GHC.Generics.R
                                            (GHC.IORef.IORef [Lib.Block]))>_R)) <x>_N)) }) -}
-a7abc3689bb22c6863888c9553c50892
+0f3ebde8782c4140b671d3c7a78c4b84
   $fGenericBlockChainState_$cfrom ::
     Server.BlockChainState -> GHC.Generics.Rep Server.BlockChainState x
   {- Arity: 1, HasNoCafRefs, Strictness: <S(S),1*U(1*U(U))>m,
@@ -291,7 +286,7 @@ a7abc3689bb22c6863888c9553c50892
                                     <'GHC.Generics.MetaData
                                        "BlockChainState"
                                        "Server"
-                                       "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+                                       "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
                                        'GHC.Types.False>_P
                                     <GHC.Generics.M1
                                        GHC.Generics.C
@@ -307,7 +302,7 @@ a7abc3689bb22c6863888c9553c50892
                                           (GHC.Generics.K1
                                              GHC.Generics.R (GHC.IORef.IORef [Lib.Block])))>_R))
                           (Sub (Sym (Server.Rep_BlockChainState[0]))) <x>_N) -}
-a7abc3689bb22c6863888c9553c50892
+0f3ebde8782c4140b671d3c7a78c4b84
   $fGenericBlockChainState_$cto ::
     GHC.Generics.Rep Server.BlockChainState x -> Server.BlockChainState
   {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m,
@@ -325,7 +320,7 @@ a7abc3689bb22c6863888c9553c50892
                                        <'GHC.Generics.MetaData
                                           "BlockChainState"
                                           "Server"
-                                          "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+                                          "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
                                           'GHC.Types.False>_P
                                        <GHC.Generics.M1
                                           GHC.Generics.C
@@ -370,14 +365,14 @@ a7abc3689bb22c6863888c9553c50892
                                                (GHC.IORef.IORef [Lib.Block])>_R))) <x>_N)
                         (GHC.Generics.N:K1[0]
                              <GHC.Generics.R>_P <GHC.IORef.IORef [Lib.Block]>_R <x>_P))) -}
-b224a3aa76329758530f766058c6642c
+ef561d81198f5cc96a5a07752cc6e80b
   $s$fMonadIOActionCtxT2 ::
     Control.Monad.IO.Class.MonadIO
       (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)
   {- Strictness: m,
      Unfolding: InlineRule (0, True, True)
                 Server.$s$fMonadIOActionCtxT_$s$fMonadIOResourceT -}
-ca9e5017d6bae245ebd6f41fb9593359
+6e23babe8aac038560ed89bfd340584a
   $s$fMonadIOActionCtxT_$s$fMonadIOResourceT ::
     Control.Monad.IO.Class.MonadIO
       (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)
@@ -386,7 +381,7 @@ ca9e5017d6bae245ebd6f41fb9593359
                   @ (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)
                   Web.Spock.Internal.Monad.$fHasSpockt_$s$fMonadIOResourceT_$cp1MonadIO
                   Server.$s$fMonadIOActionCtxT_$s$fMonadIOResourceT_$cliftIO -}
-aaabf2dc9f8657ef3f55b80a72a44aa2
+fe41bded1a5054716d0bde0cd10fa413
   $s$fMonadIOActionCtxT_$s$fMonadIOResourceT_$cliftIO ::
     GHC.Types.IO a
     -> Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO a
@@ -402,7 +397,7 @@ aaabf2dc9f8657ef3f55b80a72a44aa2
                    `cast`
                  (Sym (Control.Monad.Trans.Resource.Internal.N:ResourceT[0]
                            <GHC.Types.IO>_R <a>_N))) -}
-c13e890fe7fc25b240e8ecab06471540
+85249bd96d8a4032074c514a0fad2ea1
   $s$fMonadIOActionCtxT_$s$fMonadIOWebStateT ::
     Control.Monad.IO.Class.MonadIO
       (Web.Spock.Internal.Types.WebStateT
@@ -427,7 +422,7 @@ c13e890fe7fc25b240e8ecab06471540
                      @ st
                      @ (Control.Monad.Trans.Resource.Internal.ResourceT GHC.Types.IO)
                      Server.$s$fMonadIOActionCtxT2) -}
-895f48ea711286a190a093f615182f80
+c55f277b03bd91b2da3474ca7becc478
   $s$fMonadIOActionCtxT_$s$fMonadIOWebStateT_$cp1MonadIO ::
     GHC.Base.Monad
       (Web.Spock.Internal.Types.WebStateT
@@ -438,84 +433,84 @@ c13e890fe7fc25b240e8ecab06471540
   {- Strictness: m,
      Unfolding: InlineRule (0, True, True)
                 Web.Spock.Internal.Monad.$fHasSpockt_$s$fMonadWebStateT -}
-074a6a6f80a8ff8f6a738aeb68c6ed18
+401b5758bffddf6d1a8099af8b307e03
   $tc'BlockChainState :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   10450368238720826441##
-                   8914234704705882319##
+                   12084410033442053460##
+                   17552849152984140681##
                    Server.$trModule
                    Server.$tc'BlockChainState1) -}
-bcf20dd82671ea289139c9e77631b30a
+308167bea19ca085e5e5e3fc42b82083
   $tc'BlockChainState1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "'BlockChainState"#) -}
-9131d4cbe5550a092285bd64002c876b
+10bf46630e4cb06b95097d675ddf7e5b
   $tc'EmptySession :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   14607523324743557187##
-                   12721282556131373679##
+                   3572438023675139216##
+                   17958640765953458474##
                    Server.$trModule
                    Server.$tc'EmptySession1) -}
-457517464cac01f656e588816f95ba26
+d384e39fc2b9c17c6e72bca222af3997
   $tc'EmptySession1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "'EmptySession"#) -}
-41f16f1d5600a937c1ea9c159402e873
+3abfd9256e44e14c5bff4a27a4abfb01
   $tcBlockChainState :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   7243202019535231425##
-                   6865841823281238745##
+                   10428732514235896195##
+                   6013370826562396136##
                    Server.$trModule
                    Server.$tcBlockChainState1) -}
-47e7d1e6499557f3dca10cb9adf43c9f
+fc1c7b47b7690768672b2092cb608d21
   $tcBlockChainState1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "BlockChainState"#) -}
-3d11f2cd2bf7336c5144c90dfff16452
+64d16762e290441806beb7898ce7d600
   $tcMySession :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   13993788789617923892##
-                   5345673087778138266##
+                   12402992586496826874##
+                   7358088296995497959##
                    Server.$trModule
                    Server.$tcMySession1) -}
-9f8698b959dad7f082975d2e3c756a50
+49e222762a7811324796c947cb7b4f3a
   $tcMySession1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "MySession"#) -}
-d9849db1e2b51873dcec1a7b4a986382
+8ff07777bb894af13a2acdc3918db15f
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.Module
                    Server.$trModule2
                    Server.$trModule1) -}
-372dbf520345aef05578b0749b0171f6
+c403e3ccc706d9b273be80b60e9dc931
   $trModule1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "Server"#) -}
-7841cba632966a829dc3a135f68d3584
+e7568e856c0a6a2c98c4e799b2f8ebdb
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS
-                   "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"#) -}
-346ab595820a2b906757455198753839
+                   "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"#) -}
+3946fea49637a3fc5248c3c29f319357
   type ApiAction a = Web.Spock.Internal.Types.SpockAction () () () a
-a7abc3689bb22c6863888c9553c50892
+0f3ebde8782c4140b671d3c7a78c4b84
   data BlockChainState
     = BlockChainState {blockChainState :: GHC.IORef.IORef [Lib.Block]}
-c3fb3be844df074986c1bbf48cd12ed2
+369287603ee0cee2d6284b29f4a71e59
   data MySession = EmptySession
-a7abc3689bb22c6863888c9553c50892
+0f3ebde8782c4140b671d3c7a78c4b84
   axiom Rep_BlockChainState::
       GHC.Generics.Rep Server.BlockChainState
         = GHC.Generics.D1
             ('GHC.Generics.MetaData
                "BlockChainState"
                "Server"
-               "312Coin-0.1.0.0-91BkfT1fW8m3z2HndxAtPA"
+               "312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW"
                'GHC.Types.False)
             (GHC.Generics.C1
                ('GHC.Generics.MetaCons
@@ -527,7 +522,7 @@ a7abc3689bb22c6863888c9553c50892
                      'GHC.Generics.NoSourceStrictness
                      'GHC.Generics.DecidedLazy)
                   (GHC.Generics.Rec0 (GHC.IORef.IORef [Lib.Block]))))
-88d53a5fde4441ed6d69a1eab9796455
+e2775e66dc2cc5f696632c5749e9fca9
   addDebug ::
     Control.Monad.IO.Class.MonadIO m => GHC.Base.String -> m ()
   {- Arity: 2, Strictness: <S(LC(S)),1*U(A,1*C1(U))><L,U>,
@@ -552,10 +547,10 @@ a7abc3689bb22c6863888c9553c50892
                       ipv } })
                      `cast`
                    (Sym (GHC.Types.N:IO[0] <()>_R))) -}
-36d3907432bf3a5a02fb3fabc97c4574
+1bfc18c0f122587d0dd97c545775f18b
   addDebug2 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "312Coin"#) -}
-e61119e0499f68a1552ddc1873b99021
+a33656445f5d9c94e07bdf9fe7bfe9db
   app ::
     Web.Spock.SpockM () Server.MySession Server.BlockChainState ()
   {- Arity: 2,
@@ -628,7 +623,7 @@ e61119e0499f68a1552ddc1873b99021
                                        Server.BlockChainState
                                        (Control.Monad.Trans.Resource.Internal.ResourceT
                                           GHC.Types.IO)>_N)) <()>_N)) -}
-c250beafef30ab9075ee082084e2d928
+61a5f9b769846b389670f7a17db3683c
   app1 ::
     Web.Routing.SafeRouting.PathInternal '[]
     -> Web.Routing.Router.RegistryState
@@ -752,7 +747,7 @@ c250beafef30ab9075ee082084e2d928
                                                                            Server.BlockChainState
                                                                            (Control.Monad.Trans.Resource.Internal.ResourceT
                                                                               GHC.Types.IO))>_N) <()>_N)) -}
-709d3820cb57174fec376db7d12c76fe
+c11ec3557c8ac1c9d825bc742140c257
   app10 ::
     Web.Spock.Core.SpockCtxT
       ()
@@ -802,7 +797,7 @@ c250beafef30ab9075ee082084e2d928
                                                     (Web.Spock.Internal.Types.WebStateM
                                                        () Server.MySession Server.BlockChainState)
                                                     ()>_N))))))) -}
-e17d08a274828bb32cb0983eb7e527f0
+89c2bb4cd70f539e0ef7bc0a58c3bc6e
   app11 ::
     Web.Spock.Internal.Wire.RequestInfo ()
     -> Web.Spock.Internal.Wire.ResponseState
@@ -923,7 +918,7 @@ e17d08a274828bb32cb0983eb7e527f0
                                                                                    (),
                                                                                  Web.Spock.Internal.Wire.ResponseState,
                                                                                  ())>_N))) -}
-162125c69e2878911d3db54f59c3537d
+e7f733c34b51cb4b109d881aa77a4424
   app12 :: Data.ByteString.Builder.Internal.Builder
   {- Unfolding: (case Lib.$w$ctoJSON
                         Server.app15
@@ -934,21 +929,21 @@ e17d08a274828bb32cb0983eb7e527f0
                         (GHC.Types.[] @ GHC.Types.Char) of ww7 { Unit# ww8 ->
                  Data.Aeson.Encoding.Builder.encodeToBuilder
                    (Data.Aeson.Types.Internal.Object ww8) }) -}
-c529c0a9fdde45e187c03f0d330558e3
+bf98d93d7bb8a46daff0c6da47bff2df
   app13 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "initial data"#) -}
-090ac2a9308eb87946114366c87fd0af
+97a8595562fa888fb3d4a581149acc67
   app14 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "0"#) -}
-bcc0d8c5eb709eb1b79fe8484e01ae6d
+1e591f2deb471438faaf4d26c997e2ed
   app15 :: GHC.Types.Int
   {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
-63391229e62bd8088c1115130dcdfe1e
+56e775fd6ba43ec1d4ece68027fd1458
   app16 :: Data.ByteString.Internal.ByteString
   {- Unfolding: (case Data.Text.Show.unpackCString#
                         "application/json; charset=utf-8"# of ww { Data.Text.Internal.Text ww1 ww2 ww3 ->
                  Data.Text.Encoding.$wencodeUtf8 ww1 ww2 ww3 }) -}
-15b12b70a0f08b201d7f1eaea50aa4dd
+d0633c2d9af10bd3f2d2a8c70617dddc
   app17 ::
     Data.CaseInsensitive.Internal.CI
       Data.ByteString.Internal.ByteString
@@ -967,14 +962,14 @@ bcc0d8c5eb709eb1b79fe8484e01ae6d
                    @ Data.ByteString.Internal.ByteString
                    dt
                    dt1 } } }) -}
-5fbc104ed67cac919c9955d91eb4193f
+d211a75726b1f7da7f3b4a14253fbdf6
   app18 ::
     Web.Routing.Combinators.Path '[] 'Web.Routing.Combinators.Open
   {- Unfolding: (Web.Routing.Combinators.static Server.app19) -}
-e03532664a8c112feec196866415cb23
+a2e36dc513f08043dd72dc10345b09a9
   app19 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "block"#) -}
-550d133550d052cafbdc2c6aa93d25e1
+8c21ec8ab5fad7853d0888a954cd7de8
   app2 ::
     Web.Spock.Core.SpockCtxT
       ()
@@ -1077,7 +1072,7 @@ e03532664a8c112feec196866415cb23
                                                             Server.MySession
                                                             Server.BlockChainState)
                                                          ()>_N)))))))) -}
-cbaa76e113bd9b9fcb9b458e2aface3d
+eb116001351baa4e482e02c53b9d4478
   app3 ::
     Web.Spock.Internal.Wire.RequestInfo ()
     -> Web.Spock.Internal.Wire.ResponseState
@@ -1284,14 +1279,14 @@ cbaa76e113bd9b9fcb9b458e2aface3d
                               `cast`
                             (Sym (Web.Spock.Internal.Wire.N:ResponseBody[0])) } } } } } } },
                           GHC.Tuple.()) #) } } } } }) -}
-77ea2380f960c863ec15a5110a2cc6e3
+a9d63f046b471f9ba63182dc1bb905d0
   app4 :: Data.Text.Internal.Text
   {- Unfolding: (Data.Text.Show.unpackCString# "Content-Type"#) -}
-71dce213e0b60d4a32f1dcaa4c350411
+f0eb2987ec22c346c759e16bad312dc7
   app5 :: Data.Text.Internal.Text
   {- Unfolding: (Data.Text.Show.unpackCString#
                    "application/json; charset=utf-8"#) -}
-1388f31e361b34b0dde7c003de9b4a21
+209362fb1e37fe3b6f90bf32cc950e03
   app6 ::
     Data.Either.Either Web.Spock.Internal.Wire.ActionInterupt ()
   {- HasNoCafRefs,
@@ -1299,31 +1294,31 @@ cbaa76e113bd9b9fcb9b458e2aface3d
                    @ Web.Spock.Internal.Wire.ActionInterupt
                    @ ()
                    Web.Spock.Internal.Wire.ActionDone) -}
-265211912d47314dd8049fe1abd3026c
+d4424d4382da323dc77b0b8e1cefae8e
   app7 ::
     Web.Routing.Combinators.Path '[] 'Web.Routing.Combinators.Open
   {- Unfolding: (Web.Routing.Combinators.static Server.app8) -}
-e8f418fffbfb51e6327da5ecf7114964
+8d502a11c2310a712a42830129f1e36a
   app8 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "chain"#) -}
-674c8f43528c59543a3b1b8fb650d7b5
+52a4a23e587fe9bded76448270f05cc7
   app9 :: Web.Spock.Internal.Wire.SpockMethod
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (Web.Spock.Internal.Wire.MethodStandard
                    Network.HTTP.Types.Method.GET
                      `cast`
                    (Sym (Web.Spock.Internal.Wire.N:HttpMethod[0]))) -}
-9d4c933ae0aa9bfcbd39f02b89fe0a43
+91ee61f58be828af2c8ed5bc1db06ab4
   app_go ::
     [Lib.Block]
     -> Data.Aeson.Encoding.Internal.Encoding'
          Data.Aeson.Types.Internal.Value
   {- Arity: 1, Strictness: <S,1*U> -}
-cc4f559f9d3a84fadffaad6730ddf5a8
+46b2efdc091c443d071421a6fe30a483
   app_val1 :: Data.ByteString.Lazy.Internal.ByteString
   {- Unfolding: (Data.ByteString.Builder.toLazyByteString
                    Server.app12) -}
-387afbb663811291bb6b934d3bd44339
+bff25ec7d3dbf2e553a66c906d042ab0
   app_val2 ::
     Network.HTTP.Types.Status.Status
     -> Network.HTTP.Types.Header.ResponseHeaders
@@ -1333,7 +1328,7 @@ cc4f559f9d3a84fadffaad6730ddf5a8
                 (\ (status :: Network.HTTP.Types.Status.Status)
                    (headers :: Network.HTTP.Types.Header.ResponseHeaders) ->
                  Network.Wai.responseLBS status headers Server.app_val1) -}
-f334229ab582ae6ef28944aff5e0826a
+e6082a0a81b9ff9f4330cbba4610a69b
   blockChainState ::
     Server.BlockChainState -> GHC.IORef.IORef [Lib.Block]
   RecSel Left Server.BlockChainState
@@ -1341,7 +1336,7 @@ f334229ab582ae6ef28944aff5e0826a
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Server.BlockChainState) ->
                  case ds of wild { Server.BlockChainState ds1 -> ds1 }) -}
-89622c5aaa860c5f238d9beca67ff39a
+7f5e48d044e35018fb71e288b7f773d2
   getBlockChain ::
     (Web.Spock.Internal.Types.SpockState m
      Data.Type.Equality.~ Server.BlockChainState,
@@ -1386,12 +1381,12 @@ f334229ab582ae6ef28944aff5e0826a
                          chain `cast` (GHC.IORef.N:IORef[0] <[Lib.Block]>_N))
                         `cast`
                       (Sym (GHC.Types.N:IO[0] <[Lib.Block]>_R)) }) }) -}
-c68ce89c50ea90fdf4b37dfa881ea6c6
+df2e6b41215999dcdbaa3abfa907da2c
   runServer :: GHC.Types.IO ()
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Server.runServer1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R)) -}
-ad15ca9121a4fe77a95d240760514263
+491b60e7b8f11fb0cd7bae453813e55b
   runServer1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
@@ -1555,47 +1550,47 @@ ad15ca9121a4fe77a95d240760514263
                    System.Log.DEBUG
                    Server.runServer2
                    ipv12 } } } } } } } } }) -}
-0ff64bcfa6b2becb49ebcb42a8594a91
+e2d26187c547a6ec5cbd7cc2f1a9cfaf
   runServer10 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "Starting Server"#) -}
-42b6df9baac3599b9bb23b8e23ebb602
+0b375b7f26922d9289228ece790f1125
   runServer2 :: [GHC.Types.Char]
   {- Unfolding: (GHC.Types.:
                    @ GHC.Types.Char
                    GHC.Show.shows6
                    Server.runServer3) -}
-57b1a4abb5b664aaeaaa9e1af679d0e5
+66298f28fab46534f49cab2969dc3078
   runServer3 :: GHC.Base.String
   {- Unfolding: (GHC.Show.showLitString
                    Server.runServer5
                    Server.runServer4) -}
-0a040e20a6424d8399e97f428aa1d460
+5ac489f5bf4e68b25bd72d6f766a0c82
   runServer4 :: [GHC.Types.Char]
   {- HasNoCafRefs,
      Unfolding: (GHC.Types.:
                    @ GHC.Types.Char
                    GHC.Show.shows6
                    (GHC.Types.[] @ GHC.Types.Char)) -}
-441ba91f7bf076fefa4a2491f5dfb983
+8a8c8b4a441c28ee376f9377ab56edc7
   runServer5 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    "Server Running on 8080"#) -}
-da3f89159e3ba85a22a06db9c713936a
+73ca9ac26cc401f0f7efccd45bdcae9d
   runServer6 :: GHC.Types.Int
   {- HasNoCafRefs, Unfolding: (GHC.Types.I# 8080#) -}
-663171dcf65de927db28c71d306485ce
+9f81780e56a8d226d11d56bd53e69533
   runServer7 :: [Lib.Block]
   {- Unfolding: (GHC.Types.:
                    @ Lib.Block
                    Lib.initialBlock
                    (GHC.Types.[] @ Lib.Block)) -}
-e79f1e2cf12a2986bbf93490dafdb9db
+ff52b59867a2f3b1774c1b62b7c0deaa
   runServer8 :: [GHC.Types.Char]
   {- Unfolding: (GHC.Types.:
                    @ GHC.Types.Char
                    GHC.Show.shows6
                    Server.runServer9) -}
-e8dfbbaadff532e92207383f79cc91f8
+aad5a09569177d058f2e5e6c80d865f6
   runServer9 :: GHC.Base.String
   {- Unfolding: (GHC.Show.showLitString
                    Server.runServer10

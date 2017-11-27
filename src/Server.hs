@@ -18,13 +18,13 @@ import           Data.Aeson       hiding (json)
 import           Data.Monoid      ((<>))
 import           Data.Text        (Text, pack)
 import           GHC.Generics
-import           Text.PrettyPrint.GenericPretty
 
 type ApiAction a = SpockAction () () () a
 
 data MySession = EmptySession
 
 data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
+                                         -- registeredNodes :: IORef [Node]
                                        } deriving (Generic)
 
 addDebug :: (MonadIO m) => String -> m ()
@@ -35,6 +35,11 @@ getBlockChain = do
   (BlockChainState chain) <- getState
   liftIO $ readIORef chain
 
+-- getNodes :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Block]
+-- getNodes = do
+--   (BlockChainState chain) <- getState
+--   liftIO $ readIORef chain
+
 app :: SpockM () MySession BlockChainState ()
 app = do
   get "block" $ do
@@ -42,6 +47,10 @@ app = do
   get "chain" $ do
     chain <- getBlockChain
     json $ chain
+  -- post "node" $ do
+  --   theNode <- jsonBody' :: ApiAction Node
+  --   text $ "Parsed: " <> pack (show thePerson)
+
 
 runServer :: IO ()
 runServer = do
