@@ -17,7 +17,6 @@ initLogger = let logPriority = DEBUG
       fileHandler ("312Coin.log") logPriority >>= format >>= \h ->
         updateGlobalLogger rootLoggerName $ setLevel logPriority . setHandlers [s, h]
 
-
 main :: IO ()
 main = do
   _ <- initLogger
