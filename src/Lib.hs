@@ -13,23 +13,20 @@ import           Data.Binary
 import           Data.ByteString.Char8          (pack)
 import           Data.Time.Clock.POSIX
 import           Text.Read                      (readMaybe)
-import           GHC.Generics
+import           GHC.Generics                   hiding (to, from)
 import           Web.Spock
 import           Web.Spock.Config
 
 ----------------------------------
 data Transaction = Transaction
-  { to :: String
-  , from :: String
-  , amount :: Int
+  { sender :: String
+  , receiver :: String
+  , value :: Int
   , timestamp :: Int
   } deriving (Generic, Show)
 
 instance ToJSON Transaction
 instance FromJSON Transaction
-
-initialTransaction :: Transaction
-initialTransaction = Transaction "" "" 0 0
 
 data TransactionArgs = TransactionArgs
   { to :: String
@@ -39,6 +36,17 @@ data TransactionArgs = TransactionArgs
 
 instance ToJSON TransactionArgs
 instance FromJSON TransactionArgs
+
+timestampTransaction :: (MonadIO m) => TransactionArgs -> m Transaction
+timestampTransaction args = do
+  time <- liftIO epoch
+  let transaction = Transaction
+                    { sender        = to args
+                    , receiver      = from args
+                    , value    = amount args
+                    , timestamp = time
+                    }
+  return (liftIO transaction)
 
 -- addTransaction :: (MonadIO m) => Transaction -> String -> m Transaction
 -- addTransaction stringData = do

@@ -48,6 +48,14 @@ getTransactions = do
   (BlockChainState _ _ transactions) <- getState
   liftIO $ readIORef transactions
 
+addTransaction :: MonadIO m => IORef [Transaction] -> TransactionArgs -> m ()
+addTransaction ref transactionArgs = do
+  chain <- liftIO $ readIORef ref
+  -- liftDebug "adding new transaction"
+  let transaction = timestampTransaction transactionArgs
+  _ <- liftIO $ atomicModifyIORef' ref $ \t -> (t ++ [transaction], t ++ [transaction])
+  return ()
+
 app :: Api
 app = do
   get "block" $ do
@@ -62,8 +70,12 @@ app = do
     transactions <- getTransactions
     json $ transactions
   post "transaction" $ do
-    (transaction :: TransactionArgs) <- jsonBody'
-    json $ transaction
+    (transactionArgs :: TransactionArgs) <- jsonBody'
+    (BlockChainState _ _ ref) <- getState
+    _ <- addTransaction ref transactionArgs
+    -- liftDebug $ show transactions
+    transactions <- getTransactions
+    json $ transactions
 
 errorJson :: Int -> Text -> ApiAction ()
 errorJson code message =
