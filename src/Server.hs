@@ -27,14 +27,6 @@ data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
                                        , nodeState :: IORef [Node]
                                        } deriving (Generic)
 
-data NodeArgs = NodeArgs { name    :: String
-                         , id      :: Int
-                         , address :: String
-                         } deriving (Show, Eq, Generic)
-                         
-instance ToJSON NodeArgs
-instance FromJSON NodeArgs
-
 addDebug :: (MonadIO m) => String -> m ()
 addDebug str = liftIO (debugM "312Coin" (show str))
 
@@ -52,6 +44,14 @@ registerNode :: MonadIO m => IORef [Node] -> Node -> m ()
 registerNode ref node = do
   _ <- liftIO $ atomicModifyIORef' ref $ \n -> (n ++ [node], n ++ [node])
   return ()
+
+getLatestNode :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m Node
+getLatestNode = fmap last getNodes
+
+getNodeId :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => NodeArgs -> m Node
+getNodeId nodeArgs = do
+  latestNode <- getLatestNode
+  createNode latestNode nodeArgs
 
 -- createNode :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => String -> m Node
 -- createNode stringData = do
@@ -72,7 +72,8 @@ app = do
     json $ node
   post "node" $ do
     (BlockChainState ref currentNodes) <- getState
-    (newNode :: Node) <- jsonBody'
+    (nodeArgs :: NodeArgs) <- jsonBody'
+    (newNode :: Node) <- getNodeId nodeArgs
     _ <- registerNode currentNodes newNode
     json $ newNode
 
