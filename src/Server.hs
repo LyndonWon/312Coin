@@ -46,6 +46,20 @@ getBlockChain = do
   (BlockChainState chain _ _) <- getState
   liftIO $ readIORef chain
 
+getLatestBlock :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m Block
+getLatestBlock = fmap last getBlockChain
+
+addBlock :: MonadIO m => IORef [Block] -> Block -> m ()
+addBlock ref block = do
+  chain <- liftIO $ readIORef ref
+  if isValidNewBlock (last chain) block
+    then do
+      addDebug "adding new block"
+      _ <- liftIO $ atomicModifyIORef' ref $ \b -> (b ++ [block], b ++ [block])
+      return ()
+    else
+      addDebug "new block not valid. skipping"
+
 getNodes :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Node]
 getNodes = do
   (BlockChainState _ nodes _) <- getState
@@ -62,8 +76,24 @@ addTransaction ref transaction = do
   _ <- liftIO $ atomicModifyIORef' ref $ \t -> (t ++ [transaction], t ++ [transaction])
   return ()
 
+grabTransactions :: MonadIO m => IORef [Transaction] -> m [Transaction]
+grabTransactions ref = do
+  addDebug "Grabbing transactions"
+  transactions <- liftIO $ atomicModifyIORef' ref $ \t -> ([], t)
+  return transactions
+
 app :: Api
 app = do
+  -- Block routes
+  get "block" $ do
+    (BlockChainState chain _ transactions) <- getState
+    lastBlock <- getLatestBlock
+    lastTransactions <- grabTransactions transactions
+    block <- mineBlock lastBlock lastTransactions
+    _ <- addBlock chain block
+    chain <- getBlockChain
+    addDebug $ show chain
+    json $ chain
   --  Chain routes
   get "chain" $ do
     chain <- getBlockChain

@@ -134,8 +134,8 @@ isValidChain chain = case chain of
       x == initialBlock &&
       all (uncurry isValidNewBlock) blockPairs
 
-mineBlockFrom :: (MonadIO m) => Block -> m Block
-mineBlockFrom lastBlock = do
+mineBlock :: (MonadIO m) => Block -> [Transaction] -> m Block
+mineBlock lastBlock latestTransactions = do
   time <- liftIO epoch
   let block = Block { index        = index lastBlock + 1
                     , previousHash = blockHash lastBlock
