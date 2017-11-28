@@ -23,7 +23,7 @@ data Transaction = Transaction
   , receiver :: String
   , value :: Int
   , timeProcessed :: Int
-  } deriving (Generic, Show)
+  } deriving (Show, Read, Eq, Generic)
 
 instance ToJSON Transaction
 instance FromJSON Transaction
@@ -32,7 +32,7 @@ data TransactionArgs = TransactionArgs
   { to :: String
   , from :: String
   , amount :: Int
-  } deriving (Show, Eq, Generic)
+  } deriving (Show, Read, Eq, Generic)
 
 instance ToJSON TransactionArgs
 instance FromJSON TransactionArgs
@@ -42,7 +42,7 @@ instance FromJSON TransactionArgs
 data Node = Node
   { name :: String
   , id  :: Int
-  } deriving (Generic, Show, Read, Eq)
+  } deriving (Show, Read, Eq, Generic)
 
 instance ToJSON Node
 instance FromJSON Node

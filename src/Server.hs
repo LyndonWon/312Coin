@@ -51,7 +51,7 @@ getTransactions = do
 addTransaction :: MonadIO m => IORef [Transaction] -> Transaction -> m ()
 addTransaction ref transaction = do
   chain <- liftIO $ readIORef ref
-  liftDebug "adding new transaction"
+  addDebug "Adding new transaction"
   _ <- liftIO $ atomicModifyIORef' ref $ \t -> (t ++ [transaction], t ++ [transaction])
   return ()
 
@@ -67,9 +67,11 @@ app = do
     json $ nodes
   get "transaction" $ do
     transactions <- getTransactions
+    addDebug $ show transactions
     json $ transactions
   post "transaction" $ do
     (args :: TransactionArgs) <- jsonBody'
+    addDebug $ show args
     (BlockChainState _ _ ref) <- getState
     time <- liftIO epoch
     let transaction = Transaction
@@ -79,8 +81,8 @@ app = do
                       , timeProcessed = time
                       }
     _ <- addTransaction ref transaction
-    -- liftDebug $ show transactions
     transactions <- getTransactions
+    addDebug $ show transactions
     json $ transactions
 
 errorJson :: Int -> Text -> ApiAction ()
