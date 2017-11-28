@@ -140,7 +140,7 @@ mineBlock lastBlock latestTransactions = do
   let block = Block { index        = index lastBlock + 1
                     , previousHash = blockHash lastBlock
                     , timestamp    = time
-                    , blockData    = []
+                    , blockData    = latestTransactions
                     , nonce        = 0
                     , blockHash    = "will be changed"
                     }
