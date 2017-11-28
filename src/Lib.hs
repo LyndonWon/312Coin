@@ -16,15 +16,16 @@ import           Text.Read                      (readMaybe)
 import           GHC.Generics
 
 data Node = Node
-  { name :: String
-  , id  :: Int
+  { name    :: String
+  , id      :: Int
+  , address :: String
   } deriving (Generic, Show, Read, Eq)
 
 instance ToJSON Node
 instance FromJSON Node
 
 initialNode :: Node
-initialNode = Node "master" 1
+initialNode = Node "master" 1 "localhost:1234"
 
 data Block = Block { index        :: Int
                    , previousHash :: String

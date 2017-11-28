@@ -24,8 +24,16 @@ type ApiAction a = SpockAction () () () a
 data MySession = EmptySession
 
 data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
-                                         , nodeState :: IORef [Node]
+                                       , nodeState :: IORef [Node]
                                        } deriving (Generic)
+
+data NodeArgs = NodeArgs { name    :: String
+                         , id      :: Int
+                         , address :: String
+                         } deriving (Show, Eq, Generic)
+                         
+instance ToJSON NodeArgs
+instance FromJSON NodeArgs
 
 addDebug :: (MonadIO m) => String -> m ()
 addDebug str = liftIO (debugM "312Coin" (show str))
@@ -40,6 +48,18 @@ getNodes = do
   (BlockChainState _ nodes) <- getState
   liftIO $ readIORef nodes
 
+registerNode :: MonadIO m => IORef [Node] -> Node -> m ()
+registerNode ref node = do
+  _ <- liftIO $ atomicModifyIORef' ref $ \n -> (n ++ [node], n ++ [node])
+  return ()
+
+-- createNode :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => String -> m Node
+-- createNode stringData = do
+--   nodeArgs <- json $ stringData
+--   show
+--   mineBlockFrom lastBlock stringData
+
+
 app :: SpockM () MySession BlockChainState ()
 app = do
   get "block" $ do
@@ -50,10 +70,11 @@ app = do
   get "node" $ do
     node <- getNodes
     json $ node
-  -- post "node" $ do
-  --   theNode <- jsonBody' :: ApiAction Node
-  --   text $ "Parsed: " <> pack (show thePerson)
-
+  post "node" $ do
+    (BlockChainState ref currentNodes) <- getState
+    (newNode :: Node) <- jsonBody'
+    _ <- registerNode currentNodes newNode
+    json $ newNode
 
 runServer :: IO ()
 runServer = do
