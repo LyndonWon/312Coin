@@ -17,7 +17,7 @@ import           Web.Spock.Config
 import           Data.Aeson       hiding (json)
 import           Data.Monoid      ((<>))
 import           Data.Text        (Text, pack)
-import           GHC.Generics
+import           GHC.Generics     hiding (to, from)
 
 type Api = SpockM () MySession BlockChainState ()
 
@@ -48,11 +48,10 @@ getTransactions = do
   (BlockChainState _ _ transactions) <- getState
   liftIO $ readIORef transactions
 
-addTransaction :: MonadIO m => IORef [Transaction] -> TransactionArgs -> m ()
-addTransaction ref transactionArgs = do
+addTransaction :: MonadIO m => IORef [Transaction] -> Transaction -> m ()
+addTransaction ref transaction = do
   chain <- liftIO $ readIORef ref
-  -- liftDebug "adding new transaction"
-  let transaction = timestampTransaction transactionArgs
+  liftDebug "adding new transaction"
   _ <- liftIO $ atomicModifyIORef' ref $ \t -> (t ++ [transaction], t ++ [transaction])
   return ()
 
@@ -70,9 +69,16 @@ app = do
     transactions <- getTransactions
     json $ transactions
   post "transaction" $ do
-    (transactionArgs :: TransactionArgs) <- jsonBody'
+    (args :: TransactionArgs) <- jsonBody'
     (BlockChainState _ _ ref) <- getState
-    _ <- addTransaction ref transactionArgs
+    time <- liftIO epoch
+    let transaction = Transaction
+                      { sender        = to args
+                      , receiver      = from args
+                      , value    = amount args
+                      , timeProcessed = time
+                      }
+    _ <- addTransaction ref transaction
     -- liftDebug $ show transactions
     transactions <- getTransactions
     json $ transactions

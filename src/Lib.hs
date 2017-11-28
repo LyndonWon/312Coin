@@ -22,7 +22,7 @@ data Transaction = Transaction
   { sender :: String
   , receiver :: String
   , value :: Int
-  , timestamp :: Int
+  , timeProcessed :: Int
   } deriving (Generic, Show)
 
 instance ToJSON Transaction
@@ -36,28 +36,6 @@ data TransactionArgs = TransactionArgs
 
 instance ToJSON TransactionArgs
 instance FromJSON TransactionArgs
-
-timestampTransaction :: (MonadIO m) => TransactionArgs -> m Transaction
-timestampTransaction args = do
-  time <- liftIO epoch
-  let transaction = Transaction
-                    { sender        = to args
-                    , receiver      = from args
-                    , value    = amount args
-                    , timestamp = time
-                    }
-  return (liftIO transaction)
-
--- addTransaction :: (MonadIO m) => Transaction -> String -> m Transaction
--- addTransaction stringData = do
---   time <- liftIO epoch
---   let transaction = Transaction
---                     { to = stringData
---                     , from = stringData
---                     , amount = stringData
---                     , timestamp = time
---                     }
---   return (transaction)
 
 ----------------------------------
 

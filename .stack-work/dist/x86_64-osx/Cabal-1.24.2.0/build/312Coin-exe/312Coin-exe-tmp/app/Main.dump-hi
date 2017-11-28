@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-11-28 01:00:04.011894 UTC
+2017-11-28 04:29:22.329128 UTC
 
 interface main@main:Main 8002
-  interface hash: 89efba91f6aa7798979bb2da268eb815
-  ABI hash: 699a5d5a11c95a687c32f7161a763e41
+  interface hash: 3e4191a0fc3acb1d6b55742a6c264d23
+  ABI hash: a231fec13d1b5ffae72fb98140931b92
   export-list hash: 348604d3a4cc9b94cb471a3de101cde0
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: c6dfcabecfc65a0b67d0f04c7f4320bb
@@ -183,8 +183,8 @@ family instance modules: 312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Storable
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed
                          vector-0.12.0.1@vector-0.12.0.1-692PQMDMB6pIQ1uGwefDcQ:Data.Vector.Unboxed.Base
-import  -/  312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Lib cf79e146c6f5069db03990d164baf0d0
-import  -/  312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Server b49ecd98a21ccd42cddd148abbea8509
+import  -/  312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Lib 03a630ea2f9726319b9d67e86badbf53
+import  -/  312Coin-0.1.0.0@312Coin-0.1.0.0-3NylGJnbwqAAplgCLpSCLW:Server 323a2d9876f1c910facb49703d484427
 import  -/  base-4.9.1.0:GHC.Base c4231c43c07e46080a26bf94094c7aa1
 import  -/  base-4.9.1.0:GHC.IO.Handle.FD bf0291e0f2b6c0eca5446f986999f1cc
 import  -/  base-4.9.1.0:Prelude 22dd289b8469a8fa8dc81cab7b237771
@@ -326,12 +326,12 @@ c6a14d16de29171c0b01985b2f3750ee
 b19b1c6bc05625d72ea2839f3a8414aa
   initLogger6 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "312Coin.log"#) -}
-817ce2645e0a775034379d4bed50bfa6
+7b30c31ae1d8620877854c4ae005d8de
   main :: GHC.Types.IO ()
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Main.main1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R)) -}
-8a70488b46a3f6e63f275116dc62fe29
+1ec7d90c16d025f7451a2e683f8ac555
   main1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
@@ -360,7 +360,7 @@ b19b1c6bc05625d72ea2839f3a8414aa
                            ds5 })
                         ipv of ds2 { (#,#) ipv2 ipv3 ->
                  Server.runServer1 ipv2 } }) -}
-0f0069d437faa3d926eefc4d0105dec2
+665ece2b95f6179b5e7de356e4eec12f
   main2 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
