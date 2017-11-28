@@ -2,6 +2,7 @@
 
 module Lib where
 
+import System.IO.Unsafe
 import           Control.Monad.Trans
 import           Crypto.Hash                    ( Digest
                                                 , SHA256
@@ -17,6 +18,7 @@ import           GHC.Generics                   hiding (to, from)
 import           Web.Spock
 import           Web.Spock.Config
 
+-- TODO: Need to refactor out Transaction logic to transaction.hs
 ----------------------------------
 data Transaction = Transaction
   { sender :: String
@@ -37,6 +39,18 @@ data TransactionArgs = TransactionArgs
 instance ToJSON TransactionArgs
 instance FromJSON TransactionArgs
 
+timeStampTransaction :: (MonadIO m) => TransactionArgs -> m Transaction
+timeStampTransaction args = do
+  time <- liftIO epoch
+  let transaction = Transaction
+                    { sender        = to args
+                    , receiver      = from args
+                    , value    = amount args
+                    , timeProcessed = time
+                    }
+  return transaction
+
+-- TODO: Need to refactor out Node logic to node.hs
 ----------------------------------
 
 data Node = Node
@@ -51,11 +65,10 @@ initialNode :: Node
 initialNode = Node "master" 1
 
 ----------------------------------
-
 data Block = Block { index        :: Int
                    , previousHash :: String
                    , timestamp    :: Int
-                   , blockData    :: String
+                   , blockData    :: [Transaction]
                    , nonce        :: Int
                    , blockHash    :: String
                    } deriving (Show, Read, Eq, Generic)
@@ -73,7 +86,7 @@ hashString :: String -> String
 hashString = maybe (error "Something went wrong generating a hash") show . sha256
 
 calculateBlockHash :: Block -> String
-calculateBlockHash (Block i p t b n _) = hashString (concat [show i, p, show t, b, show n])
+calculateBlockHash (Block i p t b n _) = hashString (concat [show i, p, show t, show b, show n])
 
 setBlockHash :: Block -> Block
 setBlockHash block = block {blockHash = calculateBlockHash block}
@@ -101,7 +114,7 @@ findNonce block = do
 
 initialBlock :: Block
 initialBlock = do
-  let block = Block 0 "0" 0 "initial data" 0 ""
+  let block = Block 0 "0" 0 [] 0 ""
   setNonceAndHash block
 
 isValidNewBlock :: Block -> Block -> Bool
@@ -121,13 +134,13 @@ isValidChain chain = case chain of
       x == initialBlock &&
       all (uncurry isValidNewBlock) blockPairs
 
-mineBlockFrom :: (MonadIO m) => Block -> String -> m Block
-mineBlockFrom lastBlock stringData = do
+mineBlockFrom :: (MonadIO m) => Block -> m Block
+mineBlockFrom lastBlock = do
   time <- liftIO epoch
   let block = Block { index        = index lastBlock + 1
                     , previousHash = blockHash lastBlock
                     , timestamp    = time
-                    , blockData    = stringData
+                    , blockData    = []
                     , nonce        = 0
                     , blockHash    = "will be changed"
                     }

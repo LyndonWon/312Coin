@@ -33,6 +33,14 @@ data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
 addDebug :: (MonadIO m) => String -> m ()
 addDebug str = liftIO (debugM "312Coin" (show str))
 
+errorJson :: Int -> Text -> ApiAction ()
+errorJson code message =
+  json $
+    object
+    [ "result" .= String "failure"
+    , "error" .= object ["code" .= code, "message" .= message]
+    ]
+
 getBlockChain :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Block]
 getBlockChain = do
   (BlockChainState chain _ _) <- getState
@@ -50,52 +58,42 @@ getTransactions = do
 
 addTransaction :: MonadIO m => IORef [Transaction] -> Transaction -> m ()
 addTransaction ref transaction = do
-  chain <- liftIO $ readIORef ref
   addDebug "Adding new transaction"
   _ <- liftIO $ atomicModifyIORef' ref $ \t -> (t ++ [transaction], t ++ [transaction])
   return ()
 
 app :: Api
 app = do
-  get "block" $ do
-    json $ Block 0 "0" 0 "initial data" 0 ""
+  --  Chain routes
   get "chain" $ do
     chain <- getBlockChain
+    addDebug $ show chain
     json $ chain
+  --  Node routes
   get "node" $ do
     nodes <- getNodes
+    addDebug $ show nodes
     json $ nodes
+  --  Transaction routes
   get "transaction" $ do
     transactions <- getTransactions
     addDebug $ show transactions
     json $ transactions
+  -- TODO: Need to refactor out the creating transaction logic into Lib
   post "transaction" $ do
     (args :: TransactionArgs) <- jsonBody'
     addDebug $ show args
     (BlockChainState _ _ ref) <- getState
-    time <- liftIO epoch
-    let transaction = Transaction
-                      { sender        = to args
-                      , receiver      = from args
-                      , value    = amount args
-                      , timeProcessed = time
-                      }
+    transaction <- timeStampTransaction args
     _ <- addTransaction ref transaction
     transactions <- getTransactions
     addDebug $ show transactions
     json $ transactions
 
-errorJson :: Int -> Text -> ApiAction ()
-errorJson code message =
-  json $
-    object
-    [ "result" .= String "failure"
-    , "error" .= object ["code" .= code, "message" .= message]
-    ]
-
 runServer :: IO ()
 runServer = do
   addDebug "Starting Server"
+  -- TODO: I dont think we need these maybe statements, most of it can just be inititialized usually
   chainRef <- maybe (newIORef [initialBlock]) (const $ newIORef []) (Nothing)
   nodeRef <- maybe (newIORef [initialNode]) (const $ newIORef []) (Nothing)
   transactionRef <- maybe (newIORef []) (const $ newIORef []) (Nothing)
