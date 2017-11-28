@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveGeneric       #-}
+{-# LANGUAGE DeriveGeneric, DuplicateRecordFields #-}
 
 module Lib where
 
@@ -14,6 +14,44 @@ import           Data.ByteString.Char8          (pack)
 import           Data.Time.Clock.POSIX
 import           Text.Read                      (readMaybe)
 import           GHC.Generics
+import           Web.Spock
+import           Web.Spock.Config
+
+----------------------------------
+data Transaction = Transaction
+  { to :: String
+  , from :: String
+  , amount :: Int
+  , timestamp :: Int
+  } deriving (Generic, Show)
+
+instance ToJSON Transaction
+instance FromJSON Transaction
+
+initialTransaction :: Transaction
+initialTransaction = Transaction "" "" 0 0
+
+data TransactionArgs = TransactionArgs
+  { to :: String
+  , from :: String
+  , amount :: Int
+  } deriving (Show, Eq, Generic)
+
+instance ToJSON TransactionArgs
+instance FromJSON TransactionArgs
+
+-- addTransaction :: (MonadIO m) => Transaction -> String -> m Transaction
+-- addTransaction stringData = do
+--   time <- liftIO epoch
+--   let transaction = Transaction
+--                     { to = stringData
+--                     , from = stringData
+--                     , amount = stringData
+--                     , timestamp = time
+--                     }
+--   return (transaction)
+
+----------------------------------
 
 data Node = Node
   { name :: String
@@ -25,6 +63,8 @@ instance FromJSON Node
 
 initialNode :: Node
 initialNode = Node "master" 1
+
+----------------------------------
 
 data Block = Block { index        :: Int
                    , previousHash :: String
