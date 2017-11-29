@@ -50,6 +50,14 @@ timeStampTransaction args = do
                     }
   return transaction
 
+-- isValidNewTransaction :: BlockChain -> Transaction -> Bool
+-- isValidNewTransaction chain transaction
+--   | index prev + 1 == index next &&
+--     blockHash prev == previousHash next &&
+--     blockHash next == calculateBlockHash next &&
+--     satisfiesPow (blockHash next) = True
+--   | otherwise = False
+
 -- TODO: Need to refactor out Node logic to node.hs
 ----------------------------------
 
