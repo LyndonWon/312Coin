@@ -53,9 +53,6 @@ timeStampTransaction args = do
 flatten :: [[a]] -> [a]
 flatten xs = (\z n -> foldr (\x y -> foldr z y x) n xs) (:) []
 
-gatherTransactions :: [Block] -> [Transaction]
-gatherTransactions chain = allTransactions chain
-
 allTransactions :: [Block] -> [Transaction]
 allTransactions chain = flatten [ transactions | Block _ _ _ transactions _ _  <- chain]
 
@@ -76,8 +73,13 @@ debit key transactions = foldl (\acc (Transaction _ _ amount _)  -> acc + amount
 balance :: String -> [Transaction] -> Int
 balance key transaction = debit key transaction - credit key transaction
 
--- isValidNewTransaction :: [Block] -> String -> Integer -> Bool
--- isValidNewTransaction blockchain key amount
+isNotOverDraft :: Transaction -> [Block] -> Bool
+isNotOverDraft transaction chain = (balance (sender transaction) (allTransactions chain)) - (value transaction) >= 0
+
+isValidNewTransaction :: Transaction -> [Block] -> Bool
+isValidNewTransaction transaction chain
+  | isNotOverDraft transaction chain = True
+  | otherwise = False
 
 
 -- TODO: Need to refactor out Node logic to node.hs
@@ -144,7 +146,7 @@ findNonce block = do
 
 initialBlock :: Block
 initialBlock = do
-  let block = Block 0 "0" 0 [] 0 ""
+  let block = Block 0 "0" 0 [Transaction "God" "Corey" 1000 0] 0 ""
   setNonceAndHash block
 
 isValidNewBlock :: Block -> Block -> Bool

@@ -54,11 +54,11 @@ addBlock ref block = do
   chain <- liftIO $ readIORef ref
   if isValidNewBlock (last chain) block
     then do
-      addDebug "adding new block"
+      addDebug "Adding new block"
       _ <- liftIO $ atomicModifyIORef' ref $ \b -> (b ++ [block], b ++ [block])
       return ()
     else
-      addDebug "new block not valid. skipping"
+      addDebug "New block not valid. skipping"
 
 getNodes :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Node]
 getNodes = do
@@ -68,7 +68,7 @@ getNodes = do
 
 getAllTransactions :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Transaction]
 getAllTransactions = do
-  addDebug "Getting current transactions not in chain"
+  addDebug "Getting current transactions in chain"
   (BlockChainState ref _ _) <- getState
   chain <- liftIO $ readIORef ref
   let allTransactions = flatten [ transactions | Block _ _ _ transactions _ _  <- chain]
@@ -80,17 +80,17 @@ getCurrentTransactions = do
   (BlockChainState _ _ transactions) <- getState
   liftIO $ readIORef transactions
 
-addTransaction :: MonadIO m => IORef [Transaction] -> Transaction -> m ()
-addTransaction ref transaction = do
-  addDebug "Adding new transaction"
-  _ <- liftIO $ atomicModifyIORef' ref $ \t -> (t ++ [transaction], t ++ [transaction])
-  return ()
-
-grabTransactions :: MonadIO m => IORef [Transaction] -> m [Transaction]
-grabTransactions ref = do
-  addDebug "Grabbing transactions"
-  transactions <- liftIO $ atomicModifyIORef' ref $ \t -> ([], t)
-  return transactions
+addTransaction :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => Transaction -> m ()
+addTransaction transaction = do
+  (BlockChainState chainRef _ transactionsRef) <- getState
+  chain <- liftIO $ readIORef chainRef
+  if isValidNewTransaction transaction chain
+    then do
+      addDebug "Adding new transaction"
+      _ <- liftIO $ atomicModifyIORef' transactionsRef $ \t -> (t ++ [transaction], t ++ [transaction])
+      return ()
+    else
+      addDebug "Transaction not valid. skipping"
 
 app :: Api
 app = do
@@ -98,7 +98,7 @@ app = do
   get "block" $ do
     (BlockChainState chain _ transactions) <- getState
     lastBlock <- getLatestBlock
-    lastTransactions <- grabTransactions transactions
+    lastTransactions <- liftIO $ atomicModifyIORef' transactions $ \t -> ([], t)
     block <- mineBlock lastBlock lastTransactions
     _ <- addBlock chain block
     chain <- getBlockChain
@@ -127,9 +127,8 @@ app = do
   post "transaction" $ do
     (args :: TransactionArgs) <- jsonBody'
     addDebug $ show args
-    (BlockChainState _ _ ref) <- getState
     transaction <- timeStampTransaction args
-    _ <- addTransaction ref transaction
+    _ <- addTransaction transaction
     transactions <- getCurrentTransactions
     addDebug $ show transactions
     json $ transactions
