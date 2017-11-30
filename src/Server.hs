@@ -62,11 +62,21 @@ addBlock ref block = do
 
 getNodes :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Node]
 getNodes = do
+  addDebug "Getting all registered nodes"
   (BlockChainState _ nodes _) <- getState
   liftIO $ readIORef nodes
 
-getTransactions :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Transaction]
-getTransactions = do
+getAllTransactions :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Transaction]
+getAllTransactions = do
+  addDebug "Getting current transactions not in chain"
+  (BlockChainState ref _ _) <- getState
+  chain <- liftIO $ readIORef ref
+  let allTransactions = flatten [ transactions | Block _ _ _ transactions _ _  <- chain]
+  return allTransactions
+
+getCurrentTransactions :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Transaction]
+getCurrentTransactions = do
+  addDebug "Getting current transactions not in chain"
   (BlockChainState _ _ transactions) <- getState
   liftIO $ readIORef transactions
 
@@ -106,7 +116,11 @@ app = do
     json $ nodes
   --  Transaction routes
   get "transaction" $ do
-    transactions <- getTransactions
+    transactions <- getCurrentTransactions
+    addDebug $ show transactions
+    json $ transactions
+  get "chain/transactions" $ do
+    transactions <- getAllTransactions
     addDebug $ show transactions
     json $ transactions
   -- TODO: Need to refactor out the creating transaction logic into Lib
@@ -116,7 +130,7 @@ app = do
     (BlockChainState _ _ ref) <- getState
     transaction <- timeStampTransaction args
     _ <- addTransaction ref transaction
-    transactions <- getTransactions
+    transactions <- getCurrentTransactions
     addDebug $ show transactions
     json $ transactions
 

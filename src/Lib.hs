@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveGeneric, DuplicateRecordFields #-}
+{-# LANGUAGE DeriveGeneric, DuplicateRecordFields, ParallelListComp #-}
 
 module Lib where
 
@@ -50,13 +50,35 @@ timeStampTransaction args = do
                     }
   return transaction
 
--- isValidNewTransaction :: BlockChain -> Transaction -> Bool
--- isValidNewTransaction chain transaction
---   | index prev + 1 == index next &&
---     blockHash prev == previousHash next &&
---     blockHash next == calculateBlockHash next &&
---     satisfiesPow (blockHash next) = True
---   | otherwise = False
+flatten :: [[a]] -> [a]
+flatten xs = (\z n -> foldr (\x y -> foldr z y x) n xs) (:) []
+
+gatherTransactions :: [Block] -> [Transaction]
+gatherTransactions chain = allTransactions chain
+
+allTransactions :: [Block] -> [Transaction]
+allTransactions chain = flatten [ transactions | Block _ _ _ transactions _ _  <- chain]
+
+filterBySender :: String -> Transaction -> Bool
+filterBySender key (Transaction sender _ _ _ ) | sender == key = True
+filterBySender _ _ = False
+
+filterByReceiver :: String -> Transaction -> Bool
+filterByReceiver key (Transaction _ receiver _ _ ) | receiver == key = True
+filterByReceiver _ _ = False
+
+credit :: String -> [Transaction] -> Int
+credit key transactions = foldl (\acc (Transaction _ _ amount _)  -> acc + amount ) 0 $ filter (filterBySender key) transactions
+
+debit :: String -> [Transaction] -> Int
+debit key transactions = foldl (\acc (Transaction _ _ amount _)  -> acc + amount ) 0 $ filter (filterByReceiver key) transactions
+
+balance :: String -> [Transaction] -> Int
+balance key transaction = debit key transaction - credit key transaction
+
+-- isValidNewTransaction :: [Block] -> String -> Integer -> Bool
+-- isValidNewTransaction blockchain key amount
+
 
 -- TODO: Need to refactor out Node logic to node.hs
 ----------------------------------
