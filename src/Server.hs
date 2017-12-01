@@ -46,7 +46,7 @@ data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
                                        } deriving (Generic)
 
 -- TODO: This needs to be updated for transactions
-data BlockUpdate = UpdateData Block | ReplaceData [Block] | RequestChain deriving (Generic)
+data BlockUpdate = UpdateData Block | ReplaceData [Block] | RequestChain deriving (Generic) | ReplaceTransactionPool transactions
 instance B.Binary BlockUpdate
 
 p2pServiceName :: String
@@ -111,7 +111,7 @@ getAllTransactions = do
 
 getCurrentTransactions :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Transaction]
 getCurrentTransactions = do
-  addDebug "Getting transactions not in chain"
+  addDebug "Getting transactions not in chain."
   (BlockChainState _ _ transactions _ _) <- getState
   liftIO $ readIORef transactions
 
@@ -121,11 +121,22 @@ addTransaction transaction = do
   chain <- liftIO $ readIORef chainRef
   if isValidNewTransaction transaction chain
     then do
-      addDebug "Adding new transaction"
+      addDebug "Adding new transaction."
       _ <- liftIO $ atomicModifyIORef' transactionsRef $ \t -> (t ++ [transaction], t ++ [transaction])
       return ()
     else
-      addDebug "Transaction not valid. skipping"
+      addDebug "Transaction not valid."
+
+replaceTransactionPool :: MonadIO m => IORef [Transaction] -> [Transaction] -> m ()
+replaceTransactionPool transactionRef newPool = do
+  setPool <- liftIO $ atomicModifyIORef' transactionRef $ const (newPool, newPool)
+  addDebug ("Updated transaction pool: " ++ show setPool)
+
+sendTransactionPool :: MonadIO m => LocalNode -> IORef [Transaction] -> m ()
+sendTransactionPool localNode transactionRef = liftIO $ runProcess localNode $ do
+  liftDebug "Emitting transaction pool."
+  transactions <- liftIO $ readIORef transactionRef
+  P2P.nsendPeers p2pServiceName $ ReplaceTransactions transactions
 
 app :: Api
 app = do
@@ -183,9 +194,9 @@ runServer args = do
   addDebug "Starting Server"
   (localNode, procId) <- runP2P (p2pPort args) (seedNode args) (return ())
   -- TODO: I dont think we need these maybe statements, most of it can just be inititialized usually
-  chainRef <- maybe (newIORef [initialBlock]) (const $ newIORef []) (Nothing)
-  nodeRef <- maybe (newIORef [initialNode]) (const $ newIORef []) (Nothing)
-  transactionRef <- maybe (newIORef []) (const $ newIORef []) (Nothing)
+  chainRef <- maybe (newIORef [initialBlock]) (const $ newIORef []) (seedNode args)
+  nodeRef <- maybe (newIORef [initialNode]) (const $ newIORef []) (seedNode args)
+  transactionRef <- maybe (newIORef []) (const $ newIORef []) (seedNode args)
   spockCfg <- defaultSpockCfg EmptySession PCNoDatabase (BlockChainState chainRef nodeRef transactionRef localNode procId)
   _ <- async $ runSpock (read (httpPort args) :: Int) (spock spockCfg Server.app)
   addDebug $ "REST API Running on " ++ (httpPort args)
@@ -199,8 +210,9 @@ runServer args = do
     else addDebug "This is the initial node, not requesting a chain"
     forever $ do
       message <- expect :: Process BlockUpdate
-      addDebug "Message received.."
+      addDebug "Message received."
       case message of
+        -- Block/Chain
         (ReplaceData chain) -> do
           addDebug $ "Replace data with new chain: " ++ show chain
           -- replaceChain ref chain
@@ -210,3 +222,11 @@ runServer args = do
         RequestChain -> do
           addDebug "Provide current chain"
           -- sendChain localNode ref
+        -- Transaction
+        (ReplaceTransactionPool transactions) -> do
+          addDebug $ "Replace transactions with new transaction pool: " ++ show transactions
+          replaceTransactionPool transactionRef transactions
+        RequestTransactions -> do
+          addDebug "Providing current transaction pool"
+          sendTransactionPool localNode transactionRef
+        -- Nodes
