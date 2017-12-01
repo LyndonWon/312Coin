@@ -51,6 +51,7 @@ data BlockUpdate =  UpdateChain Block
                   | UpdateTransactionPool Transaction
                   | ReplaceTransactionPool [Transaction]
                   | RequestTransactionPool deriving (Generic)
+                  
 instance B.Binary BlockUpdate
 
 p2pServiceName :: String
@@ -197,9 +198,8 @@ runP2P port bootstrapNode = P2P.bootstrapNonBlocking "127.0.0.1" port (maybeToLi
 
 runServer :: CliArgs -> IO ()
 runServer args = do
-  addDebug "Starting Server"
+  addDebug "Starting REST API and P2P Node"
   (localNode, procId) <- runP2P (p2pPort args) (seedNode args) (return ())
-  -- TODO: I dont think we need these maybe statements, most of it can just be inititialized usually
   chainRef <- maybe (newIORef [initialBlock]) (const $ newIORef []) (seedNode args)
   nodeRef <- maybe (newIORef [initialNode]) (const $ newIORef []) (seedNode args)
   transactionRef <- maybe (newIORef []) (const $ newIORef []) (seedNode args)
@@ -214,11 +214,11 @@ runServer args = do
       addDebug "This is not the initial node, getting chain from P2P seed"
       -- requestChain localNode
     else addDebug "This is the initial node, not requesting a chain"
+    addDebug $ "P2P Node Running on " ++ (p2pPort args)
     forever $ do
       message <- expect :: Process BlockUpdate
       addDebug "Message received."
       case message of
-        -- Block/Chain
         (ReplaceChain chain) -> do
           addDebug $ "Replace data with new chain: " ++ show chain
           -- replaceChain ref chain
@@ -228,7 +228,6 @@ runServer args = do
         RequestChain -> do
           addDebug "Request for current chain."
           -- sendChain localNode ref
-        -- Transaction
         (ReplaceTransactionPool transactions) -> do
           addDebug $ "Replace transactions with new transaction pool: " ++ show transactions
           replaceTransactionPool transactionRef transactions
@@ -238,4 +237,4 @@ runServer args = do
         RequestTransactionPool -> do
           addDebug "Providing current transaction pool"
           sendTransactionPool localNode transactionRef
-        -- Nodes
+        -- TODO: add Node logic
