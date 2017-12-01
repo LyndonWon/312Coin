@@ -9,8 +9,12 @@ module Server where
 import           Lib
 import           Control.Monad                    (forever)
 import           Control.Monad.Trans
+import           Control.Concurrent               (threadDelay)
 import           Control.Concurrent.Async
+import           Control.Distributed.Process
+import           Control.Distributed.Process.Node
 import           Data.IORef
+import           Data.Maybe
 import           System.Log.Logger
 import           Web.Spock
 import           Web.Spock.Config
@@ -19,16 +23,34 @@ import           Data.Monoid      ((<>))
 import           Data.Text        (Text, pack)
 import           GHC.Generics     hiding (to, from)
 
+import qualified Control.Distributed.Backend.P2P  as P2P
+import qualified Data.Binary                      as B
+import qualified Data.Text                        as T
+
 type Api = SpockM () MySession BlockChainState ()
 
 type ApiAction a = SpockAction () () () a
+
+data CliArgs = CliArgs { httpPort :: String
+                         , p2pPort  :: String
+                         , seedNode :: Maybe String
+                         }
 
 data MySession = EmptySession
 
 data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
                                        , nodeState :: IORef [Node]
                                        , transactionState :: IORef [Transaction]
+                                       , node            :: LocalNode
+                                       , pid             :: ProcessId
                                        } deriving (Generic)
+
+-- TODO: This needs to be updated for transactions
+data BlockUpdate = UpdateData Block | ReplaceData [Block] | RequestChain deriving (Generic)
+instance B.Binary BlockUpdate
+
+p2pServiceName :: String
+p2pServiceName = "updateservice"
 
 addDebug :: (MonadIO m) => String -> m ()
 addDebug str = liftIO (debugM "312Coin" (show str))
@@ -43,7 +65,7 @@ errorJson code message =
 
 getBlockChain :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Block]
 getBlockChain = do
-  (BlockChainState chain _ _) <- getState
+  (BlockChainState chain _ _ _ _) <- getState
   liftIO $ readIORef chain
 
 getLatestBlock :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m Block
@@ -63,7 +85,7 @@ addBlock ref block = do
 getNodes :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Node]
 getNodes = do
   addDebug "Getting all registered nodes"
-  (BlockChainState _ nodes _) <- getState
+  (BlockChainState _ nodes _ _ _) <- getState
   liftIO $ readIORef nodes
 
 registerNode :: MonadIO m => IORef [Node] -> Node -> m ()
@@ -81,21 +103,21 @@ getNodeId nodeArgs = do
 
 getAllTransactions :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Transaction]
 getAllTransactions = do
-  addDebug "Getting current transactions in chain"
-  (BlockChainState ref _ _) <- getState
+  addDebug "Getting transactions in chain"
+  (BlockChainState ref _ _ _ _) <- getState
   chain <- liftIO $ readIORef ref
   let allTransactions = flatten [ transactions | Block _ _ _ transactions _ _  <- chain]
   return allTransactions
 
 getCurrentTransactions :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Transaction]
 getCurrentTransactions = do
-  addDebug "Getting current transactions not in chain"
-  (BlockChainState _ _ transactions) <- getState
+  addDebug "Getting transactions not in chain"
+  (BlockChainState _ _ transactions _ _) <- getState
   liftIO $ readIORef transactions
 
 addTransaction :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => Transaction -> m ()
 addTransaction transaction = do
-  (BlockChainState chainRef _ transactionsRef) <- getState
+  (BlockChainState chainRef _ transactionsRef _ _) <- getState
   chain <- liftIO $ readIORef chainRef
   if isValidNewTransaction transaction chain
     then do
@@ -109,7 +131,7 @@ app :: Api
 app = do
   -- Block routes
   get "block" $ do
-    (BlockChainState chain _ transactions) <- getState
+    (BlockChainState chain _ transactions _ _) <- getState
     lastBlock <- getLatestBlock
     lastTransactions <- liftIO $ atomicModifyIORef' transactions $ \t -> ([], t)
     block <- mineBlock lastBlock lastTransactions
@@ -128,7 +150,7 @@ app = do
     addDebug $ show nodes
     json $ nodes
   post "node" $ do
-    (BlockChainState _ ref _) <- getState
+    (BlockChainState _ ref _ _ _) <- getState
     (nodeArgs :: NodeArgs) <- jsonBody'
     (newNode :: Node) <- getNodeId nodeArgs
     _ <- registerNode ref newNode
@@ -154,13 +176,37 @@ app = do
     addDebug $ show transactions
     json $ transactions
 
-runServer :: IO ()
-runServer = do
+runP2P port bootstrapNode = P2P.bootstrapNonBlocking "127.0.0.1" port (maybeToList $ fmap P2P.makeNodeId bootstrapNode) initRemoteTable
+
+runServer :: CliArgs -> IO ()
+runServer args = do
   addDebug "Starting Server"
+  (localNode, procId) <- runP2P (p2pPort args) (seedNode args) (return ())
   -- TODO: I dont think we need these maybe statements, most of it can just be inititialized usually
   chainRef <- maybe (newIORef [initialBlock]) (const $ newIORef []) (Nothing)
   nodeRef <- maybe (newIORef [initialNode]) (const $ newIORef []) (Nothing)
   transactionRef <- maybe (newIORef []) (const $ newIORef []) (Nothing)
-  spockCfg <- defaultSpockCfg EmptySession PCNoDatabase (BlockChainState chainRef nodeRef transactionRef)
-  runSpock 8080 (spock spockCfg app)
-  addDebug "Server Running on 8080"
+  spockCfg <- defaultSpockCfg EmptySession PCNoDatabase (BlockChainState chainRef nodeRef transactionRef localNode procId)
+  _ <- async $ runSpock (read (httpPort args) :: Int) (spock spockCfg Server.app)
+  addDebug $ "REST API Running on " ++ (httpPort args)
+  runProcess localNode $ do
+    getSelfPid >>= register p2pServiceName
+    liftIO $ threadDelay 1000000
+    _ <- if isJust $ seedNode args
+    then do
+      addDebug "This is not the initial node, getting chain from P2P seed"
+      -- requestChain localNode
+    else addDebug "This is the initial node, not requesting a chain"
+    forever $ do
+      message <- expect :: Process BlockUpdate
+      addDebug "Message received.."
+      case message of
+        (ReplaceData chain) -> do
+          addDebug $ "Replace data with new chain: " ++ show chain
+          -- replaceChain ref chain
+        (UpdateData block) -> do
+          addDebug $ "Add new block to chain: " ++ show block
+          -- addBlock ref block
+        RequestChain -> do
+          addDebug "Provide current chain"
+          -- sendChain localNode ref
