@@ -51,7 +51,7 @@ data BlockUpdate =  UpdateChain Block
                   | UpdateTransactionPool Transaction
                   | ReplaceTransactionPool [Transaction]
                   | RequestTransactionPool deriving (Generic)
-                  
+
 instance B.Binary BlockUpdate
 
 p2pServiceName :: String
@@ -143,6 +143,25 @@ sendTransactionPool localNode transactionRef = liftIO $ runProcess localNode $ d
   transactions <- liftIO $ readIORef transactionRef
   P2P.nsendPeers p2pServiceName $ ReplaceTransactionPool transactions
 
+-- Chain Functions --
+replaceChain :: MonadIO m => IORef [Block] -> [Block] -> m ()
+replaceChain chainRef newChain = do
+  currChain  <- liftIO $ readIORef chainRef
+  if isValidChain newChain && length currChain < length newChain
+    then do
+      _ <- liftIO $ atomicModifyIORef' chainRef $ const (newChain, newChain)
+      return ()
+    else addDebug "chain is not valid for updating"
+
+requestChain :: MonadIO m => LocalNode -> m ()
+requestChain localNode = liftIO $ runProcess localNode $ do
+  P2P.nsendPeers p2pServiceName $ RequestChain
+
+sendChain :: MonadIO m => LocalNode -> IORef [Block] -> m ()
+sendChain localNode chainRef = liftIO $ runProcess localNode $ do
+  newChain <- liftIO $ readIORef chainRef
+  P2P.nsendPeers p2pServiceName $ ReplaceChain newChain
+
 app :: Api
 app = do
   -- Block routes
@@ -212,7 +231,7 @@ runServer args = do
     _ <- if isJust $ seedNode args
     then do
       addDebug "This is not the initial node, getting chain from P2P seed"
-      -- requestChain localNode
+      requestChain localNode
     else addDebug "This is the initial node, not requesting a chain"
     addDebug $ "P2P Node Running on " ++ (p2pPort args)
     forever $ do
@@ -221,13 +240,13 @@ runServer args = do
       case message of
         (ReplaceChain chain) -> do
           addDebug $ "Replace data with new chain: " ++ show chain
-          -- replaceChain ref chain
+          replaceChain chainRef chain
         (UpdateChain block) -> do
           addDebug $ "Add new block to chain: " ++ show block
-          -- addBlock ref block
+          addBlock chainRef block
         RequestChain -> do
           addDebug "Request for current chain."
-          -- sendChain localNode ref
+          sendChain localNode chainRef
         (ReplaceTransactionPool transactions) -> do
           addDebug $ "Replace transactions with new transaction pool: " ++ show transactions
           replaceTransactionPool transactionRef transactions
