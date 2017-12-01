@@ -7,7 +7,7 @@
 module Server where
 
 import           Lib
-import           Control.Monad                    (forever)
+import           Control.Monad                    (forever, when)
 import           Control.Monad.Trans
 import           Control.Concurrent               (threadDelay)
 import           Control.Concurrent.Async
@@ -55,7 +55,7 @@ data BlockUpdate =  UpdateChain Block
 instance B.Binary BlockUpdate
 
 p2pServiceName :: String
-p2pServiceName = "updateservice"
+p2pServiceName = "blockchain-update-service"
 
 addDebug :: (MonadIO m) => String -> m ()
 addDebug str = liftIO (debugM "312Coin" (show str))
@@ -120,17 +120,28 @@ getCurrentTransactions = do
   (BlockChainState _ _ transactions _ _) <- getState
   liftIO $ readIORef transactions
 
-addTransaction :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => Transaction -> m ()
-addTransaction transaction = do
+addNewTransaction :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => Transaction -> m ()
+addNewTransaction transaction = do
   (BlockChainState chainRef _ transactionsRef _ _) <- getState
   chain <- liftIO $ readIORef chainRef
-  if isValidNewTransaction transaction chain
+  if isValidTransaction transaction chain
     then do
       addDebug "Adding new transaction."
       _ <- liftIO $ atomicModifyIORef' transactionsRef $ \t -> (t ++ [transaction], t ++ [transaction])
       return ()
     else
       addDebug "Transaction not valid."
+
+addTransaction :: MonadIO m => IORef [Transaction] -> Transaction -> m ()
+addTransaction ref transaction = do
+  transactions <- liftIO $ readIORef ref
+  if isNewTransaction transaction transactions
+    then do
+    addDebug "Adding new transaction to pool from peer"
+    _ <- liftIO $ atomicModifyIORef' ref $ \t -> (t ++ [transaction], t ++ [transaction])
+    return ()
+  else
+    addDebug "Already have transaction."
 
 requestTransactionPool :: MonadIO m => LocalNode -> m ()
 requestTransactionPool localNode = liftIO $ runProcess localNode $ do
@@ -148,7 +159,6 @@ sendTransactionPool localNode transactionRef = liftIO $ runProcess localNode $ d
   transactions <- liftIO $ readIORef transactionRef
   P2P.nsendPeers p2pServiceName $ ReplaceTransactionPool transactions
 
--- Chain Functions --
 replaceChain :: MonadIO m => IORef [Block] -> [Block] -> m ()
 replaceChain chainRef newChain = do
   currentChain <- liftIO $ readIORef chainRef
@@ -156,7 +166,7 @@ replaceChain chainRef newChain = do
     then addDebug $ "chain is not valid for updating!: " ++ show newChain
     else do
       setChain <- liftIO $ atomicModifyIORef' chainRef $ const (newChain, newChain)
-      addDebug ("updated chain: " ++ show setChain)
+      addDebug ("Updated chain: " ++ show setChain)
 
 requestChain :: MonadIO m => LocalNode -> m ()
 requestChain localNode = liftIO $ runProcess localNode $ do
@@ -171,22 +181,21 @@ sendChain localNode chainRef = liftIO $ runProcess localNode $ do
 
 app :: Api
 app = do
-  -- Block routes
+  -- TODO: Refactor this out into its own controller method
   get "block" $ do
-    (BlockChainState chain _ transactions _ _) <- getState
+    (BlockChainState chain _ transactions localNode _) <- getState
     lastBlock <- getLatestBlock
     lastTransactions <- liftIO $ atomicModifyIORef' transactions $ \t -> ([], t)
     block <- mineBlock lastBlock lastTransactions
     _ <- addBlock chain block
+    liftIO $ runProcess localNode $ P2P.nsendPeers p2pServiceName $ UpdateChain block
     chain <- getBlockChain
     addDebug $ show chain
     json $ chain
-  --  Chain routes
   get "chain" $ do
     chain <- getBlockChain
     addDebug $ show chain
     json $ chain
-  --  Node routes
   get "node" $ do
     nodes <- getNodes
     addDebug $ show nodes
@@ -199,7 +208,6 @@ app = do
     nodes <- getNodes
     addDebug $ show nodes
     json $ nodes
-  --  Transaction routes
   get "transaction" $ do
     transactions <- getCurrentTransactions
     addDebug $ show transactions
@@ -208,23 +216,21 @@ app = do
     transactions <- getAllTransactions
     addDebug $ show transactions
     json $ transactions
-  -- TODO: Need to refactor out the creating transaction logic into Lib
+  -- TODO: Refactor this out into its own controller method
   post "transaction" $ do
     (BlockChainState _ _ _ localNode _) <- getState
     (args :: TransactionArgs) <- jsonBody'
     addDebug $ show args
     transaction <- timeStampTransaction args
-    _ <- addTransaction transaction
-    transactions <- getCurrentTransactions
+    _ <- addNewTransaction transaction
     liftIO $ runProcess localNode $ P2P.nsendPeers p2pServiceName $ UpdateTransactionPool transaction
-    addDebug $ show transactions
-    json $ transactions
+    json $ transaction
 
-runP2P port bootstrapNode = P2P.bootstrapNonBlocking "127.0.0.1" port (maybeToList $ P2P.makeNodeId `fmap` bootstrapNode) initRemoteTable
+runP2P port bootstrapNode = P2P.bootstrapNonBlocking "localhost" port (maybeToList $ P2P.makeNodeId `fmap` bootstrapNode) initRemoteTable
 
 runServer :: CliArgs -> IO ()
 runServer args = do
-  addDebug "Starting REST API and P2P Node"
+  addDebug "Starting REST API and P2P Node."
   (localNode, procId) <- runP2P (p2pPort args) (seedNode args) (return ())
   chainRef <- maybe (newIORef [initialBlock]) (const $ newIORef []) (seedNode args)
   nodeRef <- maybe (newIORef [initialNode]) (const $ newIORef []) (seedNode args)
@@ -237,14 +243,14 @@ runServer args = do
     liftIO $ threadDelay 1000000
     _ <- if isJust $ seedNode args
     then do
-      addDebug "This is not the initial node, getting chain from P2P seed"
+      addDebug "This is not the initial node, getting chain from P2P seed."
       requestChain localNode
       requestTransactionPool localNode
-    else addDebug "This is the initial node, not requesting a chain"
-    addDebug $ "P2P Node Running on " ++ (p2pPort args)
+    else addDebug "This is the initial node, not requesting a chain."
+    addDebug $ "P2P Node Running on: " ++ (p2pPort args)
     forever $ do
       message <- expect :: Process BlockUpdate
-      addDebug "Message received"
+      addDebug "Message received."
       case message of
         (ReplaceChain chain) -> do
           addDebug $ "Replace data with new chain: " ++ show chain
@@ -252,6 +258,7 @@ runServer args = do
         (UpdateChain block) -> do
           addDebug $ "Add new block to chain: " ++ show block
           addBlock chainRef block
+          replaceTransactionPool transactionRef []
         RequestChain -> do
           addDebug "Request for current chain."
           sendChain localNode chainRef
@@ -260,8 +267,7 @@ runServer args = do
           replaceTransactionPool transactionRef transactions
         (UpdateTransactionPool transaction) -> do
           addDebug $ "Add new transaction to pool: " ++ show transaction
-          -- addBlock ref block
+          addTransaction transactionRef transaction
         RequestTransactionPool -> do
-          addDebug "Providing current transaction pool"
+          addDebug "Providing current transaction pool."
           sendTransactionPool localNode transactionRef
-        -- TODO: add Node logic
