@@ -1,7 +1,9 @@
 {-# LANGUAGE DeriveGeneric, DuplicateRecordFields, ParallelListComp #-}
 
+-- LEGION CODE SOURCED FROM: https://github.com/aviaviavi/legion/blob/master/src/Lib.hs --
 module Lib where
 
+-- LEGION: Package selection --
 import System.IO.Unsafe
 import           Control.Monad.Trans
 import           Crypto.Hash                    ( Digest
@@ -105,7 +107,16 @@ instance FromJSON NodeArgs
 initialNode :: Node
 initialNode = Node "master" 0 "localhost:1234"
 
+createNode :: (MonadIO m) => Node -> NodeArgs -> m Node
+createNode lastNode nodeArgs = do
+  let node = Node { name    = nName nodeArgs
+                  , uuid    = uuid lastNode + 1
+                  , address = nAddress nodeArgs
+                  }
+  return node
+
 ----------------------------------
+-- LEGION: Structure of Block --
 data Block = Block { index        :: Int
                    , previousHash :: String
                    , timestamp    :: Int
@@ -118,6 +129,7 @@ instance ToJSON Block
 instance FromJSON Block
 instance Binary Block
 
+-- LEGION: Implementation of Block creation, hashing, proof of work, and validation --
 epoch :: IO Int
 epoch = round `fmap` getPOSIXTime
 
@@ -187,11 +199,3 @@ mineBlock lastBlock latestTransactions = do
                     , blockHash    = "will be changed"
                     }
   return (setNonceAndHash block)
-
-createNode :: (MonadIO m) => Node -> NodeArgs -> m Node
-createNode lastNode nodeArgs = do
-  let node = Node { name    = nName nodeArgs
-                  , uuid    = uuid lastNode + 1
-                  , address = nAddress nodeArgs
-                  }
-  return node

@@ -4,8 +4,10 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies        #-}
 
+-- LEGION CODE SOURCED FROM: https://github.com/aviaviavi/legion/blob/master/src/Server.hs --
 module Server where
 
+-- LEGION: Package selection --
 import           Lib
 import           Control.Monad                    (forever)
 import           Control.Monad.Trans
@@ -31,6 +33,7 @@ type Api = SpockM () MySession BlockChainState ()
 
 type ApiAction a = SpockAction () () () a
 
+-- LEGION: Arguments for CLI --
 data CliArgs = CliArgs { httpPort :: String
                          , p2pPort  :: String
                          , seedNode :: Maybe String
@@ -38,6 +41,8 @@ data CliArgs = CliArgs { httpPort :: String
 
 data MySession = EmptySession
 
+-- LEGION: Basic structure for BlockChainState --
+-- 312Coin: additional fields added --
 data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
                                        , nodeState :: IORef [Node]
                                        , transactionState :: IORef [Transaction]
@@ -45,6 +50,8 @@ data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
                                        , pid             :: ProcessId
                                        } deriving (Generic)
 
+-- LEGION: Basic types for BlockUpdate --
+-- 312Coin: additional types added --
 data BlockUpdate =  UpdateChain Block
                   | ReplaceChain [Block]
                   | RequestChain
@@ -68,6 +75,7 @@ errorJson code message =
     , "error" .= object ["code" .= code, "message" .= message]
     ]
 
+-- LEGION: Basic implementation of getBlockChain, getLatestBlock and addBlock --
 getBlockChain :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Block]
 getBlockChain = do
   (BlockChainState chain _ _ _ _) <- getState
@@ -143,6 +151,7 @@ sendTransactionPool localNode transactionRef = liftIO $ runProcess localNode $ d
   transactions <- liftIO $ readIORef transactionRef
   P2P.nsendPeers p2pServiceName $ ReplaceTransactionPool transactions
 
+-- LEGION: Implementation of replaceChain, requestChain, sendChain --
 -- Chain Functions --
 replaceChain :: MonadIO m => IORef [Block] -> [Block] -> m ()
 replaceChain chainRef newChain = do
@@ -164,6 +173,8 @@ sendChain localNode chainRef = liftIO $ runProcess localNode $ do
 
 app :: Api
 app = do
+  -- LEGION: Basic GET /block and GET /chain implementation --
+  -- 312Coin: Additional functionality for storing transactions --
   -- Block routes
   get "block" $ do
     (BlockChainState chain _ transactions _ _) <- getState
@@ -213,6 +224,8 @@ app = do
     addDebug $ show transactions
     json $ transactions
 
+-- LEGION: Basic P2P Messaging for updating BlockChainState --
+-- 312Coin: Additional functionality added for transaction consensus --
 runP2P port bootstrapNode = P2P.bootstrapNonBlocking "127.0.0.1" port (maybeToList $ fmap P2P.makeNodeId bootstrapNode) initRemoteTable
 
 runServer :: CliArgs -> IO ()

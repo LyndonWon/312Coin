@@ -1,3 +1,4 @@
+-- LEGION CODE SOURCED FROM: https://github.com/aviaviavi/legion/blob/master/app/Main.hs --
 module Main where
 
 import Lib
