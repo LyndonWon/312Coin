@@ -26,8 +26,8 @@ type ApiAction a = SpockAction () () () a
 data MySession = EmptySession
 
 data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
-                                         , nodeState :: IORef [Node]
-                                         , transactionState :: IORef [Transaction]
+                                       , nodeState :: IORef [Node]
+                                       , transactionState :: IORef [Transaction]
                                        } deriving (Generic)
 
 addDebug :: (MonadIO m) => String -> m ()
@@ -65,6 +65,19 @@ getNodes = do
   addDebug "Getting all registered nodes"
   (BlockChainState _ nodes _) <- getState
   liftIO $ readIORef nodes
+
+registerNode :: MonadIO m => IORef [Node] -> Node -> m ()
+registerNode ref node = do
+  _ <- liftIO $ atomicModifyIORef' ref $ \n -> (n ++ [node], n ++ [node])
+  return ()
+
+getLatestNode :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m Node
+getLatestNode = fmap last getNodes
+
+getNodeId :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => NodeArgs -> m Node
+getNodeId nodeArgs = do
+  latestNode <- getLatestNode
+  createNode latestNode nodeArgs
 
 getAllTransactions :: (SpockState m ~ BlockChainState, MonadIO m, HasSpock m) => m [Transaction]
 getAllTransactions = do
@@ -111,6 +124,14 @@ app = do
     json $ chain
   --  Node routes
   get "node" $ do
+    nodes <- getNodes
+    addDebug $ show nodes
+    json $ nodes
+  post "node" $ do
+    (BlockChainState _ ref _) <- getState
+    (nodeArgs :: NodeArgs) <- jsonBody'
+    (newNode :: Node) <- getNodeId nodeArgs
+    _ <- registerNode ref newNode
     nodes <- getNodes
     addDebug $ show nodes
     json $ nodes

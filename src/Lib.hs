@@ -85,16 +85,24 @@ isValidNewTransaction transaction chain
 -- TODO: Need to refactor out Node logic to node.hs
 ----------------------------------
 
-data Node = Node
-  { name :: String
-  , id  :: Int
-  } deriving (Show, Read, Eq, Generic)
+data Node = Node { name      :: String
+                 , uuid      :: Int
+                 , address   :: String
+                 } deriving (Generic, Show, Read, Eq)
 
 instance ToJSON Node
 instance FromJSON Node
 
+data NodeArgs = NodeArgs { nName    :: String
+                         , nAddress :: String
+                         } deriving (Show, Eq, Generic)
+
+instance ToJSON NodeArgs
+instance FromJSON NodeArgs
+
+
 initialNode :: Node
-initialNode = Node "master" 1
+initialNode = Node "master" 0 "localhost:1234"
 
 ----------------------------------
 data Block = Block { index        :: Int
@@ -177,3 +185,11 @@ mineBlock lastBlock latestTransactions = do
                     , blockHash    = "will be changed"
                     }
   return (setNonceAndHash block)
+
+createNode :: (MonadIO m) => Node -> NodeArgs -> m Node
+createNode lastNode nodeArgs = do
+  let node = Node { name    = nName nodeArgs
+                  , uuid    = uuid lastNode + 1
+                  , address = nAddress nodeArgs
+                  }
+  return node
