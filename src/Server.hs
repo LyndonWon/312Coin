@@ -45,8 +45,12 @@ data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
                                        , pid             :: ProcessId
                                        } deriving (Generic)
 
--- TODO: This needs to be updated for transactions
-data BlockUpdate = UpdateData Block | ReplaceData [Block] | RequestChain deriving (Generic) | ReplaceTransactionPool transactions
+data BlockUpdate =  UpdateChain Block
+                  | ReplaceChain [Block]
+                  | RequestChain
+                  | UpdateTransactionPool Transaction
+                  | ReplaceTransactionPool [Transaction]
+                  | RequestTransactionPool deriving (Generic)
 instance B.Binary BlockUpdate
 
 p2pServiceName :: String
@@ -134,9 +138,9 @@ replaceTransactionPool transactionRef newPool = do
 
 sendTransactionPool :: MonadIO m => LocalNode -> IORef [Transaction] -> m ()
 sendTransactionPool localNode transactionRef = liftIO $ runProcess localNode $ do
-  liftDebug "Emitting transaction pool."
+  addDebug "Emitting transaction pool."
   transactions <- liftIO $ readIORef transactionRef
-  P2P.nsendPeers p2pServiceName $ ReplaceTransactions transactions
+  P2P.nsendPeers p2pServiceName $ ReplaceTransactionPool transactions
 
 app :: Api
 app = do
@@ -179,11 +183,13 @@ app = do
     json $ transactions
   -- TODO: Need to refactor out the creating transaction logic into Lib
   post "transaction" $ do
+    (BlockChainState _ _ _ localNode _) <- getState
     (args :: TransactionArgs) <- jsonBody'
     addDebug $ show args
     transaction <- timeStampTransaction args
     _ <- addTransaction transaction
     transactions <- getCurrentTransactions
+    liftIO $ runProcess localNode $ P2P.nsendPeers p2pServiceName $ UpdateTransactionPool transaction
     addDebug $ show transactions
     json $ transactions
 
@@ -213,20 +219,23 @@ runServer args = do
       addDebug "Message received."
       case message of
         -- Block/Chain
-        (ReplaceData chain) -> do
+        (ReplaceChain chain) -> do
           addDebug $ "Replace data with new chain: " ++ show chain
           -- replaceChain ref chain
-        (UpdateData block) -> do
+        (UpdateChain block) -> do
           addDebug $ "Add new block to chain: " ++ show block
           -- addBlock ref block
         RequestChain -> do
-          addDebug "Provide current chain"
+          addDebug "Request for current chain."
           -- sendChain localNode ref
         -- Transaction
         (ReplaceTransactionPool transactions) -> do
           addDebug $ "Replace transactions with new transaction pool: " ++ show transactions
           replaceTransactionPool transactionRef transactions
-        RequestTransactions -> do
+        (UpdateTransactionPool transaction) -> do
+          addDebug $ "Add new transaction to pool: " ++ show transaction
+          -- addBlock ref block
+        RequestTransactionPool -> do
           addDebug "Providing current transaction pool"
           sendTransactionPool localNode transactionRef
         -- Nodes
