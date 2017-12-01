@@ -46,7 +46,7 @@ data BlockChainState = BlockChainState { blockChainState :: IORef [Block]
                                        } deriving (Generic)
 
 -- TODO: This needs to be updated for transactions
-data BlockUpdate = UpdateData Block | ReplaceData [Block] | RequestChain deriving (Generic)
+data BlockUpdate = UpdateChain Block | ReplaceChain [Block] | RequestChain deriving (Generic)
 instance B.Binary BlockUpdate
 
 p2pServiceName :: String
@@ -127,6 +127,27 @@ addTransaction transaction = do
     else
       addDebug "Transaction not valid. skipping"
 
+-- Chain Functions --
+replaceChain :: MonadIO m => IORef [Block] -> [Block] -> m ()
+replaceChain chainRef newChain = do
+  currChain  <- liftIO $ readIORef chainRef
+  if isValidChain newChain && length currChain < length newChain
+    then do
+      _ <- liftIO $ atomicModifyIORef' chainRef $ const (newChain, newChain)
+      return ()
+    else addDebug "chain is not valid for updating"
+
+requestChain :: MonadIO m => LocalNode -> m ()
+requestChain localNode = liftIO $ runProcess localNode $ do
+  P2P.nsendPeers p2pServiceName $ RequestChain
+
+
+sendChain :: MonadIO m => LocalNode -> IORef [Block] -> m ()
+sendChain localNode chainRef = liftIO $ runProcess localNode $ do
+  newChain <- liftIO $ readIORef chainRef
+  P2P.nsendPeers p2pServiceName $ ReplaceChain newChain
+
+
 app :: Api
 app = do
   -- Block routes
@@ -195,18 +216,18 @@ runServer args = do
     _ <- if isJust $ seedNode args
     then do
       addDebug "This is not the initial node, getting chain from P2P seed"
-      -- requestChain localNode
+      requestChain localNode
     else addDebug "This is the initial node, not requesting a chain"
     forever $ do
       message <- expect :: Process BlockUpdate
       addDebug "Message received.."
       case message of
-        (ReplaceData chain) -> do
+        (ReplaceChain chain) -> do
           addDebug $ "Replace data with new chain: " ++ show chain
-          -- replaceChain ref chain
-        (UpdateData block) -> do
+          replaceChain chainRef chain
+        (UpdateChain block) -> do
           addDebug $ "Add new block to chain: " ++ show block
-          -- addBlock ref block
+          addBlock chainRef block
         RequestChain -> do
           addDebug "Provide current chain"
-          -- sendChain localNode ref
+          sendChain localNode chainRef
