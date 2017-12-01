@@ -27,6 +27,8 @@ library
                       , Spock
                       , text
                       , async
+                      , distributed-process
+                      , distributed-process-p2p
   default-language:    Haskell2010
 
 executable 312Coin-exe
@@ -40,6 +42,9 @@ executable 312Coin-exe
                      , text
                      , aeson
                      , async
+                     , binary
+                     , distributed-process
+                     , distributed-process-p2p
   default-language:    Haskell2010
 
 test-suite 312Coin-test

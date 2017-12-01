@@ -29,6 +29,7 @@ data Transaction = Transaction
 
 instance ToJSON Transaction
 instance FromJSON Transaction
+instance Binary Transaction
 
 data TransactionArgs = TransactionArgs
   { to :: String
@@ -115,6 +116,7 @@ data Block = Block { index        :: Int
 
 instance ToJSON Block
 instance FromJSON Block
+instance Binary Block
 
 epoch :: IO Int
 epoch = round `fmap` getPOSIXTime

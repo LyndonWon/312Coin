@@ -9,15 +9,19 @@ import           System.Log.Handler               (setFormatter)
 import           System.Log.Handler.Simple
 import           System.Log.Logger
 
-initLogger :: IO ()
-initLogger = let logPriority = DEBUG
-                 format lh = return $ setFormatter lh (simpleLogFormatter "[$time : $loggername : $prio] $msg")
+initLogger :: String -> IO ()
+initLogger port = let logPriority = DEBUG
+                      format lh = return $ setFormatter lh (simpleLogFormatter "[$time : $loggername : $prio] $msg")
   in
     streamHandler stdout logPriority >>= format >>= \s ->
-      fileHandler ("312Coin.log") logPriority >>= format >>= \h ->
+      fileHandler ("312Coin" ++ port ++ ".log") logPriority >>= format >>= \h ->
         updateGlobalLogger rootLoggerName $ setLevel logPriority . setHandlers [s, h]
 
 main :: IO ()
 main = do
-  _ <- initLogger
-  runServer
+  args <- getArgs >>= \a -> case a of
+        [h,p] -> return $ CliArgs h p Nothing
+        [h,p,i] -> return $ CliArgs h p $ Just i
+        _ -> fail "Usage: 312Coin httpPort :: String p2pPort :: String bootstrapAddress :: [String]\n"
+  _ <- initLogger $ p2pPort args
+  runServer args
