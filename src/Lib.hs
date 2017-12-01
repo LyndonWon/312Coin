@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveGeneric, DuplicateRecordFields #-}
+{-# LANGUAGE DeriveGeneric, DuplicateRecordFields, ParallelListComp #-}
 
 module Lib where
 
@@ -49,6 +49,38 @@ timeStampTransaction args = do
                     , timeProcessed = time
                     }
   return transaction
+
+flatten :: [[a]] -> [a]
+flatten xs = (\z n -> foldr (\x y -> foldr z y x) n xs) (:) []
+
+allTransactions :: [Block] -> [Transaction]
+allTransactions chain = flatten [ transactions | Block _ _ _ transactions _ _  <- chain]
+
+filterBySender :: String -> Transaction -> Bool
+filterBySender key (Transaction sender _ _ _ ) | sender == key = True
+filterBySender _ _ = False
+
+filterByReceiver :: String -> Transaction -> Bool
+filterByReceiver key (Transaction _ receiver _ _ ) | receiver == key = True
+filterByReceiver _ _ = False
+
+credit :: String -> [Transaction] -> Int
+credit key transactions = foldl (\acc (Transaction _ _ amount _)  -> acc + amount ) 0 $ filter (filterBySender key) transactions
+
+debit :: String -> [Transaction] -> Int
+debit key transactions = foldl (\acc (Transaction _ _ amount _)  -> acc + amount ) 0 $ filter (filterByReceiver key) transactions
+
+balance :: String -> [Transaction] -> Int
+balance key transaction = debit key transaction - credit key transaction
+
+isNotOverDraft :: Transaction -> [Block] -> Bool
+isNotOverDraft transaction chain = (balance (sender transaction) (allTransactions chain)) - (value transaction) >= 0
+
+isValidNewTransaction :: Transaction -> [Block] -> Bool
+isValidNewTransaction transaction chain
+  | isNotOverDraft transaction chain = True
+  | otherwise = False
+
 
 -- TODO: Need to refactor out Node logic to node.hs
 ----------------------------------
@@ -122,7 +154,7 @@ findNonce block = do
 
 initialBlock :: Block
 initialBlock = do
-  let block = Block 0 "0" 0 [] 0 ""
+  let block = Block 0 "0" 0 [Transaction "God" "Corey" 1000 0] 0 ""
   setNonceAndHash block
 
 isValidNewBlock :: Block -> Block -> Bool
