@@ -132,6 +132,11 @@ addTransaction transaction = do
     else
       addDebug "Transaction not valid."
 
+requestTransactionPool :: MonadIO m => LocalNode -> m ()
+requestTransactionPool localNode = liftIO $ runProcess localNode $ do
+  addDebug "Requesting transaction pool."
+  P2P.nsendPeers p2pServiceName RequestTransactionPool
+
 replaceTransactionPool :: MonadIO m => IORef [Transaction] -> [Transaction] -> m ()
 replaceTransactionPool transactionRef newPool = do
   setPool <- liftIO $ atomicModifyIORef' transactionRef $ const (newPool, newPool)
@@ -146,19 +151,21 @@ sendTransactionPool localNode transactionRef = liftIO $ runProcess localNode $ d
 -- Chain Functions --
 replaceChain :: MonadIO m => IORef [Block] -> [Block] -> m ()
 replaceChain chainRef newChain = do
-  currChain  <- liftIO $ readIORef chainRef
-  if isValidChain newChain && length currChain < length newChain
-    then do
-      _ <- liftIO $ atomicModifyIORef' chainRef $ const (newChain, newChain)
-      return ()
-    else addDebug "chain is not valid for updating"
+  currentChain <- liftIO $ readIORef chainRef
+  if (not . isValidChain) newChain || length currentChain >= length newChain
+    then addDebug $ "chain is not valid for updating!: " ++ show newChain
+    else do
+      setChain <- liftIO $ atomicModifyIORef' chainRef $ const (newChain, newChain)
+      addDebug ("updated chain: " ++ show setChain)
 
 requestChain :: MonadIO m => LocalNode -> m ()
 requestChain localNode = liftIO $ runProcess localNode $ do
-  P2P.nsendPeers p2pServiceName $ RequestChain
+  addDebug "Requesting chain."
+  P2P.nsendPeers p2pServiceName RequestChain
 
 sendChain :: MonadIO m => LocalNode -> IORef [Block] -> m ()
 sendChain localNode chainRef = liftIO $ runProcess localNode $ do
+  addDebug "Emitting chain."
   newChain <- liftIO $ readIORef chainRef
   P2P.nsendPeers p2pServiceName $ ReplaceChain newChain
 
@@ -213,7 +220,7 @@ app = do
     addDebug $ show transactions
     json $ transactions
 
-runP2P port bootstrapNode = P2P.bootstrapNonBlocking "127.0.0.1" port (maybeToList $ fmap P2P.makeNodeId bootstrapNode) initRemoteTable
+runP2P port bootstrapNode = P2P.bootstrapNonBlocking "127.0.0.1" port (maybeToList $ P2P.makeNodeId `fmap` bootstrapNode) initRemoteTable
 
 runServer :: CliArgs -> IO ()
 runServer args = do
@@ -232,11 +239,12 @@ runServer args = do
     then do
       addDebug "This is not the initial node, getting chain from P2P seed"
       requestChain localNode
+      requestTransactionPool localNode
     else addDebug "This is the initial node, not requesting a chain"
     addDebug $ "P2P Node Running on " ++ (p2pPort args)
     forever $ do
       message <- expect :: Process BlockUpdate
-      addDebug "Message received."
+      addDebug "Message received"
       case message of
         (ReplaceChain chain) -> do
           addDebug $ "Replace data with new chain: " ++ show chain
