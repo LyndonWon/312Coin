@@ -1,7 +1,10 @@
 {-# LANGUAGE DeriveGeneric, DuplicateRecordFields, ParallelListComp #-}
 
+-- LEGION CODE SOURCED FROM: https://github.com/aviaviavi/legion/blob/master/src/Lib.hs --
 module Lib where
 
+
+-- LEGION: Package selection --
 import           System.IO.Unsafe
 import           Control.Monad.Trans
 import           Crypto.Hash                    ( Digest
@@ -141,6 +144,7 @@ createNode lastNode nodeArgs = do
 -- TODO: Need to refactor out
 -- Block Logic (mostly) from github/legion
 ----------------------------------
+-- LEGION: Structure of Block --
 data Block = Block { index        :: Int
                    , previousHash :: String
                    , timestamp    :: Int
@@ -152,6 +156,8 @@ data Block = Block { index        :: Int
 instance ToJSON Block
 instance FromJSON Block
 instance Binary Block
+
+-- LEGION: Implementation of Block creation, hashing, proof of work, and validation --
 
 calculateBlockHash :: Block -> String
 calculateBlockHash (Block i p t b n _) = hashString (concat [show i, p, show t, show b, show n])
